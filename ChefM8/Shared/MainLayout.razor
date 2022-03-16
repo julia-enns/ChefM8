@@ -1,0 +1,30 @@
+﻿@inherits LayoutComponentBase
+
+<div class="page">
+    <main>
+        <nav class="navbar">
+            <div id="home">
+                <a href="recipes"><img src="ChefM8-Logo.png"/></a>
+            </div>
+            
+            <ul class="account-nav-links">
+                <li><a href="recipes">Recipes</a></li>
+                <li><a href="meal-plan">Meal Plan</a></li>
+                <li><a href="grocery-list">Grocery List</a></li>
+                <li><a href="contact-us">Contact Us</a></li>
+                <li><a href="login">Logout</a></li>
+            </ul>
+
+            <ul class="nav-links">
+                <li><a href="recipes">Recipes</a></li>
+                <li><a href="contact-us">Contact Us</a></li>
+                <li><a href="register">Register</a></li>
+                <li><a href="login">Login</a></li>
+            </ul>
+        </nav>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
