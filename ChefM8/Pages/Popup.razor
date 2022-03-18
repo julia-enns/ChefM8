@@ -1,0 +1,23 @@
+﻿@page "/add-recipe-popup"
+@using ChefM8.Pages
+
+<PageTitle>Add Recipes</PageTitle>
+
+<div id="content">
+    <h1>Add Recipe</h1>
+    <button @onclick="@Close">Add Recipes</button>
+</div>
+
+@code {
+    [CascadingParameter] BlazoredModalInstance ModalInstance { get; set; }
+    
+    public void Close()
+    {
+        var recipes = new List<Recipe>
+        {
+            new Recipe("Pizza", "/recipes", MealCategories.Dinner)
+        };
+
+        ModalInstance.CloseAsync(ModalResult.Ok(recipes));
+    }
+}
