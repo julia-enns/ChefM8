@@ -1,0 +1,150 @@
+﻿@page "/Recipe/Burger" 
+@inject NavigationManager NavigationManager
+
+<PageTitle>Burger</PageTitle>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<style>
+    .container
+    {
+        display: grid;
+        grid-template-rows: 100px auto auto;
+        grid-template-columns: 60% 40%;
+        grid-template-areas: 
+        "header buttons" 
+        "thumbnail ingredients" 
+        "recipe recipe";
+    }
+    .header
+    {
+        grid-row-start: 1;
+        grid-row-end: 2;
+        grid-column-start: 1;
+        grid-column-end: 2;
+    }
+
+    .buttons
+    {
+        grid-row-start: 1;
+        grid-row-end: 2;
+        grid-column-start: 2;
+        grid-column-end: 3;
+        
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 50px 50px;
+        gap: 5px;
+    }
+    
+    .favorites
+    {
+        grid-column-start: 1;
+        grid-row: 1 / 3;
+        display: inline-block;
+        border: none;
+        width: 88px;
+        height: 80px;
+        background-image: url('/favorites-button.png');
+        background-color: transparent;
+    }
+
+    .favorites:hover
+    {
+        display: inline-block;
+        border: none;
+        width: 88px;
+        height: 80px;
+        background-image: url('/favorites-button-clicked.png');
+        background-color: transparent;
+    }
+    
+    .mealplan 
+    {
+        grid-column: 2 / 4;
+        grid-row: 1;
+        color: #EE9B3B;
+    }
+
+    .button
+    {
+        background-color: #EE9B3B;
+        border-radius: 4px;
+        border: none;
+        transition-duration: 0.4s;
+    }
+
+    .button:hover 
+    {
+        color: white;
+    }
+    
+    .thumbnail
+    {
+        grid-row-start: 2;
+        grid-row-end: 3;
+        grid-column-start: 1;
+        grid-column-end: 2;
+    }
+    
+    .ingredients
+    {
+        grid-row-start: 2;
+        grid-row-end: 3;
+        grid-column-start: 2;
+        grid-column-end: 3;
+    }
+
+    .recipe
+    {
+        grid-row-start: 3;
+        grid-row-end: 3;
+        grid-column-start: 1;
+        grid-column-end: 3;
+    }
+
+</style>
+<body>
+<div class = "container">
+
+    <div class = "header">
+        <button class = "button"@onclick="NavigateToRecipe">Back</button>
+        <h1>Burger</h1>
+        Prep Time: 10 Minutes Cook Time: 15 Mins
+    </div>
+
+    <div class = "buttons">
+    	<div class = "favorites">
+        	<button class = "favorites"@onclick="NavigateToRecipe"></button>
+        </div>
+        <div class = "mealplan">
+            <p>
+                <button type="button" class="button w-100" style = "margin-top:15px;" @onclick="NavigateToRecipe">Add to Meal plan</button>
+                <button type="button" class="button w-100" style = "margin-top:10px;" @onclick="NavigateToRecipe">Add to Grocery list</button>
+            </p>
+        </div> 
+    </div>
+    
+    <div class = "thumbnail">
+
+    </div>
+
+    <div class = "ingredients">
+
+    </div>
+
+    <div class = "recipe">
+
+    </div>
+
+</div>
+
+</body>
+
+
+@code {
+    private void NavigateToRecipe() { 
+        NavigationManager.NavigateTo("recipe"); 
+        }
+}
