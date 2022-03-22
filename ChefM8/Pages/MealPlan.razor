@@ -1,6 +1,297 @@
 ﻿@page "/meal-plan"
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
 
 <PageTitle>Meal Plan</PageTitle>
 
+<div id="content">
+    <h1 id="title">Meal Plan</h1>
+
+    <div class="buttons">
+        <button @onclick="@ClearMealPlan">Clear Meal Plan</button>
+        <button>Add to Grocery List</button>
+    </div>
+    
+    <div class="day saved">
+        <h2>Saved Recipes</h2>
+        @if (SavedRecipes?.Any() ?? false)
+        {
+            <div class="recipes">
+                @foreach (var recipe in SavedRecipes)
+                {
+                    <a href="@recipe.Link">
+                        <div class="recipe">
+                            <div class="meatball-menu">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <div class="recipe-title">
+                                <h3>@recipe.Name</h3>
+                                <h4>@recipe.Category</h4>
+                            </div>
+                        </div>
+                    </a>
+                }
+            </div>
+        }
+        else
+        {
+            <p>No recipes.</p>
+        }
+    </div>
+
+    <div class="day">
+        <h2>Sunday</h2>
+        @if (SundayRecipes?.Any() ?? false)
+        {
+            <div class="recipes">
+                @foreach (var recipe in SundayRecipes)
+                {
+                    <a href="@recipe.Link">
+                        <div class="recipe">
+                            <div class="meatball-menu">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <div class="recipe-title">
+                                <h3>@recipe.Name</h3>
+                                <h4>@recipe.Category</h4>
+                            </div>
+                        </div>
+                    </a>
+                }
+            </div>
+        }
+        else
+        {
+            <p>No recipes.</p>
+        }
+    </div>
+
+    <div class="day">
+        <h2>Monday</h2>
+        @if (MondayRecipes?.Any() ?? false)
+        {
+            <div class="recipes">
+                @foreach (var recipe in MondayRecipes)
+                {
+                    <a href="@recipe.Link">
+                        <div class="recipe">
+                            <div class="meatball-menu">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <div class="recipe-title">
+                                <h3>@recipe.Name</h3>
+                                <h4>@recipe.Category</h4>
+                            </div>
+                        </div>
+                    </a>
+                }
+            </div>
+        }
+        else
+        {
+            <p>No recipes.</p>
+        }
+    </div>
+
+    <div class="day">
+        <h2>Tuesday</h2>
+        @if (TuesdayRecipes?.Any() ?? false)
+        {
+            <div class="recipes">
+                @foreach (var recipe in TuesdayRecipes)
+                {
+                    <a href="@recipe.Link">
+                        <div class="recipe">
+                            <div class="meatball-menu">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <div class="recipe-title">
+                                <h3>@recipe.Name</h3>
+                                <h4>@recipe.Category</h4>
+                            </div>
+                        </div>
+                    </a>
+                }
+            </div>
+        }
+        else
+        {
+            <p>No recipes.</p>
+        }
+    </div>
+
+    <div class="day">
+        <h2>Wednesday</h2>
+        @if (WednesdayRecipes?.Any() ?? false)
+        {
+            <div class="recipes">
+                @foreach (var recipe in WednesdayRecipes)
+                {
+                    <a href="@recipe.Link">
+                        <div class="recipe">
+                            <div class="meatball-menu">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <div class="recipe-title">
+                                <h3>@recipe.Name</h3>
+                                <h4>@recipe.Category</h4>
+                            </div>
+                        </div>
+                    </a>
+                }
+            </div>
+        }
+        else
+        {
+            <p>No recipes.</p>
+        }
+    </div>
+
+    <div class="day">
+        <h2>Thursday</h2>
+        @if (ThursdayRecipes?.Any() ?? false)
+        {
+            <div class="recipes">
+                @foreach (var recipe in ThursdayRecipes)
+                {
+                    <a href="@recipe.Link">
+                        <div class="recipe">
+                            <div class="meatball-menu">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <div class="recipe-title">
+                                <h3>@recipe.Name</h3>
+                                <h4>@recipe.Category</h4>
+                            </div>
+                        </div>
+                    </a>
+                }
+            </div>
+        }
+        else
+        {
+            <p>No recipes.</p>
+        }
+    </div>
+
+    <div class="day">
+        <h2>Friday</h2>
+        @if (FridayRecipes?.Any() ?? false)
+        {
+            <div class="recipes">
+                @foreach (var recipe in FridayRecipes)
+                {
+                    <a href="@recipe.Link">
+                        <div class="recipe">
+                            <div class="meatball-menu">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <div class="recipe-title">
+                                <h3>@recipe.Name</h3>
+                                <h4>@recipe.Category</h4>
+                            </div>
+                        </div>
+                    </a>
+                }
+            </div>
+        }
+        else
+        {
+            <p>No recipes.</p>
+        }
+    </div>
+
+    <div class="day">
+        <h2>Saturday</h2>
+        @if (SaturdayRecipes?.Any() ?? false)
+        {
+            <div class="recipes">
+                @foreach (var recipe in SaturdayRecipes)
+                {
+                    <a href="@recipe.Link">
+                        <div class="recipe">
+                            <div class="meatball-menu">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <div class="recipe-title">
+                                <h3>@recipe.Name</h3>
+                                <h4>@recipe.Category</h4>
+                            </div>
+                        </div>
+                    </a>
+                }
+            </div>
+        }
+        else
+        {
+            <p>No recipes.</p>
+        }
+    </div>
+
+    <button id="add-recipes" @onclick="@ShowPopup">ADD RECIPES</button>
+</div>
+
 @code {
+    [CascadingParameter] public IModalService Modal { get; set; }
+
+
+    public IList<Recipe> SavedRecipes = new List<Recipe>();
+    public IList<Recipe> SundayRecipes = new List<Recipe>();
+    public IList<Recipe> MondayRecipes = new List<Recipe>();
+    public IList<Recipe> TuesdayRecipes = new List<Recipe>();
+    public IList<Recipe> WednesdayRecipes = new List<Recipe>();
+    public IList<Recipe> ThursdayRecipes = new List<Recipe>();
+    public IList<Recipe> FridayRecipes = new List<Recipe>();
+    public IList<Recipe> SaturdayRecipes = new List<Recipe>();
+
+    public MealPlan()
+    {
+        Modal = new ModalService();
+
+        //var str = localStorage.GetItemAsync<string>("SavedRecipes");
+    }
+
+    protected async void ShowPopup()
+    {
+        var formModal = Modal.Show<Popup>("Add Recipe");
+        var result = await formModal.Result;
+
+        if(result.Data is null) return;
+
+        foreach(var recipe in (IList<Recipe>) result.Data)
+        {
+            SavedRecipes.Add(recipe);
+        }
+        
+        await localStorage.SetItemAsync("SavedRecipes", "Hey");
+        StateHasChanged();
+    }
+    
+    protected void ClearMealPlan()
+    {
+        SavedRecipes.Clear();
+        SundayRecipes.Clear();
+        MondayRecipes.Clear();
+        TuesdayRecipes.Clear();
+        WednesdayRecipes.Clear();
+        ThursdayRecipes.Clear();
+        FridayRecipes.Clear();
+        SaturdayRecipes.Clear();
+    }
+
 }

@@ -11,6 +11,10 @@ main{
     justify-content: space-between;
     background-color: black;
 }
+.navbar .active {
+    color: #ffad51;
+}
+
 .navbar a {
     color: white;
     font-size: 25px;
@@ -21,7 +25,7 @@ main{
 }
 
 .navbar a:hover {
-    color: #ffad51;
+    color: #e07900;
 }
 
 .navbar ul {

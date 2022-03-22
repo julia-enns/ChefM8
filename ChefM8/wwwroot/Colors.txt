@@ -1,0 +1,2 @@
+﻿Main color - #ffad51
+Darker main color - #e07900

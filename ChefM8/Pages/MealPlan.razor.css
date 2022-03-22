@@ -1,0 +1,139 @@
+#content {
+    background-color: #ffad51;
+    width: 80%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 25px 100px;
+}
+
+#title{
+    font-size: 60px;
+    margin: 20px;
+    color: white;
+    font-weight: bolder;
+    text-align: center;
+    border-bottom: 5px solid white;
+}
+
+.buttons{
+    display: flex;
+    justify-content: end;
+}
+
+button{
+    margin: 5px;
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    border-radius: 10px;
+    padding: 10px 50px;
+    border: 3px solid black;
+}
+
+button:hover {
+    background-color: white;
+    color: black;
+}
+
+.day{
+    background-color: white;
+    margin: 10px 0px;
+    padding: 10px 50px;
+}
+
+.saved {
+    background-color: #e07900;
+    border: 1px solid black;
+}
+
+#add-recipes {
+    position: fixed;
+    background-color: black;
+    color: white;
+    font-size: 25px;
+    font-weight: bold;
+    right: 0;
+    bottom: 0;
+    margin: 30px;
+    height: 150px;
+    width: 150px;
+    border-radius: 100px;
+    padding: 0px;
+}
+
+#add-recipes:hover {
+    color: #ffad51;
+}
+
+a{
+    text-decoration: none;
+}
+
+.recipes{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.recipe {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    height: 150px;
+    width: 195px;
+    background-color: black;
+    color: white;
+    margin: 5px;
+    border-radius: 20px;
+    text-align: center;
+    padding: 10px;
+    gap: 5px;
+}
+
+.recipe-title {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.recipe:hover {
+    background-color: grey;
+}
+
+.recipe:hover span {
+    background: white;
+}
+
+.meatball-menu:hover span {
+    background: black;
+}
+
+.meatball-menu {
+    width: 50px;
+    height: 20px;
+    position: relative;
+    align-self: end;
+    margin: 5px;
+}
+
+.meatball-menu span {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: grey;
+    position: absolute;
+}
+
+.meatball-menu span:nth-child(1) {
+    left: 0%;
+}
+
+.meatball-menu span:nth-child(2) {
+    left: 35%;
+}
+
+.meatball-menu span:nth-child(3) {
+    left: 72%;
+}
