@@ -8,18 +8,18 @@
             </div>
             
             <ul class="account-nav-links">
-                <li><a href="recipes">Recipes</a></li>
-                <li><a href="meal-plan">Meal Plan</a></li>
-                <li><a href="grocery-list">Grocery List</a></li>
-                <li><a href="contact-us">Contact Us</a></li>
-                <li><a href="login">Logout</a></li>
+                <li><a class="@GetActive("recipes")" href="recipes">Recipes</a></li>
+                <li><a class="@GetActive("meal-plan")" href="meal-plan">Meal Plan</a></li>
+                <li><a class="@GetActive("grocery-list")" href="grocery-list">Grocery List</a></li>
+                <li><a class="@GetActive("contact-us")" href="contact-us">Contact Us</a></li>
+                <li><a class="@GetActive("login")" href="login">Logout</a></li>
             </ul>
 
             <ul class="nav-links">
-                <li><a href="recipes">Recipes</a></li>
-                <li><a href="contact-us">Contact Us</a></li>
-                <li><a href="register">Register</a></li>
-                <li><a href="login">Login</a></li>
+                <li><a class="@GetActive("recipes")" href="recipes">Recipes</a></li>
+                <li><a class="@GetActive("contact-us")" href="contact-us">Contact Us</a></li>
+                <li><a class="@GetActive("register")" href="register">Register</a></li>
+                <li><a class="@GetActive("login")" href="login">Login</a></li>
             </ul>
         </nav>
 
@@ -28,3 +28,18 @@
         </article>
     </main>
 </div>
+
+@code {
+    [Inject] NavigationManager NavigationManager { get; set; }
+
+    protected override void OnInitialized() => NavigationManager.LocationChanged += (s, e) => StateHasChanged();
+
+    bool IsActive(string href, NavLinkMatch navLinkMatch = NavLinkMatch.Prefix)
+    {
+        var relativePath = NavigationManager.ToBaseRelativePath(NavigationManager.Uri).ToLower();
+        return navLinkMatch == NavLinkMatch.All ? relativePath == href.ToLower() : relativePath.StartsWith(href.ToLower());
+    }
+
+    string GetActive(string href, NavLinkMatch navLinkMatch = NavLinkMatch.Prefix) => IsActive(href, navLinkMatch) ? "active" : "";
+}
+}
