@@ -1,0 +1,46 @@
+body {
+    padding: 10%;
+}
+
+#home-searchbar-container {
+    margin: auto;
+    width: 20%;
+    height: 50px;
+}
+
+#discover-section {
+    width: 99%;
+    height: 550px;
+    margin: auto;
+    background-color: darkgoldenrod;
+    padding: 1%;
+}
+
+.discover-block {
+    width: 700px;
+    height: 100%;
+    margin: auto;
+    background-color: darkred;
+}
+
+#allrecipes-section {
+    width: 99%;
+    height: 900px;
+    margin: auto;
+    background-color: dimgrey;
+    padding: 1.5%;
+}
+
+#filter-tab {
+    height: 100%;
+    width: 25%;
+    background-color: darkgray;
+    float: left;
+}
+
+#recipes-container {
+    height: 100%;
+    width: 74.9%;
+    background-color: darkgray;
+    float: right;
+}
