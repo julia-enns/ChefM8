@@ -9,18 +9,26 @@ body {
 }
 
 #discover-section {
+    display: block;
     width: 99%;
     height: 550px;
     margin: auto;
     background-color: darkgoldenrod;
     padding: 1%;
+    overflow-x: scroll;
+    white-space: nowrap;
 }
 
-.discover-block {
-    width: 700px;
-    height: 100%;
-    margin: auto;
-    background-color: darkred;
+.discover-item {
+    display: inline-block;
+    width: 800px;
+    margin: 0 10px;
+    height: 90%;
+    background: rgba(0, 0, 0, 0.05) no-repeat center center;
+    background-size: cover;
+    position: relative;
+    border-radius: 20px;
+    box-shadow: 0 0 10px #dfdfdf;
 }
 
 #allrecipes-section {
