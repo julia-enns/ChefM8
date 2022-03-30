@@ -1,4 +1,9 @@
 ﻿@inherits LayoutComponentBase
+@using Blazored.Toast.Configuration;
+
+
+<BlazoredToasts Position="ToastPosition.TopRight"
+                Timeout="3"/>
 
 <div class="page">
     <main>
@@ -22,6 +27,7 @@
                 <li><a class="@GetActive("login")" href="login">Login</a></li>
             </ul>
         </nav>
+        
 
         <article class="content px-4">
             @Body

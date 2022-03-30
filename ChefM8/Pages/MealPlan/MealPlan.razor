@@ -1,0 +1,409 @@
+﻿@page "/meal-plan"
+@inject User user
+@inject IToastService toastService
+
+<PageTitle>Meal Plan</PageTitle>
+
+<div id="content">
+    <h1 id="title">Meal Plan</h1>
+    <div class="buttons">
+        <button @onclick="@ClearMealPlan">Clear Meal Plan</button>
+        <button @onclick="@AddToGroceryList">Add to Grocery List</button>
+    </div>
+    
+    <div class="day saved">
+        <h2>Saved Recipes</h2>
+        @if (SavedRecipes?.Any() ?? false)
+        {
+            <div class="recipes">
+                @foreach (var recipe in SavedRecipes)
+                {
+                    <div class="recipe">
+                        <div class="buttons">
+                            <a class="recipe-link secondary-recipe-link" href="@recipe.Recipe.Link">
+                                <div class="recipe-button"></div>
+                            </a>
+                            <button class="edit-button fa fa-pencil" @onclick="() => ShowEditPopup(recipe)"></button>
+                        </div>
+                        <a class="recipe-link main-recipe-link" href="@recipe.Recipe.Link">
+                            <div class="recipe-title">
+                                <h3 class="recipe-name">@recipe.Recipe.Name</h3>
+                                <h4>@recipe.Category</h4>
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <p>No recipes.</p>
+        }
+    </div>
+
+    <div class="day">
+        <h2>Sunday</h2>
+        @if (SundayRecipes?.Any() ?? false)
+        {
+            <div class="recipes">
+                @foreach (var recipe in SundayRecipes)
+                {
+                    <div class="recipe">
+                        <div class="buttons">
+                            <a class="recipe-link secondary-recipe-link" href="@recipe.Recipe.Link">
+                                <div class="recipe-button"></div>
+                            </a>
+                            <button class="edit-button fa fa-pencil" @onclick="() => ShowEditPopup(recipe)"></button>
+                        </div>
+                        <a class="recipe-link main-recipe-link" href="@recipe.Recipe.Link">
+                            <div class="recipe-title">
+                                <h3 class="recipe-name">@recipe.Recipe.Name</h3>
+                                <h4>@recipe.Category</h4>
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <p>No recipes.</p>
+        }
+    </div>
+
+    <div class="day">
+        <h2>Monday</h2>
+        @if (MondayRecipes?.Any() ?? false)
+        {
+            <div class="recipes">
+                @foreach (var recipe in MondayRecipes)
+                {
+                    <div class="recipe">
+                        <div class="buttons">
+                            <a class="recipe-link secondary-recipe-link" href="@recipe.Recipe.Link">
+                                <div class="recipe-button"></div>
+                            </a>
+                            <button class="edit-button fa fa-pencil" @onclick="() => ShowEditPopup(recipe)"></button>
+                        </div>
+                        <a class="recipe-link main-recipe-link" href="@recipe.Recipe.Link">
+                            <div class="recipe-title">
+                                <h3 class="recipe-name">@recipe.Recipe.Name</h3>
+                                <h4>@recipe.Category</h4>
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <p>No recipes.</p>
+        }
+    </div>
+
+    <div class="day">
+        <h2>Tuesday</h2>
+        @if (TuesdayRecipes?.Any() ?? false)
+        {
+            <div class="recipes">
+                @foreach (var recipe in TuesdayRecipes)
+                {
+                    <div class="recipe">
+                        <div class="buttons">
+                            <a class="recipe-link secondary-recipe-link" href="@recipe.Recipe.Link">
+                                <div class="recipe-button"></div>
+                            </a>
+                            <button class="edit-button fa fa-pencil" @onclick="() => ShowEditPopup(recipe)"></button>
+                        </div>
+                        <a class="recipe-link main-recipe-link" href="@recipe.Recipe.Link">
+                            <div class="recipe-title">
+                                <h3 class="recipe-name">@recipe.Recipe.Name</h3>
+                                <h4>@recipe.Category</h4>
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <p>No recipes.</p>
+        }
+    </div>
+
+    <div class="day">
+        <h2>Wednesday</h2>
+        @if (WednesdayRecipes?.Any() ?? false)
+        {
+            <div class="recipes">
+                @foreach (var recipe in WednesdayRecipes)
+                {
+                    <div class="recipe">
+                        <div class="buttons">
+                            <a class="recipe-link secondary-recipe-link" href="@recipe.Recipe.Link">
+                                <div class="recipe-button"></div>
+                            </a>
+                            <button class="edit-button fa fa-pencil" @onclick="() => ShowEditPopup(recipe)"></button>
+                        </div>
+                        <a class="recipe-link main-recipe-link" href="@recipe.Recipe.Link">
+                            <div class="recipe-title">
+                                <h3 class="recipe-name">@recipe.Recipe.Name</h3>
+                                <h4>@recipe.Category</h4>
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <p>No recipes.</p>
+        }
+    </div>
+
+    <div class="day">
+        <h2>Thursday</h2>
+        @if (ThursdayRecipes?.Any() ?? false)
+        {
+            <div class="recipes">
+                @foreach (var recipe in ThursdayRecipes)
+                {
+                    <div class="recipe">
+                        <div class="buttons">
+                            <a class="recipe-link secondary-recipe-link" href="@recipe.Recipe.Link">
+                                <div class="recipe-button"></div>
+                            </a>
+                            <button class="edit-button fa fa-pencil" @onclick="() => ShowEditPopup(recipe)"></button>
+                        </div>
+                        <a class="recipe-link main-recipe-link" href="@recipe.Recipe.Link">
+                            <div class="recipe-title">
+                                <h3 class="recipe-name">@recipe.Recipe.Name</h3>
+                                <h4>@recipe.Category</h4>
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <p>No recipes.</p>
+        }
+    </div>
+
+    <div class="day">
+        <h2>Friday</h2>
+        @if (FridayRecipes?.Any() ?? false)
+        {
+            <div class="recipes">
+                @foreach (var recipe in FridayRecipes)
+                {
+                    <div class="recipe">
+                        <div class="buttons">
+                            <a class="recipe-link secondary-recipe-link" href="@recipe.Recipe.Link">
+                                <div class="recipe-button"></div>
+                            </a>
+                            <button class="edit-button fa fa-pencil" @onclick="() => ShowEditPopup(recipe)"></button>
+                        </div>
+                        <a class="recipe-link main-recipe-link" href="@recipe.Recipe.Link">
+                            <div class="recipe-title">
+                                <h3 class="recipe-name">@recipe.Recipe.Name</h3>
+                                <h4>@recipe.Category</h4>
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <p>No recipes.</p>
+        }
+    </div>
+
+    <div class="day">
+        <h2>Saturday</h2>
+        @if (SaturdayRecipes?.Any() ?? false)
+        {
+            <div class="recipes">
+                @foreach (var recipe in SaturdayRecipes)
+                {
+                    <div class="recipe">
+                        <div class="buttons">
+                            <a class="recipe-link secondary-recipe-link" href="@recipe.Recipe.Link">
+                                <div class="recipe-button"></div>
+                            </a>
+                            <button class="edit-button fa fa-pencil" @onclick="() => ShowEditPopup(recipe)"></button>
+                        </div>
+                        <a class="recipe-link main-recipe-link" href="@recipe.Recipe.Link">
+                            <div class="recipe-title">
+                                <h3 class="recipe-name">@recipe.Recipe.Name</h3>
+                                <h4>@recipe.Category</h4>
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <p>No recipes.</p>
+        }
+    </div>
+
+    <button id="add-recipes" @onclick="@ShowPopup">ADD RECIPES</button>
+</div>
+
+@code {
+    [CascadingParameter] public IModalService Modal { get; set; }
+
+    public IList<MealPlanRecipe> SavedRecipes => user.SavedRecipes;
+    public IList<MealPlanRecipe> SundayRecipes => user.SundayRecipes;
+    public IList<MealPlanRecipe> MondayRecipes => user.MondayRecipes;
+    public IList<MealPlanRecipe> TuesdayRecipes => user.TuesdayRecipes;
+    public IList<MealPlanRecipe> WednesdayRecipes => user.WednesdayRecipes;
+    public IList<MealPlanRecipe> ThursdayRecipes => user.ThursdayRecipes;
+    public IList<MealPlanRecipe> FridayRecipes => user.FridayRecipes;
+    public IList<MealPlanRecipe> SaturdayRecipes => user.SaturdayRecipes;
+
+    public MealPlan()
+    {
+        Modal = new ModalService();
+    }
+
+    protected async void ShowPopup()
+    {
+        var formModal = Modal.Show<AddRecipePopup>("", new ModalOptions() {Class="custom-modal"});
+        var result = await formModal.Result;
+
+        if(result.Data is null) return;
+
+        foreach(var recipe in (IList<MealPlanRecipe>) result.Data)
+        {
+            switch (recipe.Date)
+            {
+                case Date.Sunday:
+                    SundayRecipes.Add(recipe);
+                    break;
+                case Date.Monday:
+                    MondayRecipes.Add(recipe);
+                    break;
+                case Date.Tuesday:
+                    TuesdayRecipes.Add(recipe);
+                    break;
+                case Date.Wednesday:
+                    WednesdayRecipes.Add(recipe);
+                    break;
+                case Date.Thursday:
+                    ThursdayRecipes.Add(recipe);
+                    break;
+                case Date.Friday:
+                    FridayRecipes.Add(recipe);
+                    break;
+                case Date.Saturday:
+                    SaturdayRecipes.Add(recipe);
+                    break;
+                default:
+                    SavedRecipes.Add(recipe);
+                    break;
+            }
+        }
+
+        toastService.ShowSuccess("Successfully added recipes to meal plan!");
+        StateHasChanged();
+    }
+
+
+    protected async void ShowEditPopup(MealPlanRecipe recipe)
+    {
+        var oldRecipe = recipe;
+
+        var parameters = new ModalParameters();
+        parameters.Add(nameof(EditRecipePopup.Recipe), recipe);
+
+        var formModal = Modal.Show<EditRecipePopup>("", parameters, new ModalOptions() {Class="custom-modal"});
+        var result = await formModal.Result;
+
+        if(result.Data is null) return;
+
+        var updatedRecipe = (MealPlanRecipe) result.Data;
+
+        switch (oldRecipe.Date)
+        {
+            case Date.Sunday:
+                SundayRecipes.Remove(oldRecipe);
+                break;
+            case Date.Monday:
+                MondayRecipes.Remove(oldRecipe);
+                break;
+            case Date.Tuesday:
+                TuesdayRecipes.Remove(oldRecipe);
+                break;
+            case Date.Wednesday:
+                WednesdayRecipes.Remove(oldRecipe);
+                break;
+            case Date.Thursday:
+                ThursdayRecipes.Remove(oldRecipe);
+                break;
+            case Date.Friday:
+                FridayRecipes.Remove(oldRecipe);
+                break;
+            case Date.Saturday:
+                SaturdayRecipes.Remove(oldRecipe);
+                break;
+            default:
+                SavedRecipes.Remove(oldRecipe);
+                break;
+        }
+
+        switch (updatedRecipe.Date)
+        {
+            case Date.Sunday:
+                SundayRecipes.Add(updatedRecipe);
+                break;
+            case Date.Monday:
+                MondayRecipes.Add(updatedRecipe);
+                break;
+            case Date.Tuesday:
+                TuesdayRecipes.Add(updatedRecipe);
+                break;
+            case Date.Wednesday:
+                WednesdayRecipes.Add(updatedRecipe);
+                break;
+            case Date.Thursday:
+                ThursdayRecipes.Add(updatedRecipe);
+                break;
+            case Date.Friday:
+                FridayRecipes.Add(updatedRecipe);
+                break;
+            case Date.Saturday:
+                SaturdayRecipes.Add(updatedRecipe);
+                break;
+            default:
+                SavedRecipes.Add(updatedRecipe);
+                break;
+        }
+
+        toastService.ShowSuccess("Successfully updated recipe!");
+        StateHasChanged();
+    }
+
+    protected void ClearMealPlan()
+    {
+        SavedRecipes.Clear();
+        SundayRecipes.Clear();
+        MondayRecipes.Clear();
+        TuesdayRecipes.Clear();
+        WednesdayRecipes.Clear();
+        ThursdayRecipes.Clear();
+        FridayRecipes.Clear();
+        SaturdayRecipes.Clear();
+
+        toastService.ShowSuccess("Successfully cleared meal plan!");
+    }
+
+    protected void AddToGroceryList()
+    {
+        toastService.ShowSuccess("Successfully added grocery list to meal plan!");
+    }
+}
