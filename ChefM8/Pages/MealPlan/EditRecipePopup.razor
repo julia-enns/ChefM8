@@ -1,0 +1,116 @@
+﻿@page "/edit-recipe-popup"
+@using ChefM8.Pages
+
+<PageTitle>Update Recipes</PageTitle>
+
+<div class="content">
+    <div class="flex-container">
+        <h1>Edit Recipe</h1>
+        <div class="recipe-editor">
+            <h3 class="recipe-title">@Recipe.Recipe.Name</h3>
+                    
+            <div class="radio-button-container">
+                <div class="date-radio-buttons">
+                    <h4>Date</h4>
+                    <div class="radio-buttons">
+                        <label class="radio-button" for="sunday">
+                            <input type="radio" id="sunday" value="Sunday" name="date-@Recipe.Recipe.Name" checked=@(Recipe.Date == Date.Sunday) @onclick="@(() => UpdateDate(Date.Sunday))">
+                            <span class="radio-check"></span>
+                            <p>Su</p>
+                        </label>
+                        <label class="radio-button" for="monday">
+                            <input type="radio" id="monday" value="Monday" name="date-@Recipe.Recipe.Name" checked=@(Recipe.Date == Date.Monday) @onclick="@(() => UpdateDate(Date.Monday))">
+                            <span class="radio-check"></span>
+                            <p>M</p>
+                        </label>
+                        <label class="radio-button" for="tuesday">
+                            <input type="radio" id="tuesday" value="Tuesday" name="date-@Recipe.Recipe.Name" checked=@(Recipe.Date == Date.Tuesday) @onclick="@(() => UpdateDate(Date.Tuesday))">
+                            <span class="radio-check"></span>
+                            <p>Tu</p>
+                        </label>
+                        <label class="radio-button" for="wednesday">
+                            <input type="radio" id="wednesday" value="Wednesday" name="date-@Recipe.Recipe.Name" checked=@(Recipe.Date == Date.Wednesday) @onclick="@(() => UpdateDate(Date.Wednesday))">
+                            <span class="radio-check"></span>
+                            <p>W</p>
+                        </label>
+                        <label class="radio-button" for="thursday">
+                            <input type="radio" id="thursday" value="Thursday" name="date-@Recipe.Recipe.Name" checked=@(Recipe.Date == Date.Thursday) @onclick="@(() => UpdateDate(Date.Thursday))">
+                            <span class="radio-check"></span>
+                            <p>Th</p>
+                        </label>
+                        <label class="radio-button" for="friday">
+                            <input type="radio" id="friday" value="Friday" name="date-@Recipe.Recipe.Name" checked=@(Recipe.Date == Date.Friday) @onclick="@(() => UpdateDate(Date.Friday))">
+                            <span class="radio-check"></span>
+                            <p>F</p>
+                        </label>
+                        <label class="radio-button" for="saturday">
+                            <input type="radio" id="saturday" value="Saturday" name="date-@Recipe.Recipe.Name" checked=@(Recipe.Date == Date.Saturday) @onclick="@(() => UpdateDate(Date.Saturday))">
+                            <span class="radio-check"></span>
+                            <p>Sa</p>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="category-radio-buttons">
+                    <h4>Category</h4>
+                    <div class="radio-buttons">
+                        <label class="radio-button" for="breakfast">
+                            <input type="radio" id="breakfast" value="Breakfast" name="category-@Recipe.Recipe.Name" checked=@(Recipe.Category == MealCategories.Breakfast) @onclick="@(() => UpdateCategory(MealCategories.Breakfast))">
+                            <span class="radio-check"></span>
+                            <p>Breakfast</p>
+                        </label>
+                        <label class="radio-button" for="lunch">
+                            <input type="radio" id="lunch" value="Lunch" name="category-@Recipe.Recipe.Name" checked=@(Recipe.Category == MealCategories.Lunch) @onclick="@(() => UpdateCategory(MealCategories.Lunch))">
+                            <span class="radio-check"></span>
+                            <p>Lunch</p>
+                        </label>
+                        <label class="radio-button" for="dinner">
+                            <input type="radio" id="dinner" value="Dinner" name="category-@Recipe.Recipe.Name" checked=@(Recipe.Category == MealCategories.Dinner) @onclick="@(() => UpdateCategory(MealCategories.Dinner))">
+                            <span class="radio-check"></span>
+                            <p>Dinner</p>
+                        </label>
+                        <label class="radio-button" for="other">
+                            <input type="radio" id="other" value="Other" name="category-@Recipe.Recipe.Name" checked=@(Recipe.Category == MealCategories.Other) @onclick="@(() => UpdateCategory(MealCategories.Other))">
+                            <span class="radio-check"></span>
+                            <p>Other</p>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button @onclick="@Close">Update Recipe</button>
+    </div>
+</div>
+
+@code {
+    [CascadingParameter] BlazoredModalInstance ModalInstance { get; set; }
+
+    [Parameter] public MealPlanRecipe Recipe { get; set; }
+
+    public void UpdateDate(Date date)
+    {
+        if (Recipe.Date != date) {
+            Recipe.Date = date;
+        }        
+        else if (Recipe.Date == date)
+        {
+            Recipe.Date = null;
+        }
+    }
+
+    public void UpdateCategory(MealCategories category)
+    {
+        if (Recipe.Category != category) {
+            Recipe.Category = category;
+        }        
+        else if (Recipe.Category == category)
+        {
+            Recipe.Category = null;
+        }
+    }
+
+    public void Close()
+    {
+        ModalInstance.CloseAsync(ModalResult.Ok(Recipe));
+    }
+}
