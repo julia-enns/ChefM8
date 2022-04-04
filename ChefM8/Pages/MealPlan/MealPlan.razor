@@ -404,6 +404,17 @@
 
     protected void AddToGroceryList()
     {
+        var ingredients = SavedRecipes.SelectMany(x => x.Recipe.Ingredients).ToList();
+        ingredients.AddRange(SundayRecipes.SelectMany(x => x.Recipe.Ingredients).ToList());
+        ingredients.AddRange(MondayRecipes.SelectMany(x => x.Recipe.Ingredients).ToList());
+        ingredients.AddRange(TuesdayRecipes.SelectMany(x => x.Recipe.Ingredients).ToList());
+        ingredients.AddRange(WednesdayRecipes.SelectMany(x => x.Recipe.Ingredients).ToList());
+        ingredients.AddRange(ThursdayRecipes.SelectMany(x => x.Recipe.Ingredients).ToList());
+        ingredients.AddRange(FridayRecipes.SelectMany(x => x.Recipe.Ingredients).ToList());
+        ingredients.AddRange(SaturdayRecipes.SelectMany(x => x.Recipe.Ingredients).ToList());
+
+        user.Groceries.AddRange(ingredients);
+
         toastService.ShowSuccess("Successfully added grocery list to meal plan!");
     }
 }
