@@ -13,8 +13,9 @@
                 {
                     <label class="recipe-selector">
                         <input type="checkbox" checked="@recipe.Selected" @onchange="eventArgs => { CheckboxClicked(recipe, eventArgs.Value); }">
-                        <div class="recipe" style="background-image:@recipe.Recipe.Recipe.Image">
+                        <div class="recipe">
                             <span class="check"></span>
+                            <img src=@recipe.Recipe.Recipe.Image>
                             <h3>@recipe.Recipe.Recipe.Name</h3>
                         </div>
                     </label>
@@ -146,10 +147,9 @@
     {
         Recipes = new List<SelectedRecipe>()
         {
-            new SelectedRecipe(new MealPlanRecipe(new Recipe("Sample 1", "", "", new List<Ingredient>()), null, null), false),
-            new SelectedRecipe(new MealPlanRecipe(new Recipe("Sample 2", "", "", new List<Ingredient>()), null, null), false),
-            new SelectedRecipe(new MealPlanRecipe(new Recipe("Sample 3", "", "", new List<Ingredient>()), null, null), false),
-            new SelectedRecipe(new MealPlanRecipe(new Recipe("Sample 4", "", "", new List<Ingredient>()), null, null), false)
+            new SelectedRecipe(new MealPlanRecipe(new Recipe("Burger", "/Recipe/Burger", "/recipe-photos/Burger.jpg", new List<Ingredient>()), null, null), false),
+            new SelectedRecipe(new MealPlanRecipe(new Recipe("Pancakes", "/Recipe/Pancakes", "/recipe-photos/Pancakes.jpg", new List<Ingredient>()), null, null), false),
+            new SelectedRecipe(new MealPlanRecipe(new Recipe("Spaghetti", "/Recipe/Spaghetti", "/recipe-photos/Spaghetti.jpg", new List<Ingredient>()), null, null), false)
         };
     }
 

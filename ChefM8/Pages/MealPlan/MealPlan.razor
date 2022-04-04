@@ -18,7 +18,7 @@
             <div class="recipes">
                 @foreach (var recipe in SavedRecipes)
                 {
-                    <div class="recipe">
+                    <div class="recipe" style="background-image: url(@recipe.Recipe.Image)">
                         <div class="buttons">
                             <a class="recipe-link secondary-recipe-link" href="@recipe.Recipe.Link">
                                 <div class="recipe-button"></div>
@@ -27,8 +27,11 @@
                         </div>
                         <a class="recipe-link main-recipe-link" href="@recipe.Recipe.Link">
                             <div class="recipe-title">
-                                <h3 class="recipe-name">@recipe.Recipe.Name</h3>
-                                <h4>@recipe.Category</h4>
+                                <h3 class="recipe-background recipe-name">@recipe.Recipe.Name</h3>
+                                @if(recipe.Category is not null)
+                                {
+                                    <h4 class="recipe-category recipe-background">@recipe.Category</h4>
+                                }
                             </div>
                         </a>
                     </div>
@@ -48,7 +51,7 @@
             <div class="recipes">
                 @foreach (var recipe in SundayRecipes)
                 {
-                    <div class="recipe">
+                    <div class="recipe" style="background-image: url(@recipe.Recipe.Image)">
                         <div class="buttons">
                             <a class="recipe-link secondary-recipe-link" href="@recipe.Recipe.Link">
                                 <div class="recipe-button"></div>
@@ -57,8 +60,11 @@
                         </div>
                         <a class="recipe-link main-recipe-link" href="@recipe.Recipe.Link">
                             <div class="recipe-title">
-                                <h3 class="recipe-name">@recipe.Recipe.Name</h3>
-                                <h4>@recipe.Category</h4>
+                                <h3 class="recipe-background recipe-name">@recipe.Recipe.Name</h3>
+                                @if(recipe.Category is not null)
+                                {
+                                    <h4 class="recipe-category recipe-background">@recipe.Category</h4>
+                                }
                             </div>
                         </a>
                     </div>
@@ -78,7 +84,7 @@
             <div class="recipes">
                 @foreach (var recipe in MondayRecipes)
                 {
-                    <div class="recipe">
+                    <div class="recipe" style="background-image: url(@recipe.Recipe.Image)">
                         <div class="buttons">
                             <a class="recipe-link secondary-recipe-link" href="@recipe.Recipe.Link">
                                 <div class="recipe-button"></div>
@@ -87,8 +93,11 @@
                         </div>
                         <a class="recipe-link main-recipe-link" href="@recipe.Recipe.Link">
                             <div class="recipe-title">
-                                <h3 class="recipe-name">@recipe.Recipe.Name</h3>
-                                <h4>@recipe.Category</h4>
+                                <h3 class="recipe-background recipe-name">@recipe.Recipe.Name</h3>
+                                @if(recipe.Category is not null)
+                                {
+                                    <h4 class="recipe-category recipe-background">@recipe.Category</h4>
+                                }
                             </div>
                         </a>
                     </div>
@@ -108,7 +117,7 @@
             <div class="recipes">
                 @foreach (var recipe in TuesdayRecipes)
                 {
-                    <div class="recipe">
+                    <div class="recipe" style="background-image: url(@recipe.Recipe.Image)">
                         <div class="buttons">
                             <a class="recipe-link secondary-recipe-link" href="@recipe.Recipe.Link">
                                 <div class="recipe-button"></div>
@@ -117,8 +126,11 @@
                         </div>
                         <a class="recipe-link main-recipe-link" href="@recipe.Recipe.Link">
                             <div class="recipe-title">
-                                <h3 class="recipe-name">@recipe.Recipe.Name</h3>
-                                <h4>@recipe.Category</h4>
+                                <h3 class="recipe-background recipe-name">@recipe.Recipe.Name</h3>
+                                @if(recipe.Category is not null)
+                                {
+                                    <h4 class="recipe-category recipe-background">@recipe.Category</h4>
+                                }
                             </div>
                         </a>
                     </div>
@@ -138,7 +150,7 @@
             <div class="recipes">
                 @foreach (var recipe in WednesdayRecipes)
                 {
-                    <div class="recipe">
+                    <div class="recipe" style="background-image: url(@recipe.Recipe.Image)">
                         <div class="buttons">
                             <a class="recipe-link secondary-recipe-link" href="@recipe.Recipe.Link">
                                 <div class="recipe-button"></div>
@@ -147,8 +159,11 @@
                         </div>
                         <a class="recipe-link main-recipe-link" href="@recipe.Recipe.Link">
                             <div class="recipe-title">
-                                <h3 class="recipe-name">@recipe.Recipe.Name</h3>
-                                <h4>@recipe.Category</h4>
+                                <h3 class="recipe-background recipe-name">@recipe.Recipe.Name</h3>
+                                @if(recipe.Category is not null)
+                                {
+                                    <h4 class="recipe-category recipe-background">@recipe.Category</h4>
+                                }
                             </div>
                         </a>
                     </div>
@@ -168,7 +183,7 @@
             <div class="recipes">
                 @foreach (var recipe in ThursdayRecipes)
                 {
-                    <div class="recipe">
+                    <div class="recipe" style="background-image: url(@recipe.Recipe.Image)">
                         <div class="buttons">
                             <a class="recipe-link secondary-recipe-link" href="@recipe.Recipe.Link">
                                 <div class="recipe-button"></div>
@@ -177,8 +192,11 @@
                         </div>
                         <a class="recipe-link main-recipe-link" href="@recipe.Recipe.Link">
                             <div class="recipe-title">
-                                <h3 class="recipe-name">@recipe.Recipe.Name</h3>
-                                <h4>@recipe.Category</h4>
+                                <h3 class="recipe-background recipe-name">@recipe.Recipe.Name</h3>
+                                @if(recipe.Category is not null)
+                                {
+                                    <h4 class="recipe-category recipe-background">@recipe.Category</h4>
+                                }
                             </div>
                         </a>
                     </div>
@@ -198,7 +216,7 @@
             <div class="recipes">
                 @foreach (var recipe in FridayRecipes)
                 {
-                    <div class="recipe">
+                    <div class="recipe" style="background-image: url(@recipe.Recipe.Image)">
                         <div class="buttons">
                             <a class="recipe-link secondary-recipe-link" href="@recipe.Recipe.Link">
                                 <div class="recipe-button"></div>
@@ -207,8 +225,11 @@
                         </div>
                         <a class="recipe-link main-recipe-link" href="@recipe.Recipe.Link">
                             <div class="recipe-title">
-                                <h3 class="recipe-name">@recipe.Recipe.Name</h3>
-                                <h4>@recipe.Category</h4>
+                                <h3 class="recipe-background recipe-name">@recipe.Recipe.Name</h3>
+                                @if(recipe.Category is not null)
+                                {
+                                    <h4 class="recipe-category recipe-background">@recipe.Category</h4>
+                                }
                             </div>
                         </a>
                     </div>
@@ -228,7 +249,7 @@
             <div class="recipes">
                 @foreach (var recipe in SaturdayRecipes)
                 {
-                    <div class="recipe">
+                    <div class="recipe" style="background-image: url(@recipe.Recipe.Image)">
                         <div class="buttons">
                             <a class="recipe-link secondary-recipe-link" href="@recipe.Recipe.Link">
                                 <div class="recipe-button"></div>
@@ -237,8 +258,11 @@
                         </div>
                         <a class="recipe-link main-recipe-link" href="@recipe.Recipe.Link">
                             <div class="recipe-title">
-                                <h3 class="recipe-name">@recipe.Recipe.Name</h3>
-                                <h4>@recipe.Category</h4>
+                                <h3 class="recipe-background recipe-name">@recipe.Recipe.Name</h3>
+                                @if(recipe.Category is not null)
+                                {
+                                    <h4 class="recipe-category recipe-background">@recipe.Category</h4>
+                                }
                             </div>
                         </a>
                     </div>
