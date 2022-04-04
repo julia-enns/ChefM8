@@ -1,19 +1,18 @@
 ﻿@page "/recipes/burger"
-@inject NavigationManager NavigationManager
 @inject IToastService toastService
 @inject IJSRuntime _jsRuntime
+@inject User user
+@inherits RecipeCode
 
 <PageTitle>Burger</PageTitle>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
-
-
 <div class = "wholepage-container">
     <div class = "header">
         <button class = "button"@onclick="@goBack">Back</button>
-        <h1>Burger </h1>
+        <h1>@burger.Name </h1>
         <h6>Prep Time: 10 Minutes Cook Time: 15 Mins </h6>
     </div>
 
@@ -23,14 +22,14 @@
         </div>
         <div class = "mealplan">
             <p>
-                <button type="button" class="button w-100" style = "margin-top:15px;" @onclick="@(() => Modal.Show<Pancakes>(""))">Add to Meal plan</button>
-                <button type="button" class="button w-100" style = "margin-top:10px;" @onclick="NavigateToRecipe">Add to Grocery list</button>
+                <button type="button" class="button w-100" style = "margin-top:15px;" @onclick="@addRecipeToMealplanPopup">Add to Meal plan</button>
+                <button type="button" class="button w-100" style = "margin-top:10px;" @onclick="@addRecipeToMealplanPopup">Add to Grocery list</button>
             </p>
         </div> 
     </div>
     
     <div class = "thumbnail">
-        <img id="myImg" src="/video-thumbnails/burger-thumbnail.png" alt="burger" style="width:100%;max-width:500px" @onclick="@showVideoPlayer"> 
+        <img id="myImg" src="@burger.Image" alt="burger" style="width:100%;max-width:500px" @onclick="@showVideoPlayer"> 
     </div>
 
     <div class = "ingredients">
@@ -105,13 +104,13 @@
         </div>
     <button id="voice" @onclick = "@voiceButton">Voice</button>
 </div>
-}
 
 @code {
     [CascadingParameter] public IModalService Modal { get; set; }
     [Parameter] public int selectVideo { get; set; } = 1;
     public List<Ingredient> burgerIngredients { get; set; }
     private double? InputValue { get; set; } = 1;
+    Recipe burger { get; set; }
 
     public Burger()
     {
@@ -125,23 +124,23 @@
             new Ingredient("Lettuce", 1, Measurement.Cup, IngredientCategory.Produce),
             new Ingredient("Tomato", 1, Measurement.None, IngredientCategory.Produce)
         };
-    }
-
-    private void NavigateToRecipe() 
-    {
-        NavigationManager.NavigateTo("recipes"); 
+        burger = new Recipe("Burger", "/recipes/burger", "/video-thumbnails/burger-thumbnail.png", burgerIngredients);
     }
 
     protected void AddToFavorites()
     {
+        AddToFavorites(this.user, burger);
         toastService.ShowSuccess("Successfully added to favorites!");
     }
 
     private void showVideoPlayer()
     {
-        var parameters = new ModalParameters();
-        parameters.Add(nameof(VideoPlayer.recipeNumber) , 1);
-        Modal.Show<VideoPlayer>("", parameters, new ModalOptions() {Class="custom-modal"});
+        showVideoPlayer(Modal, 1);
+    }
+
+    protected void addRecipeToMealplanPopup()
+    {
+        addRecipeToMealplanPopup(Modal, this.user, burger);
     }
 
     protected void voiceButton() => toastService.ShowInfo("Voice activated!");
@@ -150,4 +149,3 @@
 
     private double? amount(Ingredient ingredients) => ingredients.Amount * InputValue;
 }
-

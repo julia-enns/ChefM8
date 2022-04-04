@@ -15,7 +15,7 @@ else
 @code 
 {
     [Parameter] public int recipeNumber { get; set; }
-    string recipe { get; set; }
+    string recipe { get; set; } = "";
     protected override void OnInitialized()
     {
         if(recipeNumber == 1)

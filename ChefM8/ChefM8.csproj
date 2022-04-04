@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\Recipes\RecipesCode.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Pages\Recipes\recipe.css" />
   </ItemGroup>
 
