@@ -1,6 +1,103 @@
-﻿@page "/Recipe/Pancakes"
+﻿@page "/recipes/pancakes"
+@inject NavigationManager NavigationManager
+@inject IToastService toastService
+@inject IJSRuntime _jsRuntime
 
 <PageTitle>Pancakes</PageTitle>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+
+
+<div class = "wholepage-container">
+    <div class = "header">
+        <button class = "button"@onclick="@goBack">Back</button>
+        <h1>Pancakes </h1>
+        <h6>Prep Time: 10 Minutes Cook Time: 15 Mins </h6>
+    </div>
+
+    <div class = "buttons">
+    	<div class = center>
+        	<button class = "favorites-button" @onclick="AddToFavorites"></button>
+        </div>
+        <div class = "mealplan">
+            <p>
+                <button type="button" class="button w-100" style = "margin-top:15px;" @onclick="@(() => Modal.Show<Pancakes>(""))">Add to Meal plan</button>
+                <button type="button" class="button w-100" style = "margin-top:10px;" @onclick="NavigateToRecipe">Add to Grocery list</button>
+            </p>
+        </div> 
+    </div>
+    
+    <div class = "thumbnail">
+        <img id="myImg" src="/video-thumbnails/pancake-thumbnail.png" alt="pancake" style="width:100%;max-width:500px" @onclick="@showVideoPlayer"> 
+    </div>
+
+    <div class = "ingredients">
+        <label class = "servingSize" for="servingSize">Number of Servings: </label>
+        <input type="text" id="servingSize" name="filtersearch" placeholder="1" size="2" maxlength="4" min="1" value="1"/>
+        <h1>Ingredients:</h1>
+    </div>
+
+    <div class = "recipe-body">
+            <h3>
+                Recipe:
+            </h3>
+            <div class = "recipe-steps">
+                Step 1:
+            </div>
+            <div class = "recipe-instructions">
+                Lay burgers on an oiled Frying pan over high heat and cook for 5 minutes flipping once halfway through cooking to an internal tempurature of 160 degrees F
+            </div>
+            <div class = "recipe-steps">
+                Step 2:
+            </div>
+            <div class = "recipe-instructions">
+                Toast the buns
+            </div>
+            <div class = "recipe-steps">
+                Step 3:
+            </div>
+            <div class = "recipe-instructions">
+                Add the desired amount of lettuce along with 2 slices of the tomato and the slice of cheese on toasted buns
+            </div>
+            <div class = "recipe-steps">
+                Step 4:
+            </div>
+            <div class = "recipe-instructions">
+                Place the cooked beef patty on the the bun and set the bun tops in place
+            </div>
+        </div>
+    <button id="voice" @onclick = "@voiceButton">Voice</button>
+</div>
+}
 
 @code {
+    [CascadingParameter] public IModalService Modal { get; set; }
+
+    public Pancakes()
+    {
+        Modal = new ModalService();
+    }
+
+    private void NavigateToRecipe() 
+    {
+        NavigationManager.NavigateTo("recipes"); 
+    }
+
+    protected void AddToFavorites()
+    {
+        toastService.ShowSuccess("Successfully added to favorites!");
+    }
+
+    protected void voiceButton() => toastService.ShowInfo("Voice activated!");
+
+    private void goBack() => _jsRuntime.InvokeVoidAsync("history.go", -1);
+
+    private void showVideoPlayer()
+    {
+        var parameters = new ModalParameters();
+        parameters.Add(nameof(VideoPlayer.recipeNumber) , 3);
+        Modal.Show<VideoPlayer>("", parameters, new ModalOptions() {Class="custom-modal"});
+    }
 }
+

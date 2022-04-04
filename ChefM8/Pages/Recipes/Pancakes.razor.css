@@ -1,0 +1,125 @@
+.wholepage-container {
+    display: grid;
+    grid-template-rows: auto auto auto;
+    grid-template-columns: 60% 40%;
+    grid-template-areas:
+        "header buttons"
+        "thumbnail ingredients"
+        "recipe recipe";
+}
+
+.header {
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+
+.buttons {
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 5px;
+}
+
+.favorites-button {
+    margin-left: 25px;
+    margin-top: 27px;
+    grid-column-start: 1;
+    display: inline-block;
+    border: none;
+    width: 88px;
+    height: 80px;
+    background-image: url('/favorites-button.png');
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
+
+    .favorites-button:hover {
+        display: inline-block;
+        border: none;
+        width: 88px;
+        height: 80px;
+        background-image: url('/favorites-button-clicked.png');
+        background-repeat: no-repeat;
+        background-color: transparent;
+    }
+
+.mealplan {
+    grid-column: 2 / 4;
+    grid-row: 1;
+    color: #EE9B3B;
+}
+
+.thumbnail {
+    grid-row-start: 2;
+    grid-row-end: 3;
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+
+#myImg {
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+    #myImg:hover {
+        opacity: 0.7;
+    }
+
+.ingredients {
+    grid-row-start: 2;
+    grid-row-end: 3;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    background-color: transparent;
+}
+
+.recipe-body {
+    grid-row-start: 3;
+    grid-row-end: 3;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    background-color: transparent;
+}
+
+.recipe-body {
+}
+
+.recipe-steps {
+    font-size: 25px;
+    color: #868686;
+}
+
+.recipe-instructions {
+    margin-left: 20px;
+}
+
+
+#voice {
+    position: fixed;
+    background-color: black;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    right: 0;
+    bottom: 0;
+    margin: 30px;
+    height: 85px;
+    width: 85px;
+    border-radius: 100px;
+    padding: 0px;
+}
+
+    #voice:hover {
+        color: #ffad51;
+    }
+
+.servingSize {
+    font-size: 30px;
+}
