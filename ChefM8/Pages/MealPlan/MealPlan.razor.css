@@ -68,24 +68,26 @@ a{
     flex-direction: column;
     height: 150px;
     width: 195px;
-    background-color: black;
     color: white;
     margin: 5px;
     border-radius: 20px;
     text-align: center;
-}
-
-.a:hover ~ .recipe{
-    background-color: grey;
+    background-size: 100% 100%;
+    background-color: black;
 }
 
 .edit-button {
-    padding: 0px;
+    padding: 2px;
     margin: 5px 5px 0 0;
     align-self: flex-end;
     font-size: 24px;
     flex: 1;
     pointer-events: auto;
+    border: 2px solid white;
+}
+
+.edit-button:hover {
+    border: 2px solid #ffad51;
 }
 
 .buttons {
@@ -103,6 +105,9 @@ a{
 
 .recipe-title {
     height: 110px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .recipe-link {
@@ -127,11 +132,22 @@ a{
 }
 
 .recipe:hover {
-    color: orange;
-    background-color: grey;
+    filter: brightness(90%);
+    border: 1px solid #e07900;
+}
+
+.recipe-category {
+    font-size: 16px;
 }
 
 .recipe-button {
     flex: 3;
     width: 125px;
+}
+
+.recipe-background {
+    background-color: black;
+    border-radius: 10px;
+    width: fit-content;
+    padding: 5px;
 }
