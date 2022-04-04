@@ -1,6 +1,6 @@
 ﻿namespace ChefM8.Shared
 {
-    public enum Measurement { None, Tsp, Tbsp, Cup, Piece, Slice }
+    public enum Measurement { None, Tsp, Tbsp, Cup, Piece, Slice, Pound, Ounce }
     public enum IngredientCategory { None, Bakery, Produce, Meats, Dairy, Baking, Other }
     public record Ingredient(string Name, double Amount, Measurement Unit, IngredientCategory Category);
 
