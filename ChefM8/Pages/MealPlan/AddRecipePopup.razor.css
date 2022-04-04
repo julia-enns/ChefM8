@@ -200,11 +200,17 @@ button[disabled] {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    align-items: center;
     background: #f0f0f0;
     width: 170px;
-    height: 150px;
+    height: 170px;
     margin: 10px;
     border: 6px solid white;
+}
+
+.recipe img {
+    width: 100px;
+    height: 100px;
 }
 
 p {
