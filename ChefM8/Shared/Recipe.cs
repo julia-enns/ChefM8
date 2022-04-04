@@ -1,7 +1,8 @@
 ﻿namespace ChefM8.Shared
 {
     public enum Measurement { Tsp, Tbsp, Cups }
-    public record Ingredient(string Name, double Amount, Measurement Unit);
+    public enum IngredientCategory { Bakery, Produce, Meats, Dairy, Baking, Other }
+    public record Ingredient(string Name, double Amount, Measurement Unit, IngredientCategory Category);
 
     public record Recipe(string Name, string Link, string Image, List<Ingredient> Ingredients);
     public class MealPlanRecipe {

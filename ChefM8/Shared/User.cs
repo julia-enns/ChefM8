@@ -2,6 +2,8 @@
 {
     public class User
     {
+        public List<Ingredient> Groceries { get; set; }
+
         public IList<MealPlanRecipe> SavedRecipes { get; set; }
         public IList<MealPlanRecipe> SundayRecipes { get; set; }
         public IList<MealPlanRecipe> MondayRecipes { get; set; }
@@ -13,6 +15,8 @@
 
         public User()
         {
+            Groceries = new List<Ingredient>();
+
             SavedRecipes = new List<MealPlanRecipe>();
             SundayRecipes = new List<MealPlanRecipe>();
             MondayRecipes = new List<MealPlanRecipe>();
