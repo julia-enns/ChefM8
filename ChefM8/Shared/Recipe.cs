@@ -1,7 +1,7 @@
 ﻿namespace ChefM8.Shared
 {
-    public enum Measurement { Tsp, Tbsp, Cups }
-    public enum IngredientCategory { Bakery, Produce, Meats, Dairy, Baking, Other }
+    public enum Measurement { None, Tsp, Tbsp, Cup, Piece, Slice }
+    public enum IngredientCategory { None, Bakery, Produce, Meats, Dairy, Baking, Other }
     public record Ingredient(string Name, double Amount, Measurement Unit, IngredientCategory Category);
 
     public record Recipe(string Name, string Link, string Image, List<Ingredient> Ingredients);
@@ -29,14 +29,6 @@
         }
     }
 
-    public class AllRecipes
-    {
-        public Recipe Recipe;
-        public AllRecipes(Recipe recipe)
-        {
-            Recipe = recipe;
-        }
-    }
     public enum MealCategories { Breakfast, Lunch, Dinner, Other }
     public enum Date { Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday }
 }
