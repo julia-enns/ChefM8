@@ -25,6 +25,14 @@
         }
     }
 
+    public class AllRecipes
+    {
+        public Recipe Recipe;
+        public AllRecipes(Recipe recipe)
+        {
+            Recipe = recipe;
+        }
+    }
     public enum MealCategories { Breakfast, Lunch, Dinner, Other }
     public enum Date { Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday }
 }
