@@ -340,7 +340,7 @@
 
     protected async void ShowEditPopup(MealPlanRecipe recipe)
     {
-        var oldRecipe = recipe;
+        var oldRecipe = new MealPlanRecipe(recipe.Recipe, recipe.Date, recipe.Category);
 
         var parameters = new ModalParameters();
         parameters.Add(nameof(EditRecipePopup.Recipe), recipe);
@@ -352,31 +352,40 @@
 
         var updatedRecipe = (MealPlanRecipe) result.Data;
 
+        MealPlanRecipe recipeToRemove;
         switch (oldRecipe.Date)
         {
             case Date.Sunday:
-                SundayRecipes.Remove(oldRecipe);
+                recipeToRemove = SundayRecipes.Where(x => x.Recipe == oldRecipe.Recipe).First();
+                SundayRecipes.Remove(recipeToRemove);
                 break;
             case Date.Monday:
-                MondayRecipes.Remove(oldRecipe);
+                recipeToRemove = MondayRecipes.Where(x => x.Recipe == oldRecipe.Recipe).First();
+                MondayRecipes.Remove(recipeToRemove);
                 break;
             case Date.Tuesday:
-                TuesdayRecipes.Remove(oldRecipe);
+                recipeToRemove = TuesdayRecipes.Where(x => x.Recipe == oldRecipe.Recipe).First();
+                TuesdayRecipes.Remove(recipeToRemove);
                 break;
             case Date.Wednesday:
-                WednesdayRecipes.Remove(oldRecipe);
+                recipeToRemove = WednesdayRecipes.Where(x => x.Recipe == oldRecipe.Recipe).First();
+                WednesdayRecipes.Remove(recipeToRemove);
                 break;
             case Date.Thursday:
-                ThursdayRecipes.Remove(oldRecipe);
+                recipeToRemove = ThursdayRecipes.Where(x => x.Recipe == oldRecipe.Recipe).First();
+                ThursdayRecipes.Remove(recipeToRemove);
                 break;
             case Date.Friday:
-                FridayRecipes.Remove(oldRecipe);
+                recipeToRemove = FridayRecipes.Where(x => x.Recipe == oldRecipe.Recipe).First();
+                FridayRecipes.Remove(recipeToRemove);
                 break;
             case Date.Saturday:
-                SaturdayRecipes.Remove(oldRecipe);
+                recipeToRemove = SaturdayRecipes.Where(x => x.Recipe == oldRecipe.Recipe).First();
+                SaturdayRecipes.Remove(recipeToRemove);
                 break;
             default:
-                SavedRecipes.Remove(oldRecipe);
+                recipeToRemove = SavedRecipes.Where(x => x.Recipe == oldRecipe.Recipe).First();
+                SavedRecipes.Remove(recipeToRemove);
                 break;
         }
 
