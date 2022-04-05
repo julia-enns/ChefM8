@@ -116,10 +116,7 @@
     public void Close()
     {
         var recipesAdded = new List<MealPlanRecipe>();
-        if (selectedRecipe.Recipe.Date != null && selectedRecipe.Recipe.Category != null)
-        {
-            recipesAdded.Add(selectedRecipe.Recipe);
-        }
+        recipesAdded.Add(selectedRecipe.Recipe);
         ModalInstance.CloseAsync(ModalResult.Ok(recipesAdded));
     }
 }

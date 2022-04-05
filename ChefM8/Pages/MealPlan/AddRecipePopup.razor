@@ -147,9 +147,37 @@
     {
         Recipes = new List<SelectedRecipe>()
         {
-            new SelectedRecipe(new MealPlanRecipe(new Recipe("Burger", "/recipes/burger", "/recipe-photos/Burger.jpg", new List<Ingredient>()), null, null), false),
-            new SelectedRecipe(new MealPlanRecipe(new Recipe("Pancakes", "/recipes/pancakes", "/recipe-photos/Pancakes.jpg", new List<Ingredient>()), null, null), false),
-            new SelectedRecipe(new MealPlanRecipe(new Recipe("Spaghetti", "/recipes/spaghetti", "/recipe-photos/Spaghetti.jpg", new List<Ingredient>()), null, null), false)
+            new SelectedRecipe(new MealPlanRecipe(new Recipe("Burger", "/recipes/burger", "/recipe-photos/Burger.jpg", new List<Ingredient>(){
+                new Ingredient("Beef patties", 1, Measurement.None, IngredientCategory.Meats),
+                new Ingredient("Hamburger buns", 2, Measurement.None, IngredientCategory.Bakery),
+                new Ingredient("Onion", 1, Measurement.None, IngredientCategory.Produce),
+                new Ingredient("Cheese", 1, Measurement.Slice, IngredientCategory.Dairy),
+                new Ingredient("Lettuce", 1, Measurement.Cup, IngredientCategory.Produce),
+                new Ingredient("Tomato", 1, Measurement.None, IngredientCategory.Produce)
+            }), null, null), false),
+
+            new SelectedRecipe(new MealPlanRecipe(new Recipe("Pancakes", "/recipes/pancakes", "/recipe-photos/Pancakes.jpg", new List<Ingredient>(){
+                new Ingredient("All purpose flour", 2, Measurement.Cup, IngredientCategory.Baking),
+                new Ingredient("Baking powder", 4, Measurement.Tsp, IngredientCategory.Baking),
+                new Ingredient("Baking soda", 1, Measurement.Tsp, IngredientCategory.Baking),
+                new Ingredient("Milk", 1, Measurement.Cup, IngredientCategory.Dairy),
+                new Ingredient("Butter", 4, Measurement.Tbsp, IngredientCategory.Dairy),
+                new Ingredient("Pure vanilla extract", 2, Measurement.Tsp, IngredientCategory.Baking),
+                new Ingredient("Large egg", 1, Measurement.None, IngredientCategory.Dairy)
+            }), null, null), false),
+
+            new SelectedRecipe(new MealPlanRecipe(new Recipe("Spaghetti", "/recipes/spaghetti", "/recipe-photos/Spaghetti.jpg", new List<Ingredient>()
+            {
+                new Ingredient("Ground beef", 1, Measurement.Pound, IngredientCategory.Meats),
+                new Ingredient("Dried spaghetti", 2, Measurement.Ounce, IngredientCategory.Other),
+                new Ingredient("Shredded parmesan cheese", 1, Measurement.Cup, IngredientCategory.Dairy),
+                new Ingredient("Tomato paste", 1, Measurement.Tbsp, IngredientCategory.Other),
+                new Ingredient("Can crushed tomatoes", 1, Measurement.None, IngredientCategory.Other),
+                new Ingredient("Garlic cloves", 1, Measurement.None, IngredientCategory.Produce),
+                new Ingredient("Olive oil", 3, Measurement.Tbsp, IngredientCategory.Other),
+                new Ingredient("Salt", 1, Measurement.Tsp, IngredientCategory.Other),
+                new Ingredient("Pepper", 1, Measurement.Tsp, IngredientCategory.Other)
+            }), null, null), false)
         };
     }
 

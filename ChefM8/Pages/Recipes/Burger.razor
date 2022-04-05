@@ -29,7 +29,7 @@
     </div>
     
     <div class = "thumbnail">
-        <img id="myImg" src="@burger.Image" alt="burger" style="width:100%;max-width:500px" @onclick="@showVideoPlayer"> 
+        <img id="myImg" src="/video-thumbnails/burger-thumbnail.png" alt="burger" style="width:100%;max-width:500px" @onclick="@showVideoPlayer"> 
     </div>
 
     <div class = "ingredients">
@@ -124,7 +124,7 @@
             new Ingredient("Lettuce", 1, Measurement.Cup, IngredientCategory.Produce),
             new Ingredient("Tomato", 1, Measurement.None, IngredientCategory.Produce)
         };
-        burger = new Recipe("Burger", "/recipes/burger", "/video-thumbnails/burger-thumbnail.png", burgerIngredients);
+        burger = new Recipe("Burger", "/recipes/burger", "/recipe-photos/Burger.jpg", burgerIngredients);
     }
 
     protected void AddToFavorites()

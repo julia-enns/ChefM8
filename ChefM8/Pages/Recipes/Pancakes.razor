@@ -28,7 +28,7 @@
     </div>
     
     <div class = "thumbnail">
-        <img id="myImg" src="@pancakes.Image" alt="pancakes" style="width:100%;max-width:500px" @onclick="@showVideoPlayer"> 
+        <img id="myImg" src="/video-thumbnails/pancake-thumbnail.png" alt="pancakes" style="width:100%;max-width:500px" @onclick="@showVideoPlayer"> 
     </div>
 
     <div class = "ingredients">
@@ -126,7 +126,7 @@
             new Ingredient("Pure vanilla extract", 2, Measurement.Tsp, IngredientCategory.Baking),
             new Ingredient("Large egg", 1, Measurement.None, IngredientCategory.Dairy)
         };
-        pancakes = new Recipe("Pancakes", "/recipes/pancakes", "/video-thumbnails/pancake-thumbnail.png", pancakeIngredients);
+        pancakes = new Recipe("Pancakes", "/recipes/pancakes", "/recipe-photos/Pancakes.jpg", pancakeIngredients);
     }
 
     protected void AddToFavorites()
