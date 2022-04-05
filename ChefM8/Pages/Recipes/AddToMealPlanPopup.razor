@@ -1,0 +1,125 @@
+﻿@page "/recipes/add-to-meal-plan"
+
+@using ChefM8.Pages
+
+<PageTitle>Add to meal plan</PageTitle>
+<div class="content">
+    <div class="recipe-editor">
+        <h3 class="recipe-title">@selectedRecipe.Recipe.Recipe.Name</h3>
+                    
+        <div class="radio-button-container">
+            <div class="date-radio-buttons">
+                <h4>Date</h4>
+                <div class="radio-buttons">
+                    <label class="radio-button" for="sunday-@selectedRecipe.Recipe.Recipe.Name">
+                        <input type="radio" id="sunday-@selectedRecipe.Recipe.Recipe.Name" value="Sunday" name="date-@selectedRecipe.Recipe.Recipe.Name" checked=@(selectedRecipe.Recipe.Date == Date.Sunday) @onclick="@(() => UpdateDate(recipe, Date.Sunday))">
+                        <span class="radio-check"></span>
+                        <p>Su</p>
+                    </label>
+                    <label class="radio-button" for="monday-@selectedRecipe.Recipe.Recipe.Name">
+                        <input type="radio" id="monday-@selectedRecipe.Recipe.Recipe.Name" value="Monday" name="date-@selectedRecipe.Recipe.Recipe.Name" checked=@(selectedRecipe.Recipe.Date == Date.Monday) @onclick="@(() => UpdateDate(recipe, Date.Monday))">
+                        <span class="radio-check"></span>
+                        <p>M</p>
+                    </label>
+                    <label class="radio-button" for="tuesday-@selectedRecipe.Recipe.Recipe.Name">
+                        <input type="radio" id="tuesday-@selectedRecipe.Recipe.Recipe.Name" value="Tuesday" name="date-@selectedRecipe.Recipe.Recipe.Name" checked=@(selectedRecipe.Recipe.Date == Date.Tuesday) @onclick="@(() => UpdateDate(recipe, Date.Tuesday))">
+                        <span class="radio-check"></span>
+                        <p>Tu</p>
+                    </label>
+                    <label class="radio-button" for="wednesday-@selectedRecipe.Recipe.Recipe.Name">
+                        <input type="radio" id="wednesday-@selectedRecipe.Recipe.Recipe.Name" value="Wednesday" name="date-@selectedRecipe.Recipe.Recipe.Name" checked=@(selectedRecipe.Recipe.Date == Date.Wednesday) @onclick="@(() => UpdateDate(recipe, Date.Wednesday))">
+                        <span class="radio-check"></span>
+                        <p>W</p>
+                    </label>
+                    <label class="radio-button" for="thursday-@selectedRecipe.Recipe.Recipe.Name">
+                        <input type="radio" id="thursday-@selectedRecipe.Recipe.Recipe.Name" value="Thursday" name="date-@selectedRecipe.Recipe.Recipe.Name" checked=@(selectedRecipe.Recipe.Date == Date.Thursday) @onclick="@(() => UpdateDate(recipe, Date.Thursday))">
+                        <span class="radio-check"></span>
+                        <p>Th</p>
+                    </label>
+                    <label class="radio-button" for="friday-@selectedRecipe.Recipe.Recipe.Name">
+                        <input type="radio" id="friday-@selectedRecipe.Recipe.Recipe.Name" value="Friday" name="date-@selectedRecipe.Recipe.Recipe.Name" checked=@(selectedRecipe.Recipe.Date == Date.Friday) @onclick="@(() => UpdateDate(recipe, Date.Friday))">
+                        <span class="radio-check"></span>
+                        <p>F</p>
+                    </label>
+                    <label class="radio-button" for="saturday-@selectedRecipe.Recipe.Recipe.Name">
+                        <input type="radio" id="saturday-@selectedRecipe.Recipe.Recipe.Name" value="Saturday" name="date-@selectedRecipe.Recipe.Recipe.Name" checked=@(selectedRecipe.Recipe.Date == Date.Saturday) @onclick="@(() => UpdateDate(recipe, Date.Saturday))">
+                        <span class="radio-check"></span>
+                        <p>Sa</p>
+                    </label>
+                </div>
+            </div>
+                    
+            <div class="category-radio-buttons">
+                <h4>Category</h4>
+                <div class="radio-buttons">
+                    <label class="radio-button" for="breakfast-@selectedRecipe.Recipe.Recipe.Name">
+                        <input type="radio" id="breakfast-@selectedRecipe.Recipe.Recipe.Name" value="Breakfast" name="category-@selectedRecipe.Recipe.Recipe.Name" checked=@(selectedRecipe.Recipe.Category == MealCategories.Breakfast) @onclick="@(() => UpdateCategory(recipe, MealCategories.Breakfast))">
+                        <span class="radio-check"></span>
+                        <p>Breakfast</p>
+                    </label>
+                    <label class="radio-button" for="lunch-@selectedRecipe.Recipe.Recipe.Name">
+                        <input type="radio" id="lunch-@selectedRecipe.Recipe.Recipe.Name" value="Lunch" name="category-@selectedRecipe.Recipe.Recipe.Name" checked=@(selectedRecipe.Recipe.Category == MealCategories.Lunch) @onclick="@(() => UpdateCategory(recipe, MealCategories.Lunch))">
+                        <span class="radio-check"></span>
+                        <p>Lunch</p>
+                    </label>
+                    <label class="radio-button" for="dinner-@selectedRecipe.Recipe.Recipe.Name">
+                        <input type="radio" id="dinner-@selectedRecipe.Recipe.Recipe.Name" value="Dinner" name="category-@selectedRecipe.Recipe.Recipe.Name" checked=@(selectedRecipe.Recipe.Category == MealCategories.Dinner) @onclick="@(() => UpdateCategory(recipe, MealCategories.Dinner))">
+                        <span class="radio-check"></span>
+                        <p>Dinner</p>
+                    </label>
+                    <label class="radio-button" for="other-@selectedRecipe.Recipe.Recipe.Name">
+                        <input type="radio" id="other-@selectedRecipe.Recipe.Recipe.Name" value="Other" name="category-@selectedRecipe.Recipe.Recipe.Name" checked=@(selectedRecipe.Recipe.Category == MealCategories.Other) @onclick="@(() => UpdateCategory(recipe, MealCategories.Other))">
+                        <span class="radio-check"></span>
+                        <p>Other</p>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<button @onclick="@Close">Add Recipes</button>
+
+@code {
+    [CascadingParameter] BlazoredModalInstance ModalInstance { get; set; }
+
+    private SelectedRecipe selectedRecipe { get; set; }
+    [Parameter] public SelectedRecipe recipe { get; set; }
+
+    protected override void OnInitialized()
+    {
+        selectedRecipe = recipe;    
+    }
+
+    public void UpdateDate(SelectedRecipe recipe, Date date)
+    {
+        if (recipe is not null && recipe.Recipe.Date != date) {
+            recipe.Recipe.Date = date;
+        }        
+        else if (recipe is not null && recipe.Recipe.Date == date)
+        {
+            recipe.Recipe.Date = null;
+        }
+    }
+
+    public void UpdateCategory(SelectedRecipe recipe, MealCategories category)
+    {
+        if (recipe is not null && recipe.Recipe.Category != category) 
+        {
+            recipe.Recipe.Category = category;
+        }        
+        else if (recipe is not null && recipe.Recipe.Category == category)
+        {
+            recipe.Recipe.Category = null;
+        }
+    }
+
+    public void Close()
+    {
+        var recipesAdded = new List<MealPlanRecipe>();
+        if (selectedRecipe.Recipe.Date != null && selectedRecipe.Recipe.Category != null)
+        {
+            recipesAdded.Add(selectedRecipe.Recipe);
+        }
+        ModalInstance.CloseAsync(ModalResult.Ok(recipesAdded));
+    }
+}

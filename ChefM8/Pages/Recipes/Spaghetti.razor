@@ -1,6 +1,165 @@
-﻿@page "/Recipe/Spaghetti"
+﻿@page "/recipes/spaghetti"
+@inject IToastService toastService
+@inject IJSRuntime _jsRuntime
+@inject User user
+@inherits RecipeCode
 
 <PageTitle>Spaghetti</PageTitle>
 
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<div class = "wholepage-container">
+    <div class = "header">
+        <button class = "button"@onclick="@goBack">Back</button>
+        <h1>@spaghetti.Name </h1>
+        <h6>Prep Time: 5 Minutes Cook Time: 40 Mins </h6>
+    </div>
+
+    <div class = "buttons">
+    	<div class = center>
+        	<button class = "favorites-button" @onclick="AddToFavorites"></button>
+        </div>
+        <div class = "mealplan">
+            <p>
+                <button type="button" class="button w-100" style = "margin-top:15px;" @onclick="@addRecipeToMealplanPopup">Add to Meal plan</button>
+                <button type="button" class="button w-100" style = "margin-top:10px;" @onclick="@addRecipeToMealplanPopup">Add to Grocery list</button>
+            </p>
+        </div> 
+    </div>
+    
+    <div class = "thumbnail">
+        <img id="myImg" src="@spaghetti.Image" alt="spaghetti" style="width:100%;max-width:500px" @onclick="@showVideoPlayer"> 
+    </div>
+
+    <div class = "ingredients">
+        <label class = "servingSize" for="servingSize">Number of Servings: </label>
+        <input type="text" id="servingSize" name="filtersearch" @bind="InputValue" @bind:event="oninput" placeholder="1" size="2" maxlength="4" min="1"/>
+        <h1>Ingredients:</h1>
+         @if (spaghettiIngredients?.Any() ?? false)
+        {
+            <div class="recipes">
+                @foreach (var ingredient in spaghettiIngredients)
+                {
+                    if(@ingredient.Unit != Measurement.None)
+                    {
+                        if(@amount(ingredient) > 1 && (@ingredient.Unit !!= Measurement.Tsp || @ingredient.Unit !!= Measurement.Tbsp))
+                        {
+                            <p>@amount(ingredient) @(ingredient.Unit)s @ingredient.Name</p>
+                        }
+                        else
+                        {
+                            <p>@amount(ingredient) @(ingredient.Unit) @ingredient.Name</p>
+                        }
+                    }
+                    else
+                    {
+                        <p>@amount(ingredient) @(ingredient.Name)</p>
+                    }
+                }
+            </div>
+        }
+    </div>
+
+    <div class = "recipe-body">
+            <h3>
+                Recipe:
+            </h3>
+            <div class = "recipe-steps">
+                Step 1:
+            </div>
+            <div class = "recipe-instructions">
+                Place ground beef oiled frying pan over high heat and cook until browned or tempurature of 160 degrees F
+            </div>
+            <div class = "recipe-steps">
+                Step 2:
+            </div>
+            <div class = "recipe-instructions">
+                Stir in the garlic, tomato pastecook, stirring continuously for about 1 minute.
+            </div>
+            <div class = "recipe-steps">
+                Step 3:
+            </div>
+            <div class = "recipe-instructions">
+                 Stir in the tomatoes, 1 teaspoon of salt, and a generous pinch of black pepper
+            </div>
+            <div class = "recipe-steps">
+                Step 4:
+            </div>
+            <div class = "recipe-instructions">
+                Cook, uncovered, at a low simmer for 25 minutes of cheese on toasted buns
+            </div>
+            <div class = "recipe-steps">
+                Step 5:
+            </div>
+            <div class = "recipe-instructions">
+                Bring a large pot of salted water to the boil
+            </div>
+            <div class = "recipe-steps">
+                Step 6:
+            </div>
+            <div class = "recipe-instructions">
+                Add in dried spaghetti and cook for 7 minutes or until al dente
+            </div>
+            <div class = "recipe-steps">
+                Step 7:
+            </div>
+            <div class = "recipe-instructions">
+                Drain cooked spaghetti
+            </div>
+            <div class = "recipe-steps">
+                Step 8:
+            </div>
+            <div class = "recipe-instructions">
+                Add sauce to the drained noodles and serve
+            </div>
+        </div>
+    <button id="voice" @onclick = "@voiceButton">Voice</button>
+</div>
+
 @code {
+    [CascadingParameter] public IModalService Modal { get; set; }
+    [Parameter] public int selectVideo { get; set; } = 1;
+    public List<Ingredient> spaghettiIngredients { get; set; }
+    private double? InputValue { get; set; } = 1;
+    Recipe spaghetti { get; set; }
+
+    public Spaghetti()
+    {
+        Modal = new ModalService();
+        spaghettiIngredients = new List<Ingredient>()
+        {
+            new Ingredient("Ground beef", 1, Measurement.Pound, IngredientCategory.Meats),
+            new Ingredient("Dried spaghetti", 2, Measurement.Ounce, IngredientCategory.Other),
+            new Ingredient("Shredded parmesan cheese", 1, Measurement.Cup, IngredientCategory.Dairy),
+            new Ingredient("Tomato paste", 1, Measurement.Tbsp, IngredientCategory.Other),
+            new Ingredient("Can crushed tomatoes", 1, Measurement.None, IngredientCategory.Other),
+            new Ingredient("Garlic cloves", 1, Measurement.None, IngredientCategory.Produce),
+            new Ingredient("Olive oil", 3, Measurement.Tbsp, IngredientCategory.Other),
+            new Ingredient("Salt", 1, Measurement.Tsp, IngredientCategory.Other),
+            new Ingredient("Pepper", 1, Measurement.Tsp, IngredientCategory.Other)
+        };
+        spaghetti = new Recipe("Spaghetti", "/recipes/spaghetti", "/video-thumbnails/spaghetti-thumbnail.png", spaghettiIngredients);
+    }
+    protected void AddToFavorites()
+    {
+        AddToFavorites(this.user, spaghetti);
+        toastService.ShowSuccess("Successfully added to favorites!");
+    }
+
+    private void showVideoPlayer()
+    {
+        showVideoPlayer(Modal, 2);
+    }
+
+    protected void addRecipeToMealplanPopup()
+    {
+        addRecipeToMealplanPopup(Modal, this.user, spaghetti);
+    }
+
+    protected void voiceButton() => toastService.ShowInfo("Voice activated!");
+
+    private void goBack() => _jsRuntime.InvokeVoidAsync("history.go", -1);
+
+    private double? amount(Ingredient ingredients) => ingredients.Amount * InputValue;
 }
