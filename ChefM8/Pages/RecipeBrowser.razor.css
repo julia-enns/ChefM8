@@ -32,18 +32,21 @@ body {
 }
 
 #allrecipes-section {
+    display: flex;
     width: 99%;
-    height: 900px;
+    height: 100%;
     margin: auto;
     background-color: dimgrey;
     padding: 1.5%;
+    
 }
 
 #filter-tab {
-    height: 100%;
+
     width: 25%;
     background-color: darkgray;
     float: left;
+    flex: 1;
 }
 
 .filter-collapse-button {
@@ -77,6 +80,7 @@ body {
     grid-template-columns: repeat(3, 1fr);
     overflow-y: scroll;
     grid-auto-rows: minmax(400px, auto);
+
 }
 
 .recipe-item {
