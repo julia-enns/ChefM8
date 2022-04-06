@@ -1,9 +1,13 @@
-﻿@page "/login"
+﻿@page "/register"
 
-<PageTitle>Login</PageTitle>
+<PageTitle>Register</PageTitle>
 
 <div id="login-box">
-    <h2 id = "title">Login</h2>
+    <h2 id = "title">Register</h2>
+    <div>
+    <sub id = "box-label">Email</sub>
+    <input type="text" id="searchbar" name="searchbar" placeholder="Email"/>
+    </div>
     <div>
     <sub id = "box-label">Username</sub>
     <input type="text" id="searchbar" name="searchbar" placeholder="Username"/>
@@ -13,15 +17,11 @@
     <input type="text" id="searchbar" name="searchbar" placeholder="Password"/>
     </div>
     <div>
-    <a class="submit" id = "button-text" href="register">register</a>
-    <a class="submit" id = "button-text" href="forgot-password">forgot password</a>
-    <a type="submit" id = "button-text" href="recipes">submit</a>
+    <a type="submit" id = "button-text" href="login">submit</a>
     
     </div>
 
 </div>
 
-
 @code {
 }
-
