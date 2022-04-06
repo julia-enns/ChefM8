@@ -1,0 +1,106 @@
+body {
+    padding: 10%;
+}
+
+#title {
+    font-size: 30px;
+    margin: 40px;
+    color: white;
+    text-align: center;
+}
+
+#button-text {
+    font-size: 15px;
+    margin: auto;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+}
+
+#box-label {
+    font-size: 15px;
+    margin: 55px;
+    color: white;
+    text-align: right;
+}
+
+#other-label {
+    font-size: 12px;
+    margin: 38px;
+    color: #ffad51;
+    text-align: center;
+    margin-left: 185px;
+}
+
+#sub-label {
+    font-size: 12px;
+    margin: 0px;
+    color: white;
+    text-align: center;
+    margin-left: 185px;
+}
+
+#invisible-label {
+    font-size: 15px;
+    margin: 2px;
+    color: black;
+    text-align: right;
+}
+
+#space {
+    font-size: 15px;
+    margin: 20px;
+    color: white;
+    text-align: right;
+}
+
+#smaller-space {
+    font-size: 15px;
+    margin: 5px;
+    color: white;
+    text-align: right;
+}
+
+#error-message {
+    font-size: 10px;
+    margin: auto;
+    color: #ffad51;
+    text-align: right;
+}
+
+#login-button-box {
+    margin: auto;
+    margin-top: 13px;
+    height: 35px;
+    width: 70px;
+    background-color: #ffad51;
+    padding-left: 13px;
+    padding-top: 2px;
+}
+
+#register-button-box {
+    margin-top: 13px;
+    height: 35px;
+    width: 70px;
+    background-color: #ffad51;
+    padding-left: 4px;
+    padding-top: 2px;
+}
+
+
+#login-box {
+    margin: auto;
+    width: 60%;
+    height: 600px;
+    background-color: black;
+    padding: 1%;
+}
+
+#logo img {
+    margin: auto;
+    margin-top: 50px;
+    height: 150px;
+    width: 150px;
+    margin-left: 215px;
+}
+
