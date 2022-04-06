@@ -29,7 +29,7 @@
     <a class="submit" id = "other-label" href="forgot-password">Forgot password?</a>
 
     <button id="login-button-box">
-    <a type="submit" id = "button-text" href="recipes">login</a>
+    <a type="submit" id = "button-text" href="recipes" @onclick=UserLogin>login</a>
     </button>
 
     <sub id = "sub-label">Don't have an account?</sub> 
@@ -44,5 +44,10 @@
 
 
 @code {
+
+    public void UserLogin()
+    {
+        MainLayout.Login();
+    }
 }
 
