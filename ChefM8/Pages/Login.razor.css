@@ -26,7 +26,7 @@ body {
 
 #other-label {
     font-size: 12px;
-    margin: 38px;
+    margin: 33px;
     color: #ffad51;
     text-align: center;
     margin-left: 185px;
@@ -90,7 +90,7 @@ body {
 
 #login-box {
     margin: auto;
-    width: 60%;
+    width: 600px;
     height: 600px;
     background-color: black;
     padding: 1%;
