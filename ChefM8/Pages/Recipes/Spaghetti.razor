@@ -29,7 +29,7 @@
     </div>
     
     <div class = "thumbnail">
-        <img id="myImg" src="@spaghetti.Image" alt="spaghetti" style="width:100%;max-width:500px" @onclick="@showVideoPlayer"> 
+        <img id="myImg" src="/video-thumbnails/spaghetti-thumbnail.png" alt="spaghetti" style="width:100%;max-width:500px" @onclick="@showVideoPlayer"> 
     </div>
 
     <div class = "ingredients">
@@ -139,7 +139,7 @@
             new Ingredient("Salt", 1, Measurement.Tsp, IngredientCategory.Other),
             new Ingredient("Pepper", 1, Measurement.Tsp, IngredientCategory.Other)
         };
-        spaghetti = new Recipe("Spaghetti", "/recipes/spaghetti", "/video-thumbnails/spaghetti-thumbnail.png", spaghettiIngredients);
+        spaghetti = new Recipe("Spaghetti", "/recipes/spaghetti", "/recipe-photos/Spaghetti.jpg", spaghettiIngredients);
     }
     protected void AddToFavorites()
     {
