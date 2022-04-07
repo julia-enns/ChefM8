@@ -1,0 +1,79 @@
+body {
+    padding: 10%;
+}
+
+#home-searchbar-container {
+    margin: auto;
+    width: 15%;
+    height: 50px;
+}
+
+#allrecipes-section {
+    display: flex;
+    width: 99%;
+    height: 100%;
+    margin: auto;
+    background-color: dimgrey;
+    padding: 1.5%;
+}
+
+#filter-tab {
+
+    width: 25%;
+    background-color: darkgray;
+    float: left;
+    flex: 1;
+}
+
+.filter-collapse-button {
+    background-color: #eee;
+    cursor: pointer;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+}
+
+.active, .filter-collapse-button:hover {
+    background-color: #ccc;
+}
+
+.filter-collapse-content {
+    padding: 0 18px;
+    display: none;
+    overflow: hidden;
+    background-color: #f1f1f1;
+}
+
+#recipes-container {
+    display: grid;
+    height: 100%;
+    width: 74.9%;
+    background-color: darkgray;
+    float: right;
+    grid-template-columns: repeat(3, 1fr);
+    overflow-y: scroll;
+    grid-auto-rows: minmax(400px, auto);
+}
+
+.recipe-item {
+    width: 90%;
+    margin: 10px;
+    height: 90%;
+    background: orange;
+    border-radius: 20px;
+    box-shadow: 0 0 10px #dfdfdf;
+}
+
+.recipe-item:hover {
+    border-style: solid;
+    box-shadow: 5px;
+}
+
+.recipe-item img {
+    width: 100%;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}

@@ -1,0 +1,87 @@
+﻿@page "/favourites"
+@using ChefM8.Pages
+
+@inject User user
+
+
+<PageTitle>Favourites</PageTitle>
+
+<div id="home-searchbar-container">
+    <input type="text" id="searchbar" name="searchbar" placeholder="Search in favourites"/>
+    <button id="search-btn" type="submit">Search</button>
+</div>
+
+<h2>Favourites</h2>
+<div id="allrecipes-section">
+    <div id="filter-tab">
+        <h2>Filters</h2>
+        <hr />
+        <input type="text" id="filtersearch" name="filtersearch" placeholder="Find a filter..."/>
+        <button type="submit">Search</button>
+        <hr />
+        <button type="button" class="filter-collapse-button">Filter Category Dropdown</button>
+        <div class="filter-collapse-content">
+            <p>* Test Filter</p>
+            <p>* Test Filter</p>
+            <p>* Test Filter</p>
+            <p>* Test Filter</p>
+            <p>* Test Filter</p>
+        </div>
+        <button type="button" class="filter-collapse-button">Filter Category Dropdown</button>
+        <div class="filter-collapse-content">
+            <p>* Test Filter</p>
+            <p>* Test Filter</p>
+            <p>* Test Filter</p>
+            <p>* Test Filter</p>
+            <p>* Test Filter</p>
+        </div>
+        <button type="button" class="filter-collapse-button">Filter Category Dropdown</button>
+        <div class="filter-collapse-content">
+            <p>* Test Filter</p>
+            <p>* Test Filter</p>
+            <p>* Test Filter</p>
+            <p>* Test Filter</p>
+            <p>* Test Filter</p>
+        </div>
+        <button type="button" class="filter-collapse-button">Filter Category Dropdown</button>
+        <div class="filter-collapse-content">
+            <p>* Test Filter</p>
+            <p>* Test Filter</p>
+            <p>* Test Filter</p>
+            <p>* Test Filter</p>
+            <p>* Test Filter</p>
+        </div>
+        <button type="button" class="filter-collapse-button">Filter Category Dropdown</button>
+        <div class="filter-collapse-content">
+            <p>* Test Filter</p>
+            <p>* Test Filter</p>
+            <p>* Test Filter</p>
+            <p>* Test Filter</p>
+            <p>* Test Filter</p>
+        </div>
+
+    </div>
+    <div id="recipes-container">
+        @foreach (var recipe in FavouriteRecipes)
+        {
+            <div class="recipe-item">
+                <img src=@recipe.Recipe.Image>
+                <h3>@recipe.Recipe.Name</h3>
+                <p>@recipe.Description</p>
+                <p>@recipe.Duration</p>
+                @foreach (var tag in recipe.Tags)
+                {
+                    <button type="button">@tag</button>
+                }
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    [CascadingParameter] public IModalService Modal { get; set; }
+
+    public IList<AvailableRecipes> FavouriteRecipes => user.FavouriteRecipes;
+
+
+}

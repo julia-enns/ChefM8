@@ -2,10 +2,19 @@ body {
     padding: 10%;
 }
 
+body .button {
+
+}
+
 #home-searchbar-container {
     margin: auto;
     width: 15%;
     height: 50px;
+}
+
+#fav-btn-container {
+    float: right;
+    margin-bottom: 1%;
 }
 
 #discover-section {
@@ -29,6 +38,11 @@ body {
     position: relative;
     border-radius: 20px;
     box-shadow: 0 0 10px #dfdfdf;
+}
+
+.discover-item img {
+    height: 70%;
+    border-radius: 50%;
 }
 
 #allrecipes-section {
@@ -91,4 +105,19 @@ body {
     background: orange;
     border-radius: 20px;
     box-shadow: 0 0 10px #dfdfdf;
+}
+
+.recipe-item:hover {
+    border-style: solid;
+    box-shadow: 5px;
+}
+
+.recipe-item img {
+    width: 100%;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+#heart-btn {
+    background-image: url('/favorites-button.png');
 }

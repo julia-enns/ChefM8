@@ -1,21 +1,42 @@
 ﻿@page "/recipes"
+@using ChefM8.Pages
+
+@inject User user
+@inject NavigationManager nav
+@inject IToastService toastService
+
+@inherits RecipeCode
 
 <PageTitle>Recipes</PageTitle>
 
 <div id="home-searchbar-container">
     <input type="text" id="searchbar" name="searchbar" placeholder="Search for recipes..."/>
-    <button type="submit">Search</button>
+    <button id="search-btn" type="submit">Search</button>
 </div>
+<div id="fav-btn-container">
+    <button type="button" @onclick="@(()=>nav.NavigateTo("/favourites"))">Favourites</button>
+</div>
+
 <h2>Discover</h2>
 <div id="discover-section">
-    <div class="discover-item"></div>
-    <div class="discover-item"></div>
-    <div class="discover-item"></div>
-    <div class="discover-item"></div>
-    <div class="discover-item"></div>
-    <div class="discover-item"></div>
-    <div class="discover-item"></div>
-    <div class="discover-item"></div>
+    @for (int i = 0; i < 4; i++)
+    {            
+        @foreach (var recipe in Recipes)
+        {
+            <div class="discover-item">
+                <button id = "favorites-button" @onclick="() => favouriteRecipe(recipe)"></button>
+                <img src=@recipe.Recipe.Image>
+                <h3>@recipe.Recipe.Name</h3>
+                <p>@recipe.Description</p>
+                <p>@recipe.Duration</p>
+                @foreach (var tag in recipe.Tags)
+                {
+                    <button type="button">@tag</button>
+                }
+            </div>
+        }
+    }
+
 </div>
 
 <h2>All Recipes</h2>
@@ -92,23 +113,44 @@
         </div>
     </div>
     <div id="recipes-container">
-        <div class="recipe-item"></div>
-        <div class="recipe-item"></div>
-        <div class="recipe-item"></div>
-        <div class="recipe-item"></div>
-        <div class="recipe-item"></div>
-        <div class="recipe-item"></div>
-        <div class="recipe-item"></div>
-        <div class="recipe-item"></div>
-        <div class="recipe-item"></div>
-        <div class="recipe-item"></div>
-        <div class="recipe-item"></div>
-        <div class="recipe-item"></div>
-        <div class="recipe-item"></div>
-        <div class="recipe-item"></div>
-        <div class="recipe-item"></div>
+        @for (int i = 0; i < 4; i++)
+        {            
+            @foreach (var recipe in Recipes)
+            {
+                <div class="recipe-item">
+                    <button id = "favorites-button" @onclick="() => favouriteRecipe(recipe)"></button>
+                    <img src=@recipe.Recipe.Image>
+                    <h3>@recipe.Recipe.Name</h3>
+                    <p>@recipe.Description</p>
+                    <p>@recipe.Duration</p>
+                    @foreach (var tag in recipe.Tags)
+                    {
+                        <button type="button">@tag</button>
+                    }
+                </div>
+            }
+        }
     </div>
 </div>
 
 @code {
+
+    [CascadingParameter] public IModalService Modal { get; set; }
+    public List<AvailableRecipes> Recipes { get; set; }
+
+    public RecipeBrowser()
+    {
+        Recipes = new List<AvailableRecipes>()
+        {
+            new AvailableRecipes(new Recipe("Burger", "/recipes/burger", "/recipe-photos/Burger.jpg", new List<Ingredient>()), new List<Tags>() {Tags.Lunch, Tags.Medium, Tags.Beef, Tags.Dinner}, "A classic, restaurant style cheese burger made with beef.", "25 Minutes"),
+            new AvailableRecipes(new Recipe("Pancakes", "/recipes/pancakes", "/recipe-photos/Pancakes.jpg",  new List<Ingredient>()), new List<Tags>() {Tags.Breakfast, Tags.Easy, Tags.Dairy}, "Simple fluffly pancakes, perfect to start your day.", "25 Minutes"),
+            new AvailableRecipes(new Recipe("Spaghetti", "/recipes/spaghetti", "/recipe-photos/Spaghetti.jpg", new List<Ingredient>()), new List<Tags>() {Tags.Dinner, Tags.Hard, Tags.Pasta, Tags.Dairy}, "Delicious italian style spaghetti with meat sauce.", "45 Minutes")
+        };
+    }
+
+    protected void favouriteRecipe(AvailableRecipes recipe)
+    {
+        user.FavouriteRecipes.Add(recipe);
+        toastService.ShowSuccess("Successfully added to favorites!");
+    }
 }
