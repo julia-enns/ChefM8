@@ -1,0 +1,211 @@
+.content {
+    width: 800px;
+    max-height: fit-content;
+    text-align: center;
+    overflow: hidden;
+    flex-direction: column;
+}
+
+.recipe-main-content {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.recipe-main-content img {
+    margin: 10px;
+    width: 250px;
+    height: 200px;
+}
+
+.edit-recipes {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.edit-recipes .recipe{
+    width: 100%;
+    height: 70px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    padding: 5px;
+}
+
+.recipe-title {
+    align-self: center;
+}
+
+.recipes {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.radio-button-container {
+    flex: 2;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.back-button{
+    width: 100px;
+    padding: 10px;
+}
+
+h4 {
+    font-size: 18px;
+    margin: 0px;
+    margin-top: 10px;
+}
+
+.date-radio-buttons, .category-radio-buttons {
+    background-color: lightgray;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 5px;
+    border-radius: 5px;
+}
+
+.message{
+    margin: 20px;
+}
+
+.radio-buttons {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 5px;
+}
+
+.radio-button {
+    flex-direction: column;
+    align-items: center;
+    padding: 0px 5px;
+    margin: 0px;
+}
+
+input[type=radio]:checked{
+    background: orange;
+}
+
+.edit-recipe-header {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.flex-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.back-button {
+    flex: 0 1 auto;
+    width: 100px;
+    margin-left: 0;
+}
+
+.delete{
+    color: red;
+    width: 100px;
+    padding: 0px;
+    text-align: center;
+    background-color: white;
+    border: 1px solid red;
+}
+
+.selector {
+    top: 5%;
+    right: 5%;
+    position: relative;
+    background: red;
+    height: 20px;
+    width: 20px;
+}
+
+button:disabled,
+button[disabled] {
+    border-color: grey;
+    background-color: grey;
+    color: white;
+}
+
+.recipe-selector input {
+    opacity: 0;
+}
+
+.check {
+    height: 30px;
+    width: 30px;
+    background-color: white;
+    border: 1px solid black;
+    align-self: flex-end;
+    margin: 5px;
+}
+
+.recipes input:checked ~ .recipe .check {
+    background-color: #ffad51;
+}
+
+.recipes input:checked ~ .recipe {
+    border: 6px solid #ffad51;
+}
+
+.recipe {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: #f0f0f0;
+    width: 180px;
+    height: 300px;
+    margin: 10px;
+    border: 6px solid white;
+}
+
+.recipe-editor {
+    display: flex;
+    justify-content: space-between;
+    background: #f0f0f0;
+    width: stretch;
+    height: fit-content;
+    margin: 10px;
+    border: 6px solid white;
+}
+
+.radio-button {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    align-items: center;
+    position: relative;
+    margin: 5px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.radio-button input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.radio-check {
+    position: absolute;
+    height: 15px;
+    width: 15px;
+    background-color: #fff;
+    border-radius: 50%;
+    border: 1px solid grey;
+}
+
+.radio-button:hover input ~ .radio-check {
+    background-color: #ffdbb3;
+}
+
+.radio-button input:checked ~ .radio-check {
+    background-color: #ffad51;
+}

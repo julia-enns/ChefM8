@@ -1,0 +1,40 @@
+body {
+    padding: 10%;
+}
+
+#title {
+    font-size: 30px;
+    margin: 20px;
+    color: white;
+    text-align: center;
+}
+
+#button-text {
+    font-size: 15px;
+    margin: 5px;
+    color: white;
+    text-align: right;
+}
+
+#box-label {
+    font-size: 15px;
+    margin: 50px;
+    color: white;
+    text-align: right;
+}
+
+#error-message {
+    font-size: 10px;
+    margin: auto;
+    color: #ffad51;
+    text-align: right;
+}
+
+#login-box {
+    margin: auto;
+    width: 60%;
+    height: 500px;
+    background-color: black;
+    padding: 1%;
+}
+

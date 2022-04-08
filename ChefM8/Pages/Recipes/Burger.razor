@@ -1,150 +1,151 @@
-﻿@page "/Recipe/Burger" 
-@inject NavigationManager NavigationManager
+﻿@page "/recipes/burger"
+@inject IToastService toastService
+@inject IJSRuntime _jsRuntime
+@inject User user
+@inherits RecipeCode
 
 <PageTitle>Burger</PageTitle>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
-<style>
-    .container
-    {
-        display: grid;
-        grid-template-rows: 100px auto auto;
-        grid-template-columns: 60% 40%;
-        grid-template-areas: 
-        "header buttons" 
-        "thumbnail ingredients" 
-        "recipe recipe";
-    }
-    .header
-    {
-        grid-row-start: 1;
-        grid-row-end: 2;
-        grid-column-start: 1;
-        grid-column-end: 2;
-    }
-
-    .buttons
-    {
-        grid-row-start: 1;
-        grid-row-end: 2;
-        grid-column-start: 2;
-        grid-column-end: 3;
-        
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        grid-template-rows: 50px 50px;
-        gap: 5px;
-    }
-    
-    .favorites
-    {
-        grid-column-start: 1;
-        grid-row: 1 / 3;
-        display: inline-block;
-        border: none;
-        width: 88px;
-        height: 80px;
-        background-image: url('/favorites-button.png');
-        background-color: transparent;
-    }
-
-    .favorites:hover
-    {
-        display: inline-block;
-        border: none;
-        width: 88px;
-        height: 80px;
-        background-image: url('/favorites-button-clicked.png');
-        background-color: transparent;
-    }
-    
-    .mealplan 
-    {
-        grid-column: 2 / 4;
-        grid-row: 1;
-        color: #EE9B3B;
-    }
-
-    .button
-    {
-        background-color: #EE9B3B;
-        border-radius: 4px;
-        border: none;
-        transition-duration: 0.4s;
-    }
-
-    .button:hover 
-    {
-        color: white;
-    }
-    
-    .thumbnail
-    {
-        grid-row-start: 2;
-        grid-row-end: 3;
-        grid-column-start: 1;
-        grid-column-end: 2;
-    }
-    
-    .ingredients
-    {
-        grid-row-start: 2;
-        grid-row-end: 3;
-        grid-column-start: 2;
-        grid-column-end: 3;
-    }
-
-    .recipe
-    {
-        grid-row-start: 3;
-        grid-row-end: 3;
-        grid-column-start: 1;
-        grid-column-end: 3;
-    }
-
-</style>
-<body>
-<div class = "container">
-
+<div class = "wholepage-container">
     <div class = "header">
-        <button class = "button"@onclick="NavigateToRecipe">Back</button>
-        <h1>Burger</h1>
-        Prep Time: 10 Minutes Cook Time: 15 Mins
+        <button class = "button"@onclick="@goBack">Back</button>
+        <h1>@burger.Name </h1>
+        <h6>Prep Time: 10 Minutes Cook Time: 15 Mins </h6>
     </div>
 
     <div class = "buttons">
-    	<div class = "favorites">
-        	<button class = "favorites"@onclick="NavigateToRecipe"></button>
+    	<div class = center>
+        	<button class = "favorites-button" @onclick="AddToFavorites"></button>
         </div>
         <div class = "mealplan">
             <p>
-                <button type="button" class="button w-100" style = "margin-top:15px;" @onclick="NavigateToRecipe">Add to Meal plan</button>
-                <button type="button" class="button w-100" style = "margin-top:10px;" @onclick="NavigateToRecipe">Add to Grocery list</button>
+                <button type="button" class="button w-100" style = "margin-top:15px;" @onclick="@addRecipeToMealplanPopup">Add to Meal plan</button>
+                <button type="button" class="button w-100" style = "margin-top:10px;" @onclick="@addRecipeToMealplanPopup">Add to Grocery list</button>
             </p>
         </div> 
     </div>
     
     <div class = "thumbnail">
-
+        <img id="myImg" src="/video-thumbnails/burger-thumbnail.png" alt="burger" style="width:100%;max-width:500px" @onclick="@showVideoPlayer"> 
     </div>
 
     <div class = "ingredients">
-
+        <label class = "servingSize" for="servingSize">Number of Servings: </label>
+        <input type="text" id="servingSize" name="filtersearch" @bind="InputValue" @bind:event="oninput" placeholder="1" size="2" maxlength="4" min="1"/>
+        <h1>Ingredients:</h1>
+         @if (burgerIngredients?.Any() ?? false)
+        {
+            <div class="recipes">
+                @foreach (var ingredient in burgerIngredients)
+                {
+                    if(@ingredient.Unit != Measurement.None)
+                    {
+                        if(@amount(ingredient) > 1 && (@ingredient.Unit !!= Measurement.Tsp || @ingredient.Unit !!= Measurement.Tbsp))
+                        {
+                            <p>@amount(ingredient) @(ingredient.Unit)s @ingredient.Name</p>
+                        }
+                        else
+                        {
+                            <p>@amount(ingredient) @(ingredient.Unit) @ingredient.Name</p>
+                        }
+                    }
+                    else
+                    {
+                        <p>@amount(ingredient) @(ingredient.Name)</p>
+                    }
+                }
+            </div>
+        }
     </div>
 
-    <div class = "recipe">
-
-    </div>
-
+    <div class = "recipe-body">
+            <h3>
+                Recipe:
+            </h3>
+            <div class = "recipe-steps">
+                Step 1:
+            </div>
+            <div class = "recipe-instructions">
+                Lay burgers on an oiled Frying pan over high heat and cook for 5 minutes flipping once halfway through cooking to an internal tempurature of 160 degrees F
+            </div>
+            <div class = "recipe-steps">
+                Step 2:
+            </div>
+            <div class = "recipe-instructions">
+                Slice up the tomato and onion and split the lettuce 
+            </div>
+            <div class = "recipe-steps">
+                Step 3:
+            </div>
+            <div class = "recipe-instructions">
+                Toast the buns
+            </div>
+            <div class = "recipe-steps">
+                Step 4:
+            </div>
+            <div class = "recipe-instructions">
+                Add the desired amount of lettuce, onions along with 2 slices of the tomato and the slice of cheese on toasted buns
+            </div>
+            <div class = "recipe-steps">
+                Step 5:
+            </div>
+            <div class = "recipe-instructions">
+                Place the cooked beef patty on the the bun and set the bun tops in place
+            </div>
+            <div class = "recipe-steps">
+                Step 6:
+            </div>
+            <div class = "recipe-instructions">
+                Garnish with desired sauces
+            </div>
+        </div>
+    <button id="voice" @onclick = "@voiceButton">Voice</button>
 </div>
 
-</body>
-
-
 @code {
-    private void NavigateToRecipe() { 
-        NavigationManager.NavigateTo("recipe"); 
-        }
+    [CascadingParameter] public IModalService Modal { get; set; }
+    [Parameter] public int selectVideo { get; set; } = 1;
+    public List<Ingredient> burgerIngredients { get; set; }
+    private double? InputValue { get; set; } = 1;
+    Recipe burger { get; set; }
+
+    public Burger()
+    {
+        Modal = new ModalService();
+        burgerIngredients = new List<Ingredient>()
+        {
+            new Ingredient("Beef patties", 1, Measurement.None, IngredientCategory.Meats),
+            new Ingredient("Hamburger buns", 2, Measurement.None, IngredientCategory.Bakery),
+            new Ingredient("Onion", 1, Measurement.None, IngredientCategory.Produce),
+            new Ingredient("Cheese", 1, Measurement.Slice, IngredientCategory.Dairy),
+            new Ingredient("Lettuce", 1, Measurement.Cup, IngredientCategory.Produce),
+            new Ingredient("Tomato", 1, Measurement.None, IngredientCategory.Produce)
+        };
+        burger = new Recipe("Burger", "/recipes/burger", "/recipe-photos/Burger.jpg", burgerIngredients);
+    }
+
+    protected void AddToFavorites()
+    {
+        AddToFavorites(this.user, burger);
+        toastService.ShowSuccess("Successfully added to favorites!");
+    }
+
+    private void showVideoPlayer()
+    {
+        showVideoPlayer(Modal, 1);
+    }
+
+    protected void addRecipeToMealplanPopup()
+    {
+        addRecipeToMealplanPopup(Modal, this.user, burger);
+    }
+
+    protected void voiceButton() => toastService.ShowInfo("Voice activated!");
+
+    private void goBack() => _jsRuntime.InvokeVoidAsync("history.go", -1);
+
+    private double? amount(Ingredient ingredients) => ingredients.Amount * InputValue;
 }

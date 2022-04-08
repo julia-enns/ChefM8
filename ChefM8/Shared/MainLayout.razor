@@ -1,4 +1,9 @@
 ﻿@inherits LayoutComponentBase
+@using Blazored.Toast.Configuration;
+
+
+<BlazoredToasts Position="ToastPosition.TopRight"
+                Timeout="3"/>
 
 <div class="page">
     <main>
@@ -7,21 +12,22 @@
                 <a href="recipes"><img src="ChefM8-Logo.png"/></a>
             </div>
             
-            <ul class="account-nav-links">
+            <ul class="account-nav-links" style=@AccountStyle>
                 <li><a class="@GetActive("recipes")" href="recipes">Recipes</a></li>
                 <li><a class="@GetActive("meal-plan")" href="meal-plan">Meal Plan</a></li>
                 <li><a class="@GetActive("grocery-list")" href="grocery-list">Grocery List</a></li>
                 <li><a class="@GetActive("contact-us")" href="contact-us">Contact Us</a></li>
-                <li><a class="@GetActive("login")" href="login">Logout</a></li>
+                <li><a class="@GetActive("login")" href="login" @onclick=Logout>Logout</a></li>
             </ul>
 
-            <ul class="nav-links">
+            <ul class="nav-links" style=@NoAccountStyle>
                 <li><a class="@GetActive("recipes")" href="recipes">Recipes</a></li>
                 <li><a class="@GetActive("contact-us")" href="contact-us">Contact Us</a></li>
                 <li><a class="@GetActive("register")" href="register">Register</a></li>
                 <li><a class="@GetActive("login")" href="login">Login</a></li>
             </ul>
         </nav>
+        
 
         <article class="content px-4">
             @Body
@@ -31,6 +37,9 @@
 
 @code {
     [Inject] NavigationManager NavigationManager { get; set; }
+    
+    public static string NoAccountStyle = "display: flex";
+    public static string AccountStyle = "display: none";
 
     protected override void OnInitialized() => NavigationManager.LocationChanged += (s, e) => StateHasChanged();
 
@@ -41,5 +50,16 @@
     }
 
     string GetActive(string href, NavLinkMatch navLinkMatch = NavLinkMatch.Prefix) => IsActive(href, navLinkMatch) ? "active" : "";
-}
+
+    public static void Login()
+    {
+        NoAccountStyle = "display: none";
+        AccountStyle = "display: flex";
+    }
+    
+    public static void Logout()
+    {
+        NoAccountStyle = "display: flex";
+        AccountStyle = "display: none";
+    }
 }

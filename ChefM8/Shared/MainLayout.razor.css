@@ -33,17 +33,8 @@ main{
 }
 
 .account-nav-links, .nav-links {
-    display: none;
     margin: auto 0px;
     justify-content: space-evenly;
-}
-
-.account-nav-links{
-    display: flex;
-}
-
-.nav-links {
-    display: none;
 }
 
 #home a img{

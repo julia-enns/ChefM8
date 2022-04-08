@@ -1,6 +1,153 @@
-﻿@page "/Recipe/Pancakes"
+﻿@page "/recipes/pancakes"
+@inject IToastService toastService
+@inject IJSRuntime _jsRuntime
+@inject User user
+@inherits RecipeCode
 
 <PageTitle>Pancakes</PageTitle>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<div class = "wholepage-container">
+    <div class = "header">
+        <button class = "button"@onclick="@goBack">Back</button>
+        <h1>@pancakes.Name </h1>
+        <h6>Prep Time: 5 Minutes Cook Time: 20 Mins </h6>
+    </div>
+
+    <div class = "buttons">
+    	<div class = center>
+        	<button class = "favorites-button" @onclick="@AddToFavorites"></button>
+        </div>
+        <div class = "mealplan">
+            <p>
+                <button type="button" class="button w-100" style = "margin-top:15px;" @onclick="@addRecipeToMealplanPopup">Add to Meal plan</button>
+                <button type="button" class="button w-100" style = "margin-top:10px;" @onclick="@addRecipeToMealplanPopup">Add to Grocery list</button>
+            </p>
+        </div> 
+    </div>
+    
+    <div class = "thumbnail">
+        <img id="myImg" src="/video-thumbnails/pancake-thumbnail.png" alt="pancakes" style="width:100%;max-width:500px" @onclick="@showVideoPlayer"> 
+    </div>
+
+    <div class = "ingredients">
+        <label class = "servingSize" for="servingSize">Number of Servings: </label>
+        <input type="text" id="servingSize" name="filtersearch" @bind="InputValue" @bind:event="oninput" placeholder="1" size="2" maxlength="4" min="1"/>
+        <h1>Ingredients:</h1>
+         @if (pancakeIngredients?.Any() ?? false)
+        {
+            <div class="recipes">
+                @foreach (var ingredient in pancakeIngredients)
+                {
+                    if(@ingredient.Unit != Measurement.None)
+                    {
+                        if(@amount(ingredient) > 1 && (@ingredient.Unit !!= Measurement.Tsp || @ingredient.Unit !!= Measurement.Tbsp))
+                        {
+                            <p>@amount(ingredient) @(ingredient.Unit)s @ingredient.Name</p>
+                        }
+                        else
+                        {
+                            <p>@amount(ingredient) @(ingredient.Unit) @ingredient.Name</p>
+                        }
+                    }
+                    else
+                    {
+                        <p>@amount(ingredient) @(ingredient.Name)</p>
+                    }
+                }
+            </div>
+        }
+    </div>
+
+    <div class = "recipe-body">
+            <h3>
+                Recipe:
+            </h3>
+            <div class = "recipe-steps">
+                Step 1:
+            </div>
+            <div class = "recipe-instructions">
+                Combine together the flour, sugar (or sweetener), baking powder, baking soda and salt in a large-sized bowl. Make a well in the centre and add the milk, slightly cooled melted butter, vanilla and egg
+            </div>
+            <div class = "recipe-steps">
+                Step 2:
+            </div>
+            <div class = "recipe-instructions">
+                Use a wire whisk to whisk the wet ingredients together first before slowly folding them into the dry ingredients. Mix together until smooth 
+            </div>
+            <div class = "recipe-steps">
+                Step 3:
+            </div>
+            <div class = "recipe-instructions">
+                Set the batter aside and allow to rest while heating up your pan or griddle
+            </div>
+            <div class = "recipe-steps">
+                Step 4:
+            </div>
+            <div class = "recipe-instructions">
+                Heat a nonstick pan or griddle over low-medium heat and wipe over with a little butter to lightly grease pan. Pour ¼ cup of batter onto the pan and spread out gently into a round shape with the back of your ladle or measuring cup
+            </div>
+            <div class = "recipe-steps">
+                Step 5:
+            </div>
+            <div class = "recipe-instructions">
+                When the underside is golden and bubbles begin to appear on the surface, flip with a spatula and cook until golden. Repeat with remaining batter
+            </div>
+            <div class = "recipe-steps">
+                Step 6:
+            </div>
+            <div class = "recipe-instructions">
+                Serve with honey, maple syrup
+            </div>
+        </div>
+    <button id="voice" @onclick = "@voiceButton">Voice</button>
+</div>
+
 
 @code {
+    [CascadingParameter] public IModalService Modal { get; set; }
+    [Parameter] public int selectVideo { get; set; } = 1;
+    public List<Ingredient> pancakeIngredients { get; set; }
+    private double? InputValue { get; set; } = 1;
+    Recipe pancakes { get; set; }
+
+    public Pancakes()
+    {
+
+        Modal = new ModalService();
+        pancakeIngredients = new List<Ingredient>()
+        {
+            new Ingredient("All purpose flour", 2, Measurement.Cup, IngredientCategory.Baking),
+            new Ingredient("Baking powder", 4, Measurement.Tsp, IngredientCategory.Baking),
+            new Ingredient("Baking soda", 1, Measurement.Tsp, IngredientCategory.Baking),
+            new Ingredient("Milk", 1, Measurement.Cup, IngredientCategory.Dairy),
+            new Ingredient("Butter", 4, Measurement.Tbsp, IngredientCategory.Dairy),
+            new Ingredient("Pure vanilla extract", 2, Measurement.Tsp, IngredientCategory.Baking),
+            new Ingredient("Large egg", 1, Measurement.None, IngredientCategory.Dairy)
+        };
+        pancakes = new Recipe("Pancakes", "/recipes/pancakes", "/recipe-photos/Pancakes.jpg", pancakeIngredients);
+    }
+
+    protected void AddToFavorites()
+    {
+        AddToFavorites(this.user, pancakes);
+        toastService.ShowSuccess("Successfully added to favorites!");
+    }
+
+    private void showVideoPlayer()
+    {
+        showVideoPlayer(Modal, 3);
+    }
+
+    protected void addRecipeToMealplanPopup()
+    {
+        addRecipeToMealplanPopup(Modal, this.user, pancakes);
+    }
+
+    protected void voiceButton() => toastService.ShowInfo("Voice activated!");
+
+    private void goBack() => _jsRuntime.InvokeVoidAsync("history.go", -1);
+
+    private double? amount(Ingredient ingredients) => ingredients.Amount * InputValue;
 }

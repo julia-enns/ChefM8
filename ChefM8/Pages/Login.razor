@@ -2,5 +2,52 @@
 
 <PageTitle>Login</PageTitle>
 
+
+
+<div id="login-box">
+    <div id="logo">
+    <img src="ChefM8-Logo.png"/>
+    </div>
+    <h2 id = "title">Login</h2>
+    <div>
+    <sub id = "box-label">Username</sub>
+    <input type="text" id="searchbar" name="searchbar" placeholder="Username"/>
+    </div>
+
+    <div><h2 id = "space"></h2></div>
+
+    <div>
+    <sub id = "box-label">Password</sub> 
+    <sub id = "invisible-label"></sub>
+    <input type="text" id="searchbar" name="searchbar" placeholder="Password"/>
+    </div>
+
+    <div><h2 id = "smaller-space"></h2></div>
+
+    <div>
+    
+    <a class="submit" id = "other-label" href="forgot-password">Forgot password?</a>
+
+    <button id="login-button-box">
+    <a type="submit" id = "button-text" href="recipes" @onclick=UserLogin>login</a>
+    </button>
+
+    <sub id = "sub-label">Don't have an account?</sub> 
+
+    <button id="register-button-box">
+    <a class="submit" id = "button-text" href="register">register</a>
+    </button>
+    
+    </div>
+
+</div>
+
+
 @code {
+
+    public void UserLogin()
+    {
+        MainLayout.Login();
+    }
 }
+
