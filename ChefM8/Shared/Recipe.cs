@@ -30,7 +30,7 @@
         }
     }
 
-    // Available recipes that would show up in the homepage
+    // Recipes that are functional and can be clicked
     public class AvailableRecipes
     {
         public Recipe Recipe;
@@ -46,6 +46,22 @@
             Duration = duration;
         }
     }
+
+    // Recipes that are not functional and only used for display
+    public class DisplayRecipes
+    {
+
+        public List<AvailableRecipes> Recipes;
+
+        // constructor populates the list of display reci
+        public DisplayRecipes()
+        {
+            
+        }
+    }
+
+
+
 
     public enum MealCategories { Breakfast, Lunch, Dinner, Other }
     public enum Date { Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday }
