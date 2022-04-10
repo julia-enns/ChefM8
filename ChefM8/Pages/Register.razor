@@ -3,25 +3,56 @@
 <PageTitle>Register</PageTitle>
 
 <div id="login-box">
+    <div id="logo">
+    <img src="ChefM8-Logo.png"/>
+    </div>
     <h2 id = "title">Register</h2>
+
     <div>
-    <sub id = "box-label">Email</sub>
+    <sub id = "box-email-label">Email</sub> 
+    <sub id = "invisible-label"></sub>
     <input type="text" id="searchbar" name="searchbar" placeholder="Email"/>
     </div>
+
+    <div><h2 id = "space"></h2></div>
+
     <div>
     <sub id = "box-label">Username</sub>
     <input type="text" id="searchbar" name="searchbar" placeholder="Username"/>
     </div>
+
+    <div><h2 id = "space"></h2></div>
+
     <div>
     <sub id = "box-label">Password</sub> 
+    <sub id = "invisible-label"></sub>
     <input type="text" id="searchbar" name="searchbar" placeholder="Password"/>
     </div>
+
+    <div><h2 id = "smaller-space"></h2></div>
+
     <div>
-    <a type="submit" id = "button-text" href="login">submit</a>
+    
+    <a class="submit" id = "other-label" href="login">Have an account?</a>
+
+    <button id="register-button-box">
+    <a type="submit" id = "button-text" href="login" @onclick=UserLogin>register</a>
+    </button>
     
     </div>
 
 </div>
 
+
+@code {
+
+    public void UserLogin()
+    {
+        MainLayout.Login();
+    }
+}
+
+
 @code {
 }
+

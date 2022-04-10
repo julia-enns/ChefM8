@@ -80,13 +80,13 @@ body {
 
 #register-button-box {
     margin-top: 13px;
+    margin-left: 4px;
     height: 35px;
     width: 70px;
     background-color: #ffad51;
     padding-left: 4px;
     padding-top: 2px;
 }
-
 
 #login-box {
     margin: auto;
