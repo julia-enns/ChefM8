@@ -12,7 +12,7 @@ body {
 #button-text {
     font-size: 15px;
     margin: auto;
-    color: black;
+    color: white;
     text-align: center;
     text-decoration: none;
 }
@@ -62,10 +62,10 @@ body {
 }
 
 #error-message {
-    font-size: 10px;
-    margin: auto;
+    font-size: 20px;
+    margin-left: 145px;
     color: #ffad51;
-    text-align: right;
+    text-align: center;
 }
 
 #login-button-box {
