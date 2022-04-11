@@ -30,7 +30,7 @@
             usernameTaken = false;
             <sub id = "error-message">*username taken*</sub>
         }
-        @if (registrationAttempt && !validUsername && !checkUsername)
+        else if (registrationAttempt && !validUsername && !checkUsername)
         {
             checkUsername = true;
             <sub id = "error-message">*username cannot be blank*</sub>
@@ -61,6 +61,7 @@
     {
         <div><h2 id = "smaller-space"></h2></div>
         <sub id = "confirmation">*registration successful*</sub>
+        registrationSuccess = false;
     }
 
 </div>
@@ -89,6 +90,9 @@
         checkEmail = false;
         checkUsername = false;
         checkPassword = false;
+        validEmail = false;
+        validUsername = false;
+        validPassword = false;
 
         registrationAttempt = true;
 
@@ -97,17 +101,13 @@
             validEmail = true;
         }
 
-        @if (username != "")
+        @if (username == "adminUser" || username == "customerUser")
+        {
+            usernameTaken = true;
+        }
+        else if (username != "")
         {
             validUsername = true;
-        }
-        else if (username == "adminUser")
-        {
-            usernameTaken = true;
-        }
-        else if (username == "customerUser")
-        {
-            usernameTaken = true;
         }
 
         @if (password != "")
