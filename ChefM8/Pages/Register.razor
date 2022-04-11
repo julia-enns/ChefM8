@@ -3,25 +3,123 @@
 <PageTitle>Register</PageTitle>
 
 <div id="login-box">
-    <h2 id = "title">Register</h2>
-    <div>
-    <sub id = "box-label">Email</sub>
-    <input type="text" id="searchbar" name="searchbar" placeholder="Email"/>
+    <div id="logo">
+    <img src="ChefM8-Logo.png"/>
     </div>
+    <h2 id = "title">Register</h2>
+
+    <div>
+    <sub id = "box-email-label">Email</sub> 
+    <sub id = "invisible-label"></sub>
+    <input type="text" @onchange="(e) => SetEmail(e.Value.ToString())" mail= email />
+        @if (registrationAttempt && !checkEmail && !validEmail)
+        {
+            checkEmail = true;
+            <sub id = "error-message">*invalid email*</sub>
+        }
+    </div>
+
+    <div><h2 id = "space"></h2></div>
+
     <div>
     <sub id = "box-label">Username</sub>
-    <input type="text" id="searchbar" name="searchbar" placeholder="Username"/>
+    <input type="text" @onchange="(e) => SetUsername(e.Value.ToString())" user= username />
+        @if (usernameTaken)
+        {
+            checkUsername = true;
+            usernameTaken = false;
+            <sub id = "error-message">*username taken*</sub>
+        }
+        @if (registrationAttempt && !validUsername && !checkUsername)
+        {
+            checkUsername = true;
+            <sub id = "error-message">*username cannot be blank*</sub>
+        }
     </div>
+
+    <div><h2 id = "space"></h2></div>
+
     <div>
     <sub id = "box-label">Password</sub> 
-    <input type="text" id="searchbar" name="searchbar" placeholder="Password"/>
+    <sub id = "invisible-label"></sub>
+    <input type="text" @onchange="(e) => SetPassword(e.Value.ToString())" pass= password />
+        @if (registrationAttempt && !validPassword && !checkPassword)
+        {
+            checkPassword = true;
+            <sub id = "error-message">*password cannot be blank*</sub>
+        }
     </div>
+
+    <div><h2 id = "smaller-space"></h2></div>
+
     <div>
-    <a type="submit" id = "button-text" href="login">submit</a>
-    
+    <a class="submit" id = "other-label" href="login">Have an account?</a>
+    <button @onclick="Authenticate" id="login-button-box" class="submit">register</button>
     </div>
+
+    @if(registrationSuccess)
+    {
+        <div><h2 id = "smaller-space"></h2></div>
+        <sub id = "confirmation">*registration successful*</sub>
+    }
 
 </div>
 
+
+
 @code {
+
+    private bool registrationAttempt = false;
+    private bool registrationSuccess = false;
+    private bool checkEmail = false;
+    private bool checkUsername = false;
+    private bool checkPassword = false;
+    private bool validEmail = false;
+    private bool validUsername = false;
+    private bool usernameTaken = false;
+    private bool validPassword = false;
+    private string email = "";
+    private string username = "";
+    private string password = "";
+    private void SetEmail(string mail) => email = mail;
+    private void SetUsername(string user) => username = user;
+    private void SetPassword(string pass) => password = pass;
+    private void Authenticate()
+    {
+        checkEmail = false;
+        checkUsername = false;
+        checkPassword = false;
+
+        registrationAttempt = true;
+
+        @if (email != "")
+        {
+            validEmail = true;
+        }
+
+        @if (username != "")
+        {
+            validUsername = true;
+        }
+        else if (username == "adminUser")
+        {
+            usernameTaken = true;
+        }
+        else if (username == "customerUser")
+        {
+            usernameTaken = true;
+        }
+
+        @if (password != "")
+        {
+            validPassword = true;
+        }
+
+        @if(validEmail && validUsername && validPassword)
+        {
+            registrationSuccess = true;
+        }
+
+    }
 }
+

@@ -29,6 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Pages\LoginPages\" />
     <Folder Include="wwwroot\video-thumbnails\" />
   </ItemGroup>
 

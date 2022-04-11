@@ -2,7 +2,7 @@
 
 <PageTitle>Login</PageTitle>
 
-
+@inject NavigationManager NavManager
 
 <div id="login-box">
     <div id="logo">
@@ -11,7 +11,7 @@
     <h2 id = "title">Login</h2>
     <div>
     <sub id = "box-label">Username</sub>
-    <input type="text" id="searchbar" name="searchbar" placeholder="Username"/>
+    <input type="text" @onchange="(e) => SetUsername(e.Value.ToString())" user= username />
     </div>
 
     <div><h2 id = "space"></h2></div>
@@ -19,7 +19,7 @@
     <div>
     <sub id = "box-label">Password</sub> 
     <sub id = "invisible-label"></sub>
-    <input type="text" id="searchbar" name="searchbar" placeholder="Password"/>
+    <input type="text" @onchange="(e) => SetPassword(e.Value.ToString())" pass= password />
     </div>
 
     <div><h2 id = "smaller-space"></h2></div>
@@ -28,9 +28,9 @@
     
     <a class="submit" id = "other-label" href="forgot-password">Forgot password?</a>
 
-    <button id="login-button-box">
-    <a type="submit" id = "button-text" href="recipes" @onclick=UserLogin>login</a>
-    </button>
+    <button @onclick="Authenticate" id="login-button-box" class="submit">login </button>
+
+    @*<a type="submit" id = "button-text" href="recipes" @onclick=UserLogin>login</a>*@
 
     <sub id = "sub-label">Don't have an account?</sub> 
 
@@ -39,6 +39,16 @@
     </button>
     
     </div>
+
+    <div><h2 id = "space"></h2></div>
+
+    @if (loginAttempt)
+    {
+        loginAttempt = false;
+        <div>
+        <sub id = "error-message">*invalid username or password*</sub>
+        </div>  
+    }
 
 </div>
 
@@ -49,5 +59,28 @@
     {
         MainLayout.Login();
     }
+
+    private bool loginAttempt = false;
+    private string username = "";
+    private string password = "";
+    private void SetUsername(string user) => username = user;
+    private void SetPassword(string pass) => password = pass;
+    private void Authenticate()
+    {
+        loginAttempt = true;
+
+        @if(username == "adminUser" && password == "adminPass")
+        {
+            UserLogin();
+            NavManager.NavigateTo("/recipes");
+        }
+        else if(username == "customerUser" && password == "customerPass")
+        {
+            UserLogin();
+            NavManager.NavigateTo("/recipes");
+        }
+        
+    }
+
 }
 
