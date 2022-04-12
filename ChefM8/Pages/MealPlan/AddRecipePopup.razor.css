@@ -209,8 +209,16 @@ button[disabled] {
 }
 
 .recipe img {
-    width: 100px;
-    height: 100px;
+    width: 75px;
+    height: 75px;
+}
+
+.recipe h3{
+    font-size: 20px;
+}
+
+.recipe-selector {
+    height: 200px;
 }
 
 p {
