@@ -1,0 +1,55 @@
+﻿@page "/grocery-list"
+@inject User user
+@inject IToastService toastService
+
+<PageTitle>Grocery List</PageTitle>
+
+<div id = "content">
+    <h1 id = "title">Grocery List</h1>
+    <div class = "buttons">
+        <button @onclick="@AddIngredient">Add Ingredient</button>
+    </div>
+
+    <h2 id = "category">Item Quantity Unit</h2>
+
+    <div class = "ingredient">
+        <h3>Bakery</h3>
+
+    </div>
+
+    <div class = "ingredient">
+        <h3>Dairy</h3>
+
+    </div>
+
+    <div class = "ingredient">
+        <h3>Fruits/Vegetables</h3>
+
+    </div>
+
+    <div class = "ingredient">
+        <h3>Meats</h3>
+
+    </div>
+
+    <div class = "ingredient">
+        <h3>Spices</h3>
+
+    </div>
+</div>
+@code {
+   [CascadingParameter] public IModalService Modal { get; set; }
+
+    public IList<Ingredient> Groceries => user.Groceries;
+    
+
+    public GroceryList()
+    {
+        Modal = new ModalService();
+    }
+
+    protected void AddIngredient()
+    {
+ 
+    }
+}

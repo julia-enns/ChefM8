@@ -1,0 +1,40 @@
+#content {
+    background-color: white;
+    width: 80%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 25px 100px;
+}
+
+#title {
+    font-size: 60px;
+    margin: 20px;
+    color: black;
+    font-weight: bolder;
+    text-align: left;
+}
+
+.buttons {
+    display: flex;
+    justify-content: end;
+}
+
+#category {
+    font-size: 30px;
+    margin: 20px;
+    color: #808080;
+    font-weight: bolder;
+    word-spacing: 200px;
+    text-align: center;
+}
+
+.ingredient {
+    background-color: #C0C0C0;
+    margin: 0px 0px;
+    padding: 10px 50px;
+    font-size: 30px;
+    color: #808080;
+    text-align: left;
+}
