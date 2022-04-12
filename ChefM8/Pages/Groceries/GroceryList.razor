@@ -48,8 +48,14 @@
         Modal = new ModalService();
     }
 
-    protected void AddIngredient()
-    {
- 
+    protected async void AddIngredient()
+    { 
+        var formModal = Modal.Show<AddIngredient>("", new ModalOptions() {Class="custom-modal"});
+        var result = await formModal.Result;
+
+        if(result.Data is null) return;
+
+        toastService.ShowSuccess("Successfully added ingredient to grocery list!");
+        StateHasChanged();
     }
 }
