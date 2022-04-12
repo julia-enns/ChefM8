@@ -20,26 +20,15 @@
 <h2 style="padding-top: 20px; font-weight: bold; font-size: 46px;">Discover</h2>
 <div id="discover-section">
           
-    @foreach (var recipe in Recipes_Functional)
+    @foreach (var recipe in All_Recipes)
     {
-        <div class="discover-item" style="background-image: url('@recipe.Recipe.Image');">
+        <div class="discover-item" style="background-image: url('@recipe.Recipe.Image');" @onclick="(() => nav.NavigateTo(recipe.Recipe.Link))">
             <div class="discover-description">
                 <h3>@recipe.Recipe.Name</h3>
                 <h5>@recipe.Description</h5>
                 <p>@recipe.Duration</p>
             </div>
 
-        </div>
-    }
-
-    @foreach (var recipe in Recipes_Display)
-    {
-        <div class="discover-item" style="background-image: url('@recipe.Recipe.Image');">
-            <div class="discover-description">
-                <h3>@recipe.Recipe.Name</h3>
-                <h5>@recipe.Description</h5>
-                <p>@recipe.Duration</p>
-            </div>
         </div>
     }
 
@@ -54,47 +43,53 @@
             <input type="text" id="filtersearch" name="filtersearch" placeholder="Find a filter..."/>
             <button id="filter-search-btn" type="submit">Search</button>
         </div>
+        <div id="active-filters-list">
+            @foreach (var tag in Active_Filters)
+            {
+                if (tag.IsSelected)
+                {
+                    <button type="button" class="active-filter" @onclick="() => removeFilter(tag)">@tag.Tag</button>
+                }
+            }
+        </div>
         <hr />
         @foreach (var filter in All_Filters.Filters)
         {
-            <div class="filter-button">
-                <input id="filter-collapse-trigger" type="checkbox" name="ch">
-                <label class="filter-collapse" for="ch">@filter.Category</label>
-                <div class="filter-collapse-content">
+            <nav class="filter-button">
+                <label class="filter-collapse" for="filter-collapse-trigger"><span>@filter.Category</span></label>
+                <input id="filter-collapse-trigger" type="checkbox">
+                
+                <ul class="filter-collapse-content">
                     @foreach (var item in filter.Filters)
                     {
-                        <input type="checkbox" name="fltr_checkbox">
-                        <label for="fltr_checkbox">@item.ToString()</label>
+                        <li>
+                            <input type="checkbox" name="fltr_checkbox" @bind="item.IsSelected" @onclick="() => editFilter(item)">
+                            <label for="fltr_checkbox" >@item.Tag.ToString()</label>
+                        </li>
                     }
-                </div>
-            </div>
+                </ul>
+            </nav>
         }
     </div>
     <div id="recipes-container">
       
-        @foreach (var recipe in Recipes_Functional)
+        @foreach (var recipe in All_Recipes)
         {
-            <div class="recipe-item">
-                <button id = "favorites-button" @onclick="() => favouriteRecipe(recipe)"></button>
-                <img src=@recipe.Recipe.Image>
-                <h3>@recipe.Recipe.Name</h3>
-                <h5>@recipe.Description</h5>
-                <p>@recipe.Duration</p>
-                @foreach (var tag in recipe.Tags)
+            @if (Active_Filters.Any())
+            {
+                @if (!(convertFilters().Intersect(recipe.Tags).Count() == Active_Filters.Count()))
                 {
-                    <div class="tags">@tag</div>
+                    continue;
                 }
-            </div>
-        }
-
-        @foreach (var recipe in Recipes_Display)
-        {
+            }
             <div class="recipe-item">
-                <button id = "favourites-button" @onclick="() => favouriteRecipe(recipe)"></button>
-                <img src=@recipe.Recipe.Image>
-                <h3>@recipe.Recipe.Name</h3>
-                <h5>@recipe.Description</h5>
-                <p>@recipe.Duration</p>
+                <button id = "favorites-button" @onclick="() => favouriteRecipe(recipe)" style="@isFavourite(recipe)"></button>
+                <img src=@recipe.Recipe.Image @onclick="(() => nav.NavigateTo(recipe.Recipe.Link))">
+                <div @onclick="(() => nav.NavigateTo(recipe.Recipe.Link))">
+                    <h3>@recipe.Recipe.Name</h3>
+                    <h5>@recipe.Description</h5>
+                    <p>@recipe.Duration</p>
+                </div>
                 @foreach (var tag in recipe.Tags)
                 {
                     <div class="tags">@tag</div>
@@ -108,9 +103,11 @@
 @code {
 
     [CascadingParameter] public IModalService Modal { get; set; }
+    public List<AvailableRecipes> All_Recipes { get; set; }
     public List<AvailableRecipes> Recipes_Functional { get; set; }
     public List<AvailableRecipes> Recipes_Display { get; set; }
     public AllFilters All_Filters { get; set; }
+    public List<SelectedFilter> Active_Filters { get; set; }
 
     public RecipeBrowser()
     {
@@ -123,10 +120,10 @@
 
         Recipes_Display = new List<AvailableRecipes>()
         {
-            new AvailableRecipes(new Recipe("Apple Pie", "/recipes", "/recipe-photos/apple_pie.jpg", new List<Ingredient>()), new List<Tags>() {Tags.Dessert, Tags.Easy, Tags.Baking, Tags.Dairy}, "A perfect apple pie for snacks or dessert", "40 Minutes"),
+            new AvailableRecipes(new Recipe("Apple Pie", "/recipes", "/recipe-photos/apple_pie.jpg", new List<Ingredient>()), new List<Tags>() {Tags.Dessert, Tags.Easy, Tags.Baking, Tags.Dairy}, "A perfect apple pie for snacks or dessert.", "40 Minutes"),
             new AvailableRecipes(new Recipe("Bacon and Eggs", "/recipes", "/recipe-photos/bacon_and_eggs.jpg",  new List<Ingredient>()), new List<Tags>() {Tags.Breakfast, Tags.Easy, Tags.Meats}, "A classic bacon and eggs for breakfast.", "15 Minutes"),
             new AvailableRecipes(new Recipe("Fish and Chips", "/recipes", "/recipe-photos/fish_and_chips.jpg", new List<Ingredient>()), new List<Tags>() {Tags.Lunch, Tags.Easy, Tags.Meats}, "Easy but delicious fried fish and fries that kids love.", "25 Minutes"),
-            new AvailableRecipes(new Recipe("Chocolate Fudge", "/recipes", "/recipe-photos/fudge.jpg", new List<Ingredient>()), new List<Tags>() {Tags.Dessert, Tags.Easy, Tags.Baking, Tags.Dairy}, "Simple recipe for a chocolate fudge topped with ice cream", "40 Minutes"),
+            new AvailableRecipes(new Recipe("Chocolate Fudge", "/recipes", "/recipe-photos/fudge.jpg", new List<Ingredient>()), new List<Tags>() {Tags.Dessert, Tags.Easy, Tags.Baking, Tags.Dairy}, "Simple recipe for a chocolate fudge topped with ice cream.", "40 Minutes"),
             new AvailableRecipes(new Recipe("Grilled Cheese", "/recipes", "/recipe-photos/grilled_cheese.jpg",  new List<Ingredient>()), new List<Tags>() {Tags.Breakfast, Tags.Easy, Tags.Vegetarian}, "Quick and easy recipe for grilled cheese sandwhich.", "10 Minutes"),
             new AvailableRecipes(new Recipe("Honey Garlic Tofu", "/recipes", "/recipe-photos/honey_garlic_tofu.jpg", new List<Ingredient>()), new List<Tags>() {Tags.Lunch, Tags.Medium, Tags.Vegetarian}, "Delicious tofu glazed with a sweet honey garlic sauce", "35 Minutes"),
             new AvailableRecipes(new Recipe("Rice and Beans", "/recipes", "/recipe-photos/rice_beans.jpg", new List<Ingredient>()), new List<Tags>() {Tags.Lunch, Tags.Medium, Tags.Vegetarian}, "A hearty meal for rice lovers.", "20 Minutes"),
@@ -136,13 +133,73 @@
             new AvailableRecipes(new Recipe("Vegetable Salad", "/recipes", "/recipe-photos/vegetable_salad.jpg", new List<Ingredient>()), new List<Tags>() {Tags.Dinner, Tags.Easy, Tags.Vegetarian}, "A healthy green vegetable salad", "10 Minutes")
         };
 
+        All_Recipes = Recipes_Functional.Concat(Recipes_Display).ToList();
+
         All_Filters = new AllFilters();
+        Active_Filters = new List<SelectedFilter>();
     }
 
     protected void favouriteRecipe(AvailableRecipes recipe)
     {
-        user.FavouriteRecipes.Add(recipe);
-        toastService.ShowSuccess("Successfully added to favorites!");
+        if (user.FavouriteRecipes.Contains(recipe))
+        {
+            user.FavouriteRecipes.Remove(recipe);
+            toastService.ShowWarning("Removed " + recipe.Recipe.Name + " from Favourites!");
+        } else
+        {
+            user.FavouriteRecipes.Add(recipe);
+            toastService.ShowSuccess("Successfully added " + recipe.Recipe.Name + " to favorites!"); 
+        }
+    }
+
+    public void addFilter(SelectedFilter tag)
+    {
+        Active_Filters.Add(tag);
+    }
+
+    public void removeFilter(SelectedFilter tag)
+    {
+        tag.IsSelected = false;
+        Active_Filters.Remove(tag);
+    }
+
+    // add or remove tag, depending on tag.IsSelected
+    public void editFilter(SelectedFilter tag)
+    {
+        if (!tag.IsSelected)
+        {
+            addFilter(tag);
+        } else
+        {
+            removeFilter(tag);
+        }
+    }
+
+    public void clearFilter()
+    {
+        Active_Filters.Clear();
+    }
+
+    // not very efficient
+    public List<Tags> convertFilters()
+    {
+        List<Tags> temp = new List<Tags>();
+        foreach (var filter in Active_Filters)
+        {
+            temp.Add(filter.Tag);
+        }
+        return temp;
+    }
+
+    public string isFavourite(AvailableRecipes recipe)
+    {
+        if (user.FavouriteRecipes.Contains(recipe))
+        {
+            return "background-image: url('/favorites-button-clicked.png');";
+        } else
+        {
+            return "";
+        }
     }
 
 }

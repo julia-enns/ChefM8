@@ -56,13 +56,26 @@
         }
     }
 
+
+    public class SelectedFilter
+    {
+        public bool IsSelected;
+        public Tags Tag;
+
+        public SelectedFilter(Tags tag)
+        {
+            IsSelected = false;
+            Tag = tag;
+        }
+
+    }
+
     public class FilterCategory
     {
         public string Category;
-        public List<Tags> Filters;
+        public List<SelectedFilter> Filters;
 
-        // constructor populates the list of display reci
-        public FilterCategory(string category, List<Tags> filters)
+        public FilterCategory(string category, List<SelectedFilter> filters)
         {
             Category = category;
             Filters = filters;
@@ -77,12 +90,12 @@
         {
             Filters = new List<FilterCategory>();
 
-            Filters.Add(new FilterCategory("Meal", new List<Tags> { Tags.Breakfast, Tags.Lunch, Tags.Dinner, Tags.Dessert }));
-            Filters.Add(new FilterCategory("Difficulty", new List<Tags> { Tags.Easy, Tags.Medium, Tags.Hard}));
-            Filters.Add(new FilterCategory("Diet", new List<Tags> { Tags.Meats, Tags.Vegetarian, Tags.Gluten_Free, Tags.Nut_Free, Tags.Keto, Tags.Low_Carb}));
-            Filters.Add(new FilterCategory("Meat", new List<Tags> { Tags.Beef, Tags.Chicken, Tags.Fish, Tags.Pork}));
-            Filters.Add(new FilterCategory("Ingredient Type", new List<Tags> { Tags.Meats, Tags.Dairy, Tags.Pasta, Tags.Vegetarian }));
-            Filters.Add(new FilterCategory("Season", new List<Tags> { Tags.Fall, Tags.Holiday, Tags.Spring, Tags.Summer, Tags.Winter }));
+            Filters.Add(new FilterCategory("Meal", new List<SelectedFilter> { new SelectedFilter(Tags.Breakfast), new SelectedFilter(Tags.Lunch), new SelectedFilter(Tags.Dinner), new SelectedFilter(Tags.Dessert) }));
+            Filters.Add(new FilterCategory("Difficulty", new List<SelectedFilter> { new SelectedFilter(Tags.Easy), new SelectedFilter(Tags.Medium), new SelectedFilter(Tags.Hard)}));
+            Filters.Add(new FilterCategory("Diet", new List<SelectedFilter> { new SelectedFilter(Tags.Meats), new SelectedFilter(Tags.Vegetarian), new SelectedFilter(Tags.Gluten_Free), new SelectedFilter(Tags.Nut_Free), new SelectedFilter(Tags.Keto), new SelectedFilter(Tags.Low_Carb)}));
+            Filters.Add(new FilterCategory("Meat", new List<SelectedFilter> { new SelectedFilter(Tags.Beef), new SelectedFilter(Tags.Chicken), new SelectedFilter(Tags.Fish), new SelectedFilter(Tags.Pork)}));
+            Filters.Add(new FilterCategory("Ingredient Type", new List<SelectedFilter> { new SelectedFilter(Tags.Meats), new SelectedFilter(Tags.Dairy), new SelectedFilter(Tags.Pasta), new SelectedFilter(Tags.Vegetarian) }));
+            Filters.Add(new FilterCategory("Season", new List<SelectedFilter> { new SelectedFilter(Tags.Fall), new SelectedFilter(Tags.Holiday), new SelectedFilter(Tags.Spring), new SelectedFilter(Tags.Summer), new SelectedFilter(Tags.Winter) }));
         }
     }
 

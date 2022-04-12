@@ -102,7 +102,7 @@ body {
     border: 5px solid gray;
     background-color: rgba(120,120,120, 0.3);
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    padding: 1.5%;
+    padding: 0.5%;
 }
 
 #filter-tab {
@@ -117,105 +117,111 @@ body {
     font-weight:bold;
 }
 
-#filter-tab input {
-    margin-left: 10%;
+#filter-search-container input {
+    margin-left: 19%;
 }
 
 #filter-search-container button {
-    padding: 5px 20px;
-    height: 100%;
+    width: 20%;
+    text-align: center;
+    border-radius: 1px;
+    margin: 0px;
+    padding: 0px;
 }
 
-.filter-button button {
+#active-filters-list {
+    margin-top: 20px;
+}
+
+.active-filter {
+    width: auto;
+    padding: 3px 13px;
+    padding-right: 35px;
+    font-weight: 100;
+    position: relative;
+    border: 0;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+
+}
+
+.active-filter:after {
+    position: absolute;
+    font-family: 'Courier New';
+    font-size: 16px;
+    right: 10px;
+    content: "-";
+}
+
+.active-filter:hover {
+    background-color: darkred;
+    color: red;
+}
+
+
+/*Filter dropdown animation*/
+nav.filter-button {
+    width: 100%;
+}
+
+.filter-button span {
+    padding: 10px;
+    font-size: 1.2em;
+    width: 100%;
+}
+
+.filter-collapse {
+    width: 100%;
     background-color: #e07900;
-    border-radius: 0px;
-    color: black;
     cursor: pointer;
     padding: 10px;
-    width: 98%;
-    border: none;
-    text-align: left;
-    outline: none;
-    font-size: 15px;
 }
 
-.filter-button button:hover, .filter-button button:focus {
-    background-color: #874900;
-}
-
-.filter-button {
-    position: relative;
-}
-
-/*Label*/
-.filter-collapse {
-    position: relative;
-    display: block;
-    background-color: #e07900;
-    color: black;
-    padding: 0 18px 0 12px;
-    border: 1px solid black;
-    font-size: 15px;
-    text-align: left;
-    transition: background 0.3s;
-    font-size: 18px;
-    cursor: pointer;
-}
-
+/* Triangle dropdown symbol */
 .filter-collapse:after {
-    content: "";
-    position: absolute;
-    display: block;
-    top: 50%;
-    right: 5px;
-    width: 0;
-    height: 0;
-    border-top: 4px solid rgba(255,255,255,.5);
-    border-bottom: 0 solid rgba(255,255,255,.5);
-    border-left: 4px solid transparent;
-    border-right: 4px solid transparent;
-    transition: border-bottom .1s, border-top .1s .1s;
-}
-
-.filter-collapse:hover, #filter-collapse-trigger:checked ~ .filter-collapse {
-    background-color:#874900;
-}
-
-#filter-collapse-trigger:checked ~ .filter-collapse:after {
-    border-top: 0 solid rgba(255,255,255,.5);
-    border-bottom: 4px solid rgba(255,255,255,.5);
-    transition: border-top .1s, border-bottom .1s .1s;
-}
-
-#filter-collapse-trigger, .filter-collapse-content {
-    display: none
+    float: right;
+    right: 10%;
+    font-size: 18px;
+    content: "+";
 }
 
 .filter-collapse-content {
-    max-height: 0;
-    padding: 0;
+    clear: both;
+    width: 100%;
+    height: 100px;
     overflow: hidden;
-    list-style-type: none;
-    background-color: beige;
-    box-shadow: 0 0 1px rgba(0,0,0,.3);
-    transition: max-height 0.5s ease-out;
-    min-width: 100%;
+    text-align: left;
+    transition: height .4s ease;
 }
 
-#filter-collapse-trigger~.filter-collapse-content {
-    max-height: 100%;
-    transition: max-height 0.5s ease-in;
+.filter-collapse-content li {
 }
+
+#filter-collapse-trigger {
+    position: absolute;
+    opacity: 0;
+    height: 0px;
+}
+
+#filter-collapse-trigger:checked + .filter-collapse-content {
+    height: 0px;
+}
+
+.filter-collapse-content {
+    list-style-type: none;
+}
+
+
+/*Filter dropdown end*/
 
 #recipes-container {
     display: grid;
-    height: 100%;
     width: 74.9%;
     border: 2px solid darkgray;
     float: right;
     grid-template-columns: repeat(3, 1fr);
-    overflow-y: scroll;
-    grid-auto-rows: minmax(400px, auto);
+    overflow: hidden;
+    /*grid-auto-rows: minmax(400px, auto);*/
+    grid-auto-rows: min-content;
 }
 
 .recipe-item {
@@ -227,17 +233,18 @@ body {
     cursor: pointer;
     transition: transform 0.2s;
     transition: box-shadow 0.1s;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
 
 .recipe-item:hover {
     transform: scale(1.01);
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset, rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
 .recipe-item img {
     width: 100%;
     object-fit: cover;
-    max-height: 40%;
+    height: 40%;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
 }
@@ -260,7 +267,7 @@ body {
 }
 
 .recipe-item p {
-    margin-top: 20%;
+    margin-top: 15%;
     padding-left: 5px;
     font-size: 18px;
     font-weight: bold;
