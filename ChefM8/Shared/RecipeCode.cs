@@ -63,5 +63,15 @@ namespace ChefM8.Shared
                 }
             }
         }
+
+        public async void addToGroceryListPopupAsync(IModalService modal, User user, int amount, List<Ingredient> ingredients)
+        {
+            var parameters = new ModalParameters();
+            parameters.Add(nameof(AddToGroceryListPopup.ingredient), ingredients);
+            parameters.Add(nameof(AddToGroceryListPopup.amountFromRecipe), amount);
+            var formModal = modal.Show<AddToGroceryListPopup>("", parameters, new ModalOptions() { Class = "custom-modal" });
+            var result = await formModal.Result;
+            user.Groceries.AddRange((IList<Ingredient>)result.Data);
+        }
     }
 }

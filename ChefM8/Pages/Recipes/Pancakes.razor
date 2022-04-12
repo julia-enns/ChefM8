@@ -22,7 +22,7 @@
         <div class = "mealplan">
             <p>
                 <button type="button" class="button w-100" style = "margin-top:15px;" @onclick="@addRecipeToMealplanPopup">Add to Meal plan</button>
-                <button type="button" class="button w-100" style = "margin-top:10px;" @onclick="@addRecipeToMealplanPopup">Add to Grocery list</button>
+                <button type="button" class="button w-100" style = "margin-top:10px;" @onclick="@addRecipeToGroceryListPopup">Add to Grocery list</button>
             </p>
         </div> 
     </div>
@@ -142,7 +142,26 @@
 
     protected void addRecipeToMealplanPopup()
     {
-        addRecipeToMealplanPopup(Modal, this.user, pancakes);
+        if(MainLayout.loggedIn == false)
+        {
+            toastService.ShowInfo("Can not add to meal plan, you need an account!");
+        }
+        else
+        {
+            addRecipeToMealplanPopup(Modal, this.user, pancakes);
+        }
+    }
+
+    protected void addRecipeToGroceryListPopup()
+    {
+        if(MainLayout.loggedIn == false)
+        {
+            toastService.ShowInfo("Can not add to grocery list, you need an account!");
+        }
+        else
+        {
+            addToGroceryListPopupAsync(Modal, this.user, 1, pancakeIngredients);
+        }
     }
 
     protected void voiceButton() => toastService.ShowInfo("Voice activated!");
