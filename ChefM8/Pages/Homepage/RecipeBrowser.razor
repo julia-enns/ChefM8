@@ -109,6 +109,7 @@
     public List<AvailableRecipes> Recipes_Display { get; set; }
     public AllFilters All_Filters { get; set; }
     public List<SelectedFilter> Active_Filters { get; set; }
+    public List<string> Recipe_Names { get; set; }
 
     public RecipeBrowser()
     {
@@ -138,6 +139,12 @@
 
         All_Filters = new AllFilters();
         Active_Filters = new List<SelectedFilter>();
+        Recipe_Names = new List<string>();
+
+        foreach(var recipe in All_Recipes)
+        {
+            Recipe_Names.Add(recipe.Recipe.Name);
+        }
     }
 
     protected void favouriteRecipe(AvailableRecipes recipe)
