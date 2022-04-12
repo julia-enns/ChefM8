@@ -37,9 +37,11 @@
 
 @code {
     [Inject] NavigationManager NavigationManager { get; set; }
-    
+
     public static string NoAccountStyle = "display: flex";
     public static string AccountStyle = "display: none";
+
+    public static bool loggedIn { get; set; }
 
     protected override void OnInitialized() => NavigationManager.LocationChanged += (s, e) => StateHasChanged();
 
@@ -55,11 +57,13 @@
     {
         NoAccountStyle = "display: none";
         AccountStyle = "display: flex";
+        loggedIn = true;
     }
-    
+
     public static void Logout()
     {
         NoAccountStyle = "display: flex";
         AccountStyle = "display: none";
+        loggedIn = false;
     }
 }
