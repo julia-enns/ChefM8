@@ -18,7 +18,7 @@ body {
     width: 99%;
     height: 550px;
     margin: auto;
-    background-color: darkgoldenrod;
+    background-color: #e07900;
     padding: 1%;
     overflow-x: scroll;
     white-space: nowrap;
@@ -27,19 +27,71 @@ body {
 .discover-item {
     display: inline-block;
     width: 800px;
-    margin: 0 10px;
+    margin: 20px 10px;
     height: 90%;
     background: rgba(0, 0, 0, 0.05) no-repeat center center;
     background-size: cover;
-    position: relative;
     border-radius: 20px;
-    box-shadow: 0 0 10px #dfdfdf;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+    position: relative;
+    cursor: pointer;
+    transition: transform .2s;
 }
 
-.discover-item img {
-    height: 70%;
-    border-radius: 50%;
+.discover-item:hover {
+    transform: scale(1.01);
 }
+
+/*.discover-item button {
+    position: absolute;
+    border: none;
+    height: 45px;
+    top: 2%;
+    left: 90%;
+    background-image: url('/favorites-button.png');
+    background-repeat: no-repeat;
+    background-color: transparent;
+    background-size: contain;
+    z-index: 1;
+}
+
+
+.discover-item button:hover {
+    background-image: url('/favorites-button-clicked.png');
+}*/
+
+.discover-description {
+    background-color: white;
+    text-align: center;
+    align-content: end;
+    position: absolute;
+    max-width: 55%;
+    min-height: 35%;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    bottom: 30px;
+    box-shadow: rgb(255, 138, 0) 0px 0px 0px 3px, rgb(255,255,255) 0px 0px 0px 16px;
+    overflow: hidden;
+    white-space: pre-line;
+}
+
+.discover-description h3 {
+    margin-top: 6px;
+    margin-bottom: -1px;
+    font-weight: bold;
+}
+
+.discover-description h5 {
+    font-size: 18px;
+}
+
+.discover-description p {
+    font-weight: bold;
+    font-size: 14px;
+}
+
 
 #allrecipes-section {
     display: flex;
@@ -172,9 +224,13 @@ body {
     background: #ffad51;
     border-radius: 20px;
     position: relative;
+    cursor: pointer;
+    transition: transform 0.2s;
+    transition: box-shadow 0.1s;
 }
 
 .recipe-item:hover {
+    transform: scale(1.01);
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 

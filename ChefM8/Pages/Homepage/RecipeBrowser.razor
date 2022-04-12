@@ -19,22 +19,28 @@
 
 <h2 style="padding-top: 20px; font-weight: bold; font-size: 46px;">Discover</h2>
 <div id="discover-section">
-    @for (int i = 0; i < 4; i++)
-    {            
-        @foreach (var recipe in Recipes_Functional)
-        {
-            <div class="discover-item">
-                <button id = "favorites-button" @onclick="() => favouriteRecipe(recipe)"></button>
-                <img src=@recipe.Recipe.Image>
+          
+    @foreach (var recipe in Recipes_Functional)
+    {
+        <div class="discover-item" style="background-image: url('@recipe.Recipe.Image');">
+            <div class="discover-description">
                 <h3>@recipe.Recipe.Name</h3>
-                <p>@recipe.Description</p>
+                <h5>@recipe.Description</h5>
                 <p>@recipe.Duration</p>
-                @foreach (var tag in recipe.Tags)
-                {
-                    <button type="button">@tag</button>
-                }
             </div>
-        }
+
+        </div>
+    }
+
+    @foreach (var recipe in Recipes_Display)
+    {
+        <div class="discover-item" style="background-image: url('@recipe.Recipe.Image');">
+            <div class="discover-description">
+                <h3>@recipe.Recipe.Name</h3>
+                <h5>@recipe.Description</h5>
+                <p>@recipe.Duration</p>
+            </div>
+        </div>
     }
 
 </div>
