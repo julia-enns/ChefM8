@@ -1,5 +1,59 @@
 ﻿@page "/recipes/add-to-grocery-list"
+@inject IToastService toastService
 
 @using ChefM8.Pages
 
 <PageTitle>Add to grocery list</PageTitle>
+
+<div>
+<h1>Ingredients:</h1>
+    @if (ingredients?.Any() ?? false)
+    {
+    <div>
+        @foreach (var ingredient in ingredients)
+        {
+            if(@ingredient.Unit != Measurement.None)
+            {
+                if(@amount(ingredient) > 1 && (@ingredient.Unit !!= Measurement.Tsp || @ingredient.Unit !!= Measurement.Tbsp))
+                {
+                    <p>@amount(ingredient) @(ingredient.Unit)s @ingredient.Name</p>
+                }
+                else
+                {
+                    <p>@amount(ingredient) @(ingredient.Unit) @ingredient.Name</p>
+                }
+            }
+            else
+            {
+                <p>@amount(ingredient) @(ingredient.Name)</p>
+            }
+        }
+        <button type="button" @onclick="@Close" class="button w-100" style = "margin-top:15px;">Add to list</button>
+    </div>
+    }
+</div>
+
+@code {
+    [CascadingParameter] BlazoredModalInstance ModalInstance { get; set; }
+
+    private List<Ingredient> ingredients { get; set; }
+    private int multiplier { get; set; }
+    [Parameter] public List<Ingredient> ingredient { get; set; }
+    [Parameter] public int amountFromRecipe { get; set; }
+
+    protected override void OnInitialized()
+    {
+        ingredients = ingredient;
+        multiplier = amountFromRecipe;
+    }
+
+    public void Close()
+    {
+        var ingredientsAdded = new List<Ingredient>();
+        ModalInstance.CloseAsync(ModalResult.Ok(ingredientsAdded));
+        toastService.ShowSuccess("Successfully added to grocery list!");
+    }
+
+    private double? amount(Ingredient ingredients) => ingredients.Amount * multiplier;
+
+}

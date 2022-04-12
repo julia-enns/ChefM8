@@ -4,6 +4,8 @@
     {
         public IList<Ingredient> Groceries { get; set; }
 
+        public IList<AvailableRecipes> FavouriteRecipes { get; set; }
+
         public IList<MealPlanRecipe> SavedRecipes { get; set; }
         public IList<MealPlanRecipe> SundayRecipes { get; set; }
         public IList<MealPlanRecipe> MondayRecipes { get; set; }
@@ -26,6 +28,8 @@
                 new Ingredient("Salt", 1, Measurement.Tsp, IngredientCategory.Other),
                 new Ingredient("Pepper", 1, Measurement.Tsp, IngredientCategory.Other)
                 };
+
+            FavouriteRecipes = new List<AvailableRecipes>();
 
             SavedRecipes = new List<MealPlanRecipe>();
             SundayRecipes = new List<MealPlanRecipe>();
