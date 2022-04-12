@@ -21,20 +21,51 @@
     justify-content: end;
 }
 
-#category {
-    font-size: 30px;
-    margin: 20px;
-    color: #808080;
-    font-weight: bolder;
-    word-spacing: 200px;
-    text-align: center;
+.table-headers {
+    display: flex;
+    gap: 5px;
+    justify-content: space-evenly;
 }
 
 .ingredient {
+    display: flex;
+    gap: 5px;
+    justify-content: space-evenly;
+}
+
+.ingredient-name {
+    flex: 4;
+    word-wrap: break-word;
+}
+
+.checkbox {
+    display: block;
+    height: 30px;
+    width: 30px;
+    background-color: white;
+    border: 1px solid black;
+    margin: auto;
+}
+
+.ingredient-quantity, .ingredient-unit {
+    flex: 2;
+}
+
+.starter-space, .edit-space, .delete-space {
+    flex: 1;
+}
+
+.ingredients-table {
+    display: flex;
+    flex-direction: column;
+}
+
+.ingredient-button {
+    padding: 0px;
+}
+
+.groceries {
+    display: flex;
+    flex-direction: column;
     background-color: #C0C0C0;
-    margin: 0px 0px;
-    padding: 10px 50px;
-    font-size: 30px;
-    color: #808080;
-    text-align: left;
 }

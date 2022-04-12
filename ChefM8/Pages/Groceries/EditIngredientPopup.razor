@@ -1,0 +1,13 @@
+﻿<h3>Edit Ingredient</h3>
+
+<button @onclick=@EditIngredient>Edit</button>
+
+@code {
+    [CascadingParameter] BlazoredModalInstance ModalInstance { get; set; }
+    [Parameter] public Ingredient Ingredient { get; set; }
+
+    public void EditIngredient()
+    {
+        
+    }
+}
