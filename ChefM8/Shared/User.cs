@@ -20,17 +20,7 @@
 
         public User()
         {
-            Groceries = new List<Ingredient>() {
-                new Ingredient("Ground beef", 1, Measurement.Pound, IngredientCategory.Meats),
-                new Ingredient("Dried spaghetti", 2, Measurement.Ounce, IngredientCategory.Other),
-                new Ingredient("Shredded parmesan cheese", 1, Measurement.Cup, IngredientCategory.Dairy),
-                new Ingredient("Tomato paste", 1, Measurement.Tbsp, IngredientCategory.Other),
-                new Ingredient("Can crushed tomatoes", 1, Measurement.None, IngredientCategory.Other),
-                new Ingredient("Garlic cloves", 1, Measurement.None, IngredientCategory.Produce),
-                new Ingredient("Olive oil", 3, Measurement.Tbsp, IngredientCategory.Other),
-                new Ingredient("Salt", 1, Measurement.Tsp, IngredientCategory.Other),
-                new Ingredient("Pepper", 1, Measurement.Tsp, IngredientCategory.Other)
-                };
+            Groceries = new List<Ingredient>();
 
             FavouriteRecipes = new List<AvailableRecipes>();
 

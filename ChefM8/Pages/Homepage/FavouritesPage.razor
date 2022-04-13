@@ -91,7 +91,7 @@
     protected void favouriteRecipe(AvailableRecipes recipe)
     {
         user.FavouriteRecipes.Remove(recipe);
-        toastService.ShowError("Removed from Favourites!");
+        toastService.ShowSuccess("Removed from Favourites!");
     }
 
     // not very efficient

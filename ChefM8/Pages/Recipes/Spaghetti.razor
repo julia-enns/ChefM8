@@ -18,8 +18,8 @@
 
     <div class = "buttons">
     	<div class = center>
-        	<button class = "favorites-button" @onclick="AddToFavorites"></button>
-        </div>
+        	<button id = "favorites-button" class = "favorites-button" @onclick=@(() => AddToFavorites()) style="@isFavourite()"></button>
+       </div>
         <div class = "mealplan">
             <p>
                 <button type="button" class="button w-100" style = "margin-top:15px;" @onclick="@addRecipeToMealplanPopup">Add to Meal plan</button>
@@ -141,16 +141,38 @@
         };
         spaghetti = new Recipe("Spaghetti", "/recipes/spaghetti", "/recipe-photos/Spaghetti.jpg", spaghettiIngredients);
     }
+
+    private AvailableRecipes AvailableRecipe => new AvailableRecipes(new Recipe("Spaghetti", "/recipes/spaghetti", "/recipe-photos/Spaghetti.jpg", new List<Ingredient>()), new List<Tags>() { Tags.Dinner, Tags.Hard, Tags.Pasta, Tags.Dairy }, "Delicious italian style spaghetti with meat sauce.", "45 Minutes");
+
     protected void AddToFavorites()
     {
-        if (MainLayout.loggedIn == false)
+        if(MainLayout.loggedIn == false)
         {
             OpenLogin();
         }
         else
+        {            
+            if (this.user.FavouriteRecipes.Where(x => x.Recipe.Name == AvailableRecipe.Recipe.Name).Any())
+            {
+                ((List<AvailableRecipes>)this.user.FavouriteRecipes).RemoveAll(x => x.Recipe.Name == AvailableRecipe.Recipe.Name);
+                toastService.ShowSuccess("Removed " + AvailableRecipe.Recipe.Name + " from Favourites!");
+            } 
+            else
+            {
+                this.user.FavouriteRecipes.Add(AvailableRecipe);
+                toastService.ShowSuccess("Successfully added to favorites!"); 
+            }
+        }
+    }
+    
+    public string isFavourite()
+    {
+        if (this.user.FavouriteRecipes.Where(x => x.Recipe.Name == AvailableRecipe.Recipe.Name).Any())
         {
-            AddToFavorites(this.user, new AvailableRecipes(new Recipe("Spaghetti", "/recipes/spaghetti", "/recipe-photos/Spaghetti.jpg", new List<Ingredient>()), new List<Tags>() { Tags.Dinner, Tags.Hard, Tags.Pasta, Tags.Dairy }, "Delicious italian style spaghetti with meat sauce.", "45 Minutes"));
-            toastService.ShowSuccess("Successfully added to favorites!");
+            return "background-image: url('/favorites-button-clicked.png');";
+        } else
+        {
+            return "";
         }
     }
 

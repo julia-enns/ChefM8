@@ -170,7 +170,7 @@
             if (user.FavouriteRecipes.Contains(recipe))
             {
                 user.FavouriteRecipes.Remove(recipe);
-                toastService.ShowWarning("Removed " + recipe.Recipe.Name + " from Favourites!");
+                toastService.ShowSuccess("Removed " + recipe.Recipe.Name + " from Favourites!");
             } else
             {
                 user.FavouriteRecipes.Add(recipe);
