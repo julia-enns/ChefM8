@@ -1,5 +1,4 @@
-﻿@page "/"
-@page "/grocery-list"
+﻿@page "/grocery-list"
 @inject User user
 @inject IToastService toastService
 
@@ -8,165 +7,160 @@
 <div id = "content">
     <h1 id = "title">Grocery List</h1>
     <div class = "buttons">
+        @if (Groceries?.Any() ?? false)
+        {
+            <button @onclick="@ClearIngredients">Clear List</button>
+        }
         <button @onclick="@AddIngredient">Add Ingredient</button>
     </div>
 
-    <div class="ingredients-table">
-        <div class="table-headers">
-            <div class="starter-space"></div>
-            <h2 class="ingredient-name">Item</h2>
-            <h2 class="ingredient-quantity">Quantity</h2>
-            <h2 class="ingredient-unit">Unit</h2>
-            <div class="edit-space"></div>
-            <div class="delete-space"></div>
-        </div>
-
     @if (Groceries?.Any() ?? false)
     {
-        <div class="groceries">
-        @if (Groceries.Where(x => x.Category == IngredientCategory.Bakery).Any())
-        {
-            <h3>Bakery</h3>
-            @foreach (var grocery in Groceries.Where(x => x.Category == IngredientCategory.Bakery))
+        <div class="ingredients-table">
+            <div class="table-headers">
+                <div class="starter-space"></div>
+                <h2 class="ingredient-name">Item</h2>
+                <h2 class="ingredient-quantity">Quantity</h2>
+                <h2 class="ingredient-unit">Unit</h2>
+                <div class="edit-space"></div>
+                <div class="delete-space"></div>
+            </div>
+
+            <div class="groceries">
+            @if (Groceries.Where(x => x.Category == IngredientCategory.Bakery).Any())
             {
-                <div class = "ingredient">
-                    <div class="starter-space">
-                        <span class="checkbox"></span>
+                <h3>Bakery</h3>
+                @foreach (var grocery in Groceries.Where(x => x.Category == IngredientCategory.Bakery))
+                {
+                    <div class = "ingredient">
+                        <div class="starter-space"></div>
+                        <h2 class="ingredient-name">@grocery.Name</h2>
+                        <h2 class="ingredient-quantity">@grocery.Amount</h2>
+                        <h2 class="ingredient-unit">@grocery.Unit</h2>
+                        <div class="edit-space">
+                            <button class="edit-space edit-button ingredient-button" @onclick=@(() => EditIngredient(grocery))>Edit</button>
+                        </div>
+                        <div class="delete-space">
+                            <button class="delete-space delete-button ingredient-button" @onclick=@(() => DeleteIngredient(grocery))>Delete</button>
+                        </div>                
                     </div>
-                    <h2 class="ingredient-name">@grocery.Name</h2>
-                    <h2 class="ingredient-quantity">@grocery.Amount</h2>
-                    <h2 class="ingredient-unit">@grocery.Unit</h2>
-                    <div class="edit-space">
-                        <button class="edit-space edit-button ingredient-button" @onclick=@(() => EditIngredient(grocery))>Edit</button>
-                    </div>
-                    <div class="delete-space">
-                        <button class="delete-space delete-button ingredient-button" @onclick=@(() => DeleteIngredient(grocery))>Delete</button>
-                    </div>                
-                </div>
+                }
+
             }
 
-        }
-
-        @if (Groceries.Where(x => x.Category == IngredientCategory.Baking).Any())
-        {
-            <h3>Baking</h3>
-            @foreach (var grocery in Groceries.Where(x => x.Category == IngredientCategory.Baking))
+            @if (Groceries.Where(x => x.Category == IngredientCategory.Baking).Any())
             {
-                <div class = "ingredient">
-                    <div class="starter-space">
-                        <span class="checkbox"></span>
+                <h3>Baking</h3>
+                @foreach (var grocery in Groceries.Where(x => x.Category == IngredientCategory.Baking))
+                {
+                    <div class = "ingredient">
+                        <div class="starter-space"></div>
+                        <h2 class="ingredient-name">@grocery.Name</h2>
+                        <h2 class="ingredient-quantity">@grocery.Amount</h2>
+                        <h2 class="ingredient-unit">@grocery.Unit</h2>
+                        <div class="edit-space">
+                            <button class="edit-space edit-button ingredient-button" @onclick=@(() => EditIngredient(grocery))>Edit</button>
+                        </div>
+                        <div class="delete-space">
+                            <button class="delete-space delete-button ingredient-button" @onclick=@(() => DeleteIngredient(grocery))>Delete</button>
+                        </div>                
                     </div>
-                    <h2 class="ingredient-name">@grocery.Name</h2>
-                    <h2 class="ingredient-quantity">@grocery.Amount</h2>
-                    <h2 class="ingredient-unit">@grocery.Unit</h2>
-                    <div class="edit-space">
-                        <button class="edit-space edit-button ingredient-button" @onclick=@(() => EditIngredient(grocery))>Edit</button>
-                    </div>
-                    <div class="delete-space">
-                        <button class="delete-space delete-button ingredient-button" @onclick=@(() => DeleteIngredient(grocery))>Delete</button>
-                    </div>                
-                </div>
+                }
             }
-        }
         
-        @if (Groceries.Where(x => x.Category == IngredientCategory.Dairy).Any())
-        {
-            <h3>Dairy</h3>
-            @foreach (var grocery in Groceries.Where(x => x.Category == IngredientCategory.Dairy))
+            @if (Groceries.Where(x => x.Category == IngredientCategory.Dairy).Any())
             {
-                <div class = "ingredient">
-                    <div class="starter-space">
-                        <span class="checkbox"></span>
+                <h3>Dairy</h3>
+                @foreach (var grocery in Groceries.Where(x => x.Category == IngredientCategory.Dairy))
+                {
+                    <div class = "ingredient">
+                        <div class="starter-space"></div>
+                        <h2 class="ingredient-name">@grocery.Name</h2>
+                        <h2 class="ingredient-quantity">@grocery.Amount</h2>
+                        <h2 class="ingredient-unit">@grocery.Unit</h2>
+                        <div class="edit-space">
+                            <button class="edit-space edit-button ingredient-button" @onclick=@(() => EditIngredient(grocery))>Edit</button>
+                        </div>
+                        <div class="delete-space">
+                            <button class="delete-space delete-button ingredient-button" @onclick=@(() => DeleteIngredient(grocery))>Delete</button>
+                        </div>                 
                     </div>
-                    <h2 class="ingredient-name">@grocery.Name</h2>
-                    <h2 class="ingredient-quantity">@grocery.Amount</h2>
-                    <h2 class="ingredient-unit">@grocery.Unit</h2>
-                    <div class="edit-space">
-                        <button class="edit-space edit-button ingredient-button" @onclick=@(() => EditIngredient(grocery))>Edit</button>
-                    </div>
-                    <div class="delete-space">
-                        <button class="delete-space delete-button ingredient-button" @onclick=@(() => DeleteIngredient(grocery))>Delete</button>
-                    </div>                 
-                </div>
+                }
             }
-        }
         
-        @if (Groceries.Where(x => x.Category == IngredientCategory.Meats).Any())
-        {
-            <h3>Meats</h3>
-            @foreach (var grocery in Groceries.Where(x => x.Category == IngredientCategory.Meats))
+            @if (Groceries.Where(x => x.Category == IngredientCategory.Meats).Any())
             {
-                <div class = "ingredient">
-                    <div class="starter-space">
-                        <span class="checkbox"></span>
+                <h3>Meats</h3>
+                @foreach (var grocery in Groceries.Where(x => x.Category == IngredientCategory.Meats))
+                {
+                    <div class = "ingredient">
+                        <div class="starter-space"></div>
+                        <h2 class="ingredient-name">@grocery.Name</h2>
+                        <h2 class="ingredient-quantity">@grocery.Amount</h2>
+                        <h2 class="ingredient-unit">@grocery.Unit</h2>
+                        <div class="edit-space">
+                            <button class="edit-space edit-button ingredient-button" @onclick=@(() => EditIngredient(grocery))>Edit</button>
+                        </div>
+                        <div class="delete-space">
+                            <button class="delete-space delete-button ingredient-button" @onclick=@(() => DeleteIngredient(grocery))>Delete</button>
+                        </div>                
                     </div>
-                    <h2 class="ingredient-name">@grocery.Name</h2>
-                    <h2 class="ingredient-quantity">@grocery.Amount</h2>
-                    <h2 class="ingredient-unit">@grocery.Unit</h2>
-                    <div class="edit-space">
-                        <button class="edit-space edit-button ingredient-button" @onclick=@(() => EditIngredient(grocery))>Edit</button>
-                    </div>
-                    <div class="delete-space">
-                        <button class="delete-space delete-button ingredient-button" @onclick=@(() => DeleteIngredient(grocery))>Delete</button>
-                    </div>                
-                </div>
+                }
             }
-        }
         
-        @if (Groceries.Where(x => x.Category == IngredientCategory.Produce).Any())
-        {
-            <h3>Produce</h3>
-            @foreach (var grocery in Groceries.Where(x => x.Category == IngredientCategory.Produce))
+            @if (Groceries.Where(x => x.Category == IngredientCategory.Produce).Any())
             {
-                <div class = "ingredient">
-                    <div class="starter-space">
-                        <span class="checkbox"></span>
+                <h3>Produce</h3>
+                @foreach (var grocery in Groceries.Where(x => x.Category == IngredientCategory.Produce))
+                {
+                    <div class = "ingredient">
+                        <div class="starter-space"></div>
+                        <h2 class="ingredient-name">@grocery.Name</h2>
+                        <h2 class="ingredient-quantity">@grocery.Amount</h2>
+                        <h2 class="ingredient-unit">@grocery.Unit</h2>
+                        <div class="edit-space">
+                            <button class="edit-space edit-button ingredient-button" @onclick=@(() => EditIngredient(grocery))>Edit</button>
+                        </div>
+                        <div class="delete-space">
+                            <button class="delete-space delete-button ingredient-button" @onclick=@(() => DeleteIngredient(grocery))>Delete</button>
+                        </div>                 
                     </div>
-                    <h2 class="ingredient-name">@grocery.Name</h2>
-                    <h2 class="ingredient-quantity">@grocery.Amount</h2>
-                    <h2 class="ingredient-unit">@grocery.Unit</h2>
-                    <div class="edit-space">
-                        <button class="edit-space edit-button ingredient-button" @onclick=@(() => EditIngredient(grocery))>Edit</button>
-                    </div>
-                    <div class="delete-space">
-                        <button class="delete-space delete-button ingredient-button" @onclick=@(() => DeleteIngredient(grocery))>Delete</button>
-                    </div>                 
-                </div>
+                }
             }
-        }
         
-        @if (Groceries.Where(x => x.Category == IngredientCategory.Other).Any())
-        {
-            <h3>Other</h3>
-            @foreach (var grocery in Groceries.Where(x => x.Category == IngredientCategory.Other))
+            @if (Groceries.Where(x => x.Category == IngredientCategory.Other).Any())
             {
-                <div class = "ingredient">
-                    <div class="starter-space">
-                        <span class="checkbox"></span>
+                <h3>Other</h3>
+                @foreach (var grocery in Groceries.Where(x => x.Category == IngredientCategory.Other))
+                {
+                    <div class = "ingredient">
+                        <div class="starter-space"></div>
+                        <h2 class="ingredient-name">@grocery.Name</h2>
+                        <h2 class="ingredient-quantity">@grocery.Amount</h2>
+                        <h2 class="ingredient-unit">@grocery.Unit</h2>
+                        <div class="edit-space">
+                            <button class="edit-space edit-button ingredient-button" @onclick=@(() => EditIngredient(grocery))>Edit</button>
+                        </div>
+                        <div class="delete-space">
+                            <button class="delete-space delete-button ingredient-button" @onclick=@(() => DeleteIngredient(grocery))>Delete</button>
+                        </div>                
                     </div>
-                    <h2 class="ingredient-name">@grocery.Name</h2>
-                    <h2 class="ingredient-quantity">@grocery.Amount</h2>
-                    <h2 class="ingredient-unit">@grocery.Unit</h2>
-                    <div class="edit-space">
-                        <button class="edit-space edit-button ingredient-button" @onclick=@(() => EditIngredient(grocery))>Edit</button>
-                    </div>
-                    <div class="delete-space">
-                        <button class="delete-space delete-button ingredient-button" @onclick=@(() => DeleteIngredient(grocery))>Delete</button>
-                    </div>                
+                    }
+                }
                 </div>
-            }
-
+            </div>
         }
-        </div>
-    }
-    </div>
+        else
+        {
+            <p class="empty-list">You currently have nothing in your grocery list.</p>
+        }
 </div>
 
 @code {
     [CascadingParameter] public IModalService Modal { get; set; }
 
-    public IList<Ingredient> Groceries => user.Groceries;
-
+    public IList<Ingredient> Groceries => user.Groceries.OrderBy(x => x.Name).ToList();
+    public IDictionary<Ingredient, bool> SelectedGroceries => user.Groceries.ToDictionary(x => x, y => false);
 
     public GroceryList()
     {
@@ -178,24 +172,36 @@
         var oldIngredient = new Ingredient(ingredient.Name, ingredient.Amount, ingredient.Unit, ingredient.Category);
 
         var parameters = new ModalParameters();
-        parameters.Add(nameof(EditIngredientPopup.Ingredient), ingredient);
+        parameters.Add(nameof(EditIngredientPopup.Name), ingredient.Name);
+        parameters.Add(nameof(EditIngredientPopup.Quantity), ingredient.Amount);
+        parameters.Add(nameof(EditIngredientPopup.Unit), ingredient.Unit);
+        parameters.Add(nameof(EditIngredientPopup.Section), ingredient.Category);
 
         var formModal = Modal.Show<EditIngredientPopup>("", parameters, new ModalOptions() {Class="custom-modal"});
         var result = await formModal.Result;
 
         if(result.Data is null) return;
 
-        Groceries[Groceries.IndexOf(ingredient)] = (Ingredient) result.Data;
+        user.Groceries.Remove(oldIngredient);
+        user.Groceries.Add((Ingredient) result.Data);
         toastService.ShowSuccess("Successfully edited ingredient!");
+        StateHasChanged();
     }
 
     public void DeleteIngredient(Ingredient ingredient)
     {
         if (Groceries.Contains(ingredient))
         {
-            Groceries.Remove(ingredient);
+            user.Groceries.Remove(ingredient);
             toastService.ShowSuccess("Successfully deleted ingredient!");
         }
+    }
+
+    public void ClearIngredients()
+    {
+        user.Groceries.Clear();
+
+        toastService.ShowSuccess("Successfully cleared grocery list!");
     }
 
     protected async void AddIngredient()

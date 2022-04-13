@@ -131,8 +131,15 @@
 
     protected void AddToFavorites()
     {
-        AddToFavorites(this.user, pancakes);
-        toastService.ShowSuccess("Successfully added to favorites!");
+        if (MainLayout.loggedIn == false)
+        {
+            OpenLogin();
+        }
+        else
+        {
+            AddToFavorites(this.user, new AvailableRecipes(new Recipe("Pancakes", "/recipes/pancakes", "/recipe-photos/Pancakes.jpg",  new List<Ingredient>()), new List<Tags>() {Tags.Breakfast, Tags.Easy, Tags.Dairy}, "Simple fluffly pancakes, perfect to start your day.", "25 Minutes"));
+            toastService.ShowSuccess("Successfully added to favorites!"); 
+        }
     }
 
     private void showVideoPlayer()
@@ -144,7 +151,7 @@
     {
         if(MainLayout.loggedIn == false)
         {
-            toastService.ShowInfo("Can not add to meal plan, you need an account!");
+            OpenLogin();
         }
         else
         {
@@ -156,7 +163,7 @@
     {
         if(MainLayout.loggedIn == false)
         {
-            toastService.ShowInfo("Can not add to grocery list, you need an account!");
+            OpenLogin();
         }
         else
         {
@@ -169,4 +176,10 @@
     private void goBack() => _jsRuntime.InvokeVoidAsync("history.go", -1);
 
     private double? amount(Ingredient ingredients) => ingredients.Amount * InputValue;
+    
+    public async void OpenLogin()
+    {
+        var formModal = Modal.Show<LoginPopup>("", new ModalOptions() {Class="custom-modal"});
+        await formModal.Result;
+    }
 }

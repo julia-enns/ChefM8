@@ -6,6 +6,7 @@
     flex-direction: column;
     justify-content: space-around;
     padding: 25px 100px;
+    gap: 20px;
 }
 
 #title {
@@ -47,6 +48,10 @@
     margin: auto;
 }
 
+.empty-list{
+    align-self: center;
+}
+
 .ingredient-quantity, .ingredient-unit {
     flex: 2;
 }
@@ -61,7 +66,17 @@
 }
 
 .ingredient-button {
-    padding: 0px;
+    padding: 5px 20px;
+}
+
+.delete-button {
+    color: white;
+    background-color: #e07900;
+    border: 2px solid #e07900;
+}
+
+.delete-button:hover {
+    color: black;
 }
 
 .groceries {

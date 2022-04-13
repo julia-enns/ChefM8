@@ -1,13 +1,82 @@
 ﻿<h3>Edit Ingredient</h3>
 
-<button @onclick=@EditIngredient>Edit</button>
+<div class="form">
+    <h4>Quantity</h4>
+    <input type="number" id="quantity" @bind=@Quantity @oninput="@((e) => { UpdateQuantity((string)e.Value);})"/>
+    <h4>Units</h4>
+    <div class="unit-radio-buttons">
+        <label class="radio-button" for="Tsp">
+            <input type="radio" id="Tsp" value="Tsp" name="Tsp" checked=@(Unit == Measurement.Tsp) @onclick="@(() => UpdateUnit(Measurement.Tsp))">
+            <span class="radio-check"></span>
+            <p>Tsp</p>
+        </label>
+        <label class="radio-button" for="Tbsp">
+            <input type="radio" id="Tbsp" value="Tbsp" name="Tbsp" checked=@(Unit == Measurement.Tbsp) @onclick="@(() => UpdateUnit(Measurement.Tbsp))">
+            <span class="radio-check"></span>
+            <p>Tbsp</p>
+        </label>
+        <label class="radio-button" for="Cup">
+            <input type="radio" id="Cup" value="Cup" name="Cup" checked=@(Unit == Measurement.Cup) @onclick="@(() => UpdateUnit(Measurement.Cup))">
+            <span class="radio-check"></span>
+            <p>Cup</p>
+        </label>
+        <label class="radio-button" for="Piece">
+            <input type="radio" id="Piece" value="Piece" name="Piece" checked=@(Unit == Measurement.Piece) @onclick="@(() => UpdateUnit(Measurement.Piece))">
+            <span class="radio-check"></span>
+            <p>Piece</p>
+        </label>
+        <label class="radio-button" for="Slice">
+            <input type="radio" id="Slice" value="Slice" name="Slice" checked=@(Unit == Measurement.Slice) @onclick="@(() => UpdateUnit(Measurement.Slice))">
+            <span class="radio-check"></span>
+            <p>Slice</p>
+        </label>
+        <label class="radio-button" for="Pound">
+            <input type="radio" id="Pound" value="Pound" name="Pound" checked=@(Unit == Measurement.Pound) @onclick="@(() => UpdateUnit(Measurement.Pound))">
+            <span class="radio-check"></span>
+            <p>Pound</p>
+        </label>
+        <label class="radio-button" for="Ounce">
+            <input type="radio" id="Ounce" value="Ounce" name="Ounce" checked=@(Unit == Measurement.Ounce) @onclick="@(() => UpdateUnit(Measurement.Ounce))">
+            <span class="radio-check"></span>
+            <p>Ounce</p>
+        </label>
+    </div>
+
+    <button @onclick=@EditIngredient>Edit Ingredient</button>
+</div>
 
 @code {
     [CascadingParameter] BlazoredModalInstance ModalInstance { get; set; }
-    [Parameter] public Ingredient Ingredient { get; set; }
+
+    [Parameter] public string Name { get; set; }
+    [Parameter] public double Quantity { get; set; }
+    [Parameter] public Measurement Unit { get; set; } = Measurement.None;
+    [Parameter] public IngredientCategory Section { get; set; } = IngredientCategory.None;
+    
+    public void UpdateQuantity(string quantity)
+    {
+        var amount = 0.0;
+        double.TryParse(quantity, out amount);
+
+        Quantity = amount;
+    }
+
+    public void UpdateUnit(Measurement unit)
+    {
+        if(Unit == unit)
+        {
+            Unit = Measurement.None;
+        }
+        else
+        {
+            Unit = unit; 
+        }  
+    }
 
     public void EditIngredient()
     {
-        
+        var ingredient = new Ingredient(Name, Quantity, Unit, Section);
+
+        ModalInstance.CloseAsync(ModalResult.Ok(ingredient));
     }
 }
