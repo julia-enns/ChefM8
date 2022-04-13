@@ -23,9 +23,9 @@ There are two accounts already created for the application. These include:
     * Password = customerPass
 
 There are only 3 recipes that have fully functional components (such as being able to see individual recipe page, add to grocery list, etc.). These include:
-    - Burger
-    - Pancakes
-    - Spaghetti
+   * Burger
+   * Pancakes
+   * Spaghetti
 
 
 ## How to Conduct a Successful Walkthrough
