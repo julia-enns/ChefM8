@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\LoginPages\**" />
+    <Content Remove="Pages\LoginPages\**" />
+    <EmbeddedResource Remove="Pages\LoginPages\**" />
+    <None Remove="Pages\LoginPages\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Pages\Recipes\RecipesCode.cs" />
   </ItemGroup>
 
@@ -29,7 +36,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\LoginPages\" />
     <Folder Include="wwwroot\video-thumbnails\" />
   </ItemGroup>
 

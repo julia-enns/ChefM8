@@ -2,7 +2,7 @@
 {
     public class User
     {
-        public List<Ingredient> Groceries { get; set; }
+        public IList<Ingredient> Groceries { get; set; }
 
         public IList<AvailableRecipes> FavouriteRecipes { get; set; }
 

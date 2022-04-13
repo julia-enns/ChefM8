@@ -49,8 +49,7 @@
 
     public void Close()
     {
-        var ingredientsAdded = new List<Ingredient>();
-        ModalInstance.CloseAsync(ModalResult.Ok(ingredientsAdded));
+        ModalInstance.CloseAsync(ModalResult.Ok(ingredients));
         toastService.ShowSuccess("Successfully added to grocery list!");
     }
 

@@ -446,7 +446,7 @@
         ingredients.AddRange(FridayRecipes.SelectMany(x => x.Recipe.Ingredients).ToList());
         ingredients.AddRange(SaturdayRecipes.SelectMany(x => x.Recipe.Ingredients).ToList());
 
-        user.Groceries.AddRange(ingredients);
+        ((List<Ingredient>)user.Groceries).AddRange(ingredients);
 
         toastService.ShowSuccess("Successfully added grocery list to meal plan!");
     }

@@ -1,6 +1,5 @@
 ﻿@page "/"
 @page "/recipes"
-@using ChefM8.Pages
 
 @inject User user
 @inject NavigationManager nav
@@ -37,11 +36,12 @@
     </form>
 </div>
 
-<div id="fav-btn-container">
-    <button type="button" @onclick="@(()=>nav.NavigateTo("/favourites"))">Favourites</button>
+@if(MainLayout.loggedIn){ 
+    <div id="fav-btn-container">
+        <button type="button" @onclick="@(()=>nav.NavigateTo("/favourites"))">Favourites</button>
 
-</div>
-
+    </div>
+}
 <h2 style="padding-top: 20px; font-weight: bold; font-size: 46px;">All Recipes</h2>
 <div id="allrecipes-section">
     <div id="filter-tab">
@@ -162,14 +162,20 @@
 
     protected void favouriteRecipe(AvailableRecipes recipe)
     {
-        if (user.FavouriteRecipes.Contains(recipe))
+        if(!MainLayout.loggedIn){
+            OpenLogin();
+        }
+        else
         {
-            user.FavouriteRecipes.Remove(recipe);
-            toastService.ShowWarning("Removed " + recipe.Recipe.Name + " from Favourites!");
-        } else
-        {
-            user.FavouriteRecipes.Add(recipe);
-            toastService.ShowSuccess("Successfully added " + recipe.Recipe.Name + " to favorites!"); 
+            if (user.FavouriteRecipes.Contains(recipe))
+            {
+                user.FavouriteRecipes.Remove(recipe);
+                toastService.ShowSuccess("Removed " + recipe.Recipe.Name + " from Favourites!");
+            } else
+            {
+                user.FavouriteRecipes.Add(recipe);
+                toastService.ShowSuccess("Successfully added " + recipe.Recipe.Name + " to favorites!"); 
+            }
         }
     }
 
@@ -234,4 +240,9 @@
         if (index == 3) index = 0;
     }
 
+    public async void OpenLogin()
+    {
+        var formModal = Modal.Show<LoginPopup>("", new ModalOptions() {Class="custom-modal"});
+        await formModal.Result;
+    }
 }

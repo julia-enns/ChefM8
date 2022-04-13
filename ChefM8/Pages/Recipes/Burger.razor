@@ -18,7 +18,7 @@
 
     <div class = "buttons">
     	<div class = center>
-        	<button class = "favorites-button" @onclick="AddToFavorites"></button>
+            <button id = "favorites-button" class = "favorites-button" @onclick=@(() => AddToFavorites()) style="@isFavourite()"></button>
         </div>
         <div class = "mealplan">
             <p>
@@ -127,10 +127,38 @@
         burger = new Recipe("Burger", "/recipes/burger", "/recipe-photos/Burger.jpg", burgerIngredients);
     }
 
+    private AvailableRecipes AvailableRecipe => new AvailableRecipes(new Recipe("Burger", "/recipes/burger", "/recipe-photos/Burger.jpg", new List<Ingredient>()), new List<Tags>() { Tags.Lunch, Tags.Medium, Tags.Beef, Tags.Dinner }, "A classic, restaurant style cheese burger made with beef.", "25 Minutes");
+
     protected void AddToFavorites()
     {
-        AddToFavorites(this.user, burger);
-        toastService.ShowSuccess("Successfully added to favorites!");
+        if(MainLayout.loggedIn == false)
+        {
+            OpenLogin();
+        }
+        else
+        {            
+            if (this.user.FavouriteRecipes.Where(x => x.Recipe.Name == AvailableRecipe.Recipe.Name).Any())
+            {
+                ((List<AvailableRecipes>)this.user.FavouriteRecipes).RemoveAll(x => x.Recipe.Name == AvailableRecipe.Recipe.Name);
+                toastService.ShowSuccess("Removed " + AvailableRecipe.Recipe.Name + " from Favourites!");
+            } 
+            else
+            {
+                this.user.FavouriteRecipes.Add(AvailableRecipe);
+                toastService.ShowSuccess("Successfully added to favorites!"); 
+            }
+        }
+    }
+    
+    public string isFavourite()
+    {
+        if (this.user.FavouriteRecipes.Where(x => x.Recipe.Name == AvailableRecipe.Recipe.Name).Any())
+        {
+            return "background-image: url('/favorites-button-clicked.png');";
+        } else
+        {
+            return "";
+        }
     }
 
     private void showVideoPlayer()
@@ -142,7 +170,7 @@
     {
         if(MainLayout.loggedIn == false)
         {
-            toastService.ShowInfo("Can not add to meal plan, you need an account!");
+            OpenLogin();
         }
         else
         {
@@ -154,7 +182,7 @@
     {
         if(MainLayout.loggedIn == false)
         {
-            toastService.ShowInfo("Can not add to grocery list, you need an account!");
+            OpenLogin();
         }
         else
         {
@@ -167,4 +195,10 @@
     private void goBack() => _jsRuntime.InvokeVoidAsync("history.go", -1);
 
     private double? amount(Ingredient ingredients) => ingredients.Amount * InputValue;
+
+    public async void OpenLogin()
+    {
+        var formModal = Modal.Show<LoginPopup>("", new ModalOptions() {Class="custom-modal"});
+        await formModal.Result;
+    }
 }

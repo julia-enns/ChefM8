@@ -7,12 +7,11 @@ namespace ChefM8.Shared
 {
     public abstract class RecipeCode : ComponentBase
     {
-        public void AddToFavorites(User user, Recipe recipe)
+        public void AddToFavorites(User user, AvailableRecipes recipe)
         {
-            MealPlanRecipe newMeal = new MealPlanRecipe(recipe, null, null);
-            if (!user.SavedRecipes.Contains(newMeal))
+            if (!user.FavouriteRecipes.Contains(recipe))
             {
-                user.SavedRecipes.Add(newMeal);
+                user.FavouriteRecipes.Add(recipe);
             }
         } 
         
@@ -71,7 +70,10 @@ namespace ChefM8.Shared
             parameters.Add(nameof(AddToGroceryListPopup.amountFromRecipe), amount);
             var formModal = modal.Show<AddToGroceryListPopup>("", parameters, new ModalOptions() { Class = "custom-modal" });
             var result = await formModal.Result;
-            user.Groceries.AddRange((IList<Ingredient>)result.Data);
+
+            if (result.Data is null) return;
+
+            ((List<Ingredient>)user.Groceries).AddRange((IList<Ingredient>)result.Data);
         }
     }
 }

@@ -1,0 +1,86 @@
+#content {
+    background-color: white;
+    width: 80%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 25px 100px;
+    gap: 20px;
+}
+
+#title {
+    font-size: 60px;
+    margin: 20px;
+    color: black;
+    font-weight: bolder;
+    text-align: left;
+}
+
+.buttons {
+    display: flex;
+    justify-content: end;
+}
+
+.table-headers {
+    display: flex;
+    gap: 5px;
+    justify-content: space-evenly;
+}
+
+.ingredient {
+    display: flex;
+    gap: 5px;
+    justify-content: space-evenly;
+}
+
+.ingredient-name {
+    flex: 4;
+    word-wrap: break-word;
+}
+
+.checkbox {
+    display: block;
+    height: 30px;
+    width: 30px;
+    background-color: white;
+    border: 1px solid black;
+    margin: auto;
+}
+
+.empty-list{
+    align-self: center;
+}
+
+.ingredient-quantity, .ingredient-unit {
+    flex: 2;
+}
+
+.starter-space, .edit-space, .delete-space {
+    flex: 1;
+}
+
+.ingredients-table {
+    display: flex;
+    flex-direction: column;
+}
+
+.ingredient-button {
+    padding: 5px 20px;
+}
+
+.delete-button {
+    color: white;
+    background-color: #e07900;
+    border: 2px solid #e07900;
+}
+
+.delete-button:hover {
+    color: black;
+}
+
+.groceries {
+    display: flex;
+    flex-direction: column;
+    background-color: #C0C0C0;
+}

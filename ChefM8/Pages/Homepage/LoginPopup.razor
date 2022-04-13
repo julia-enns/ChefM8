@@ -1,0 +1,15 @@
+﻿@inject NavigationManager NavManager
+
+<div class="content">
+    <p>In order to use this functionality, you will first need to login.</p>
+    <button @onclick="@NavigateToLogin">Go to Login</button>
+</div>
+
+@code {
+    [CascadingParameter] BlazoredModalInstance ModalInstance { get; set; }
+
+    public void NavigateToLogin()
+    {
+        NavManager.NavigateTo("/login");
+    }
+}
