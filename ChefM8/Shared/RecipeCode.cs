@@ -70,6 +70,9 @@ namespace ChefM8.Shared
             parameters.Add(nameof(AddToGroceryListPopup.amountFromRecipe), amount);
             var formModal = modal.Show<AddToGroceryListPopup>("", parameters, new ModalOptions() { Class = "custom-modal" });
             var result = await formModal.Result;
+
+            if (result.Data is null) return;
+
             ((List<Ingredient>)user.Groceries).AddRange((IList<Ingredient>)result.Data);
         }
     }
