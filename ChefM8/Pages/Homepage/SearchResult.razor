@@ -1,105 +1,206 @@
-﻿@page "/recipes-search"
+﻿@page "/search"
+@page "/search/{keyword}"
 @using ChefM8.Pages
 
+@inject User user
+@inject NavigationManager nav
+@inject IToastService toastService
 
-<PageTitle>Search Results</PageTitle>
+
+<PageTitle>Search for: @Keyword</PageTitle>
 
 <div id="home-searchbar-container">
-    <input type="text" id="searchbar" name="searchbar" placeholder="Find something else..."/>
-    <button id="search-btn" type="submit">Search</button>
+     <form id="animated" autocomplete="off" @onsubmit='(() => nav.NavigateTo("/search/" + searchValue))'>
+        <i class="fa fa-search" aria-hidden="true"></i><input type="text" name="search" placeholder="Find something else.." @bind="@searchValue">
+    </form>
 </div>
 
-<h2>Recipe Results for: "name"</h2>
+<h2 style="padding-top: 20px; font-weight: bold; font-size: 46px;">Search results for: @Keyword</h2>
 <div id="allrecipes-section">
     <div id="filter-tab">
-        <h2>Filters</h2>
+        <h3>Refine Recipes</h3>
         <hr />
-        <input type="text" id="filtersearch" name="filtersearch" placeholder="Find a filter..."/>
-        <button type="submit">Search</button>
+        <div id="active-filters-list">
+            @foreach (var tag in Active_Filters)
+            {
+                if (tag.IsSelected)
+                {
+                    <button type="button" class="active-filter" @onclick="() => removeFilter(tag)">@tag.Tag</button>
+                }
+            }
+        </div>
         <hr />
-        <button type="button" class="filter-collapse-button">Filter Category Dropdown</button>
-        <div class="filter-collapse-content">
-            <p>* Test Filter</p>
-            <p>* Test Filter</p>
-            <p>* Test Filter</p>
-            <p>* Test Filter</p>
-            <p>* Test Filter</p>
-        </div>
-        <button type="button" class="filter-collapse-button">Filter Category Dropdown</button>
-        <div class="filter-collapse-content">
-            <p>* Test Filter</p>
-            <p>* Test Filter</p>
-            <p>* Test Filter</p>
-            <p>* Test Filter</p>
-            <p>* Test Filter</p>
-        </div>
-        <button type="button" class="filter-collapse-button">Filter Category Dropdown</button>
-        <div class="filter-collapse-content">
-            <p>* Test Filter</p>
-            <p>* Test Filter</p>
-            <p>* Test Filter</p>
-            <p>* Test Filter</p>
-            <p>* Test Filter</p>
-        </div>
-        <button type="button" class="filter-collapse-button">Filter Category Dropdown</button>
-        <div class="filter-collapse-content">
-            <p>* Test Filter</p>
-            <p>* Test Filter</p>
-            <p>* Test Filter</p>
-            <p>* Test Filter</p>
-            <p>* Test Filter</p>
-        </div>
-        <button type="button" class="filter-collapse-button">Filter Category Dropdown</button>
-        <div class="filter-collapse-content">
-            <p>* Test Filter</p>
-            <p>* Test Filter</p>
-            <p>* Test Filter</p>
-            <p>* Test Filter</p>
-            <p>* Test Filter</p>
-        </div>
-        <button type="button" class="filter-collapse-button">Filter Category Dropdown</button>
-        <div class="filter-collapse-content">
-            <p>* Test Filter</p>
-            <p>* Test Filter</p>
-            <p>* Test Filter</p>
-            <p>* Test Filter</p>
-            <p>* Test Filter</p>
-        </div>
-        <button type="button" class="filter-collapse-button">Filter Category Dropdown</button>
-        <div class="filter-collapse-content">
-            <p>* Test Filter</p>
-            <p>* Test Filter</p>
-            <p>* Test Filter</p>
-            <p>* Test Filter</p>
-            <p>* Test Filter</p>
-        </div>
-        <button type="button" class="filter-collapse-button">Filter Category Dropdown</button>
-        <div class="filter-collapse-content">
-            <p>* Test Filter</p>
-            <p>* Test Filter</p>
-            <p>* Test Filter</p>
-            <p>* Test Filter</p>
-            <p>* Test Filter</p>
-        </div>
+        @foreach (var filter in All_Filters.Filters)
+        {
+            <nav class="filter-button">
+                <label class="filter-collapse" for="filter-collapse-trigger"><span>@filter.Category</span></label>
+                <input id="filter-collapse-trigger" type="checkbox">
+
+                <ul class="filter-collapse-content">
+                    @foreach (var item in filter.Filters)
+                    {
+                        <li>
+                            <input type="checkbox" name="fltr_checkbox" @bind="item.IsSelected" @onclick="() => editFilter(item)">
+                            <label for="fltr_checkbox">@item.Tag.ToString()</label>
+                        </li>
+                    }
+                </ul>
+            </nav>
+        }
     </div>
     <div id="recipes-container">
-        <div class="recipe-item"></div>
-        <div class="recipe-item"></div>
-        <div class="recipe-item"></div>
-        <div class="recipe-item"></div>
-        <div class="recipe-item"></div>
-        <div class="recipe-item"></div>
-        <div class="recipe-item"></div>
-        <div class="recipe-item"></div>
-        <div class="recipe-item"></div>
-        <div class="recipe-item"></div>
-        <div class="recipe-item"></div>
-        <div class="recipe-item"></div>
-        <div class="recipe-item"></div>
-        <div class="recipe-item"></div>
-        <div class="recipe-item"></div>
+        @foreach (var recipe in All_Recipes)
+        {
+            @if (Active_Filters.Any())
+            {
+                @if (!(convertFilters().Intersect(recipe.Tags).Count() == Active_Filters.Count()))
+                {
+                    continue;
+                }
+            }
+
+            @if(recipe.Recipe.Name.ToLower().Contains(Keyword.ToLower()) || recipe.Description.ToLower().Contains(Keyword.ToLower()) || searchTag(recipe, Keyword))
+            {
+                <div class="recipe-item">
+                    <button id = "favorites-button" @onclick="() => favouriteRecipe(recipe)" style="@isFavourite(recipe)"></button>
+                    <img src=@recipe.Recipe.Image @onclick="(() => nav.NavigateTo(recipe.Recipe.Link))">
+                    <div @onclick="(() => nav.NavigateTo(recipe.Recipe.Link))">
+                        <h3>@recipe.Recipe.Name</h3>
+                        <h5>@recipe.Description</h5>
+                        <p>@recipe.Duration</p>
+                    </div>
+                    @foreach (var tag in recipe.Tags)
+                    {
+                        <div class="tags">@tag</div>
+                    }
+                </div>
+            }
+        }
     </div>
 </div>
 
 @code {
+    [Parameter] public string Keyword{ get; set; }
+    [CascadingParameter] public IModalService Modal { get; set; }
+
+    public List<AvailableRecipes> SearchedRecipes { get; set; }
+    public AllFilters All_Filters { get; set; }
+    public List<SelectedFilter> Active_Filters { get; set; }
+    public List<AvailableRecipes> Recipes_Functional { get; set; }
+    public List<AvailableRecipes> Recipes_Display { get; set; }
+    public List<AvailableRecipes> All_Recipes { get; set; }
+    public string searchValue;
+
+    public SearchResult()
+    {
+        All_Filters = new AllFilters();
+        Active_Filters = new List<SelectedFilter>();
+
+        Recipes_Functional = new List<AvailableRecipes>()
+        {
+            new AvailableRecipes(new Recipe("Burger", "/recipes/burger", "/recipe-photos/Burger.jpg", new List<Ingredient>()), new List<Tags>() {Tags.Lunch, Tags.Medium, Tags.Beef, Tags.Dinner}, "A classic, restaurant style cheese burger made with beef.", "25 Minutes"),
+            new AvailableRecipes(new Recipe("Pancakes", "/recipes/pancakes", "/recipe-photos/Pancakes.jpg",  new List<Ingredient>()), new List<Tags>() {Tags.Breakfast, Tags.Easy, Tags.Dairy}, "Simple fluffly pancakes, perfect to start your day.", "25 Minutes"),
+            new AvailableRecipes(new Recipe("Spaghetti", "/recipes/spaghetti", "/recipe-photos/Spaghetti.jpg", new List<Ingredient>()), new List<Tags>() {Tags.Dinner, Tags.Hard, Tags.Pasta, Tags.Dairy}, "Delicious italian style spaghetti with meat sauce.", "45 Minutes")
+        };
+
+        Recipes_Display = new List<AvailableRecipes>()
+        {
+            new AvailableRecipes(new Recipe("Apple Pie", "/recipes", "/recipe-photos/apple_pie.jpg", new List<Ingredient>()), new List<Tags>() {Tags.Dessert, Tags.Easy, Tags.Baking, Tags.Dairy}, "A perfect apple pie for snacks or dessert.", "40 Minutes"),
+            new AvailableRecipes(new Recipe("Bacon and Eggs", "/recipes", "/recipe-photos/bacon_and_eggs.jpg",  new List<Ingredient>()), new List<Tags>() {Tags.Breakfast, Tags.Easy, Tags.Meats}, "A classic bacon and eggs for breakfast.", "15 Minutes"),
+            new AvailableRecipes(new Recipe("Fish and Chips", "/recipes", "/recipe-photos/fish_and_chips.jpg", new List<Ingredient>()), new List<Tags>() {Tags.Lunch, Tags.Easy, Tags.Meats}, "Easy but delicious fried fish and fries that kids love.", "25 Minutes"),
+            new AvailableRecipes(new Recipe("Chocolate Fudge", "/recipes", "/recipe-photos/fudge.jpg", new List<Ingredient>()), new List<Tags>() {Tags.Dessert, Tags.Easy, Tags.Baking, Tags.Dairy}, "Simple recipe for a chocolate fudge topped with ice cream.", "40 Minutes"),
+            new AvailableRecipes(new Recipe("Grilled Cheese", "/recipes", "/recipe-photos/grilled_cheese.jpg",  new List<Ingredient>()), new List<Tags>() {Tags.Breakfast, Tags.Easy, Tags.Vegetarian}, "Quick and easy recipe for grilled cheese sandwhich.", "10 Minutes"),
+            new AvailableRecipes(new Recipe("Honey Garlic Tofu", "/recipes", "/recipe-photos/honey_garlic_tofu.jpg", new List<Ingredient>()), new List<Tags>() {Tags.Lunch, Tags.Medium, Tags.Vegetarian}, "Delicious tofu glazed with a sweet honey garlic sauce", "35 Minutes"),
+            new AvailableRecipes(new Recipe("Rice and Beans", "/recipes", "/recipe-photos/rice_beans.jpg", new List<Ingredient>()), new List<Tags>() {Tags.Lunch, Tags.Medium, Tags.Vegetarian}, "A hearty meal for rice lovers.", "20 Minutes"),
+            new AvailableRecipes(new Recipe("Chicken Shawarma", "/recipes", "/recipe-photos/shawarma_chicken.jpg",  new List<Ingredient>()), new List<Tags>() {Tags.Lunch, Tags.Hard, Tags.Meats}, "A traditional chicken shawarma with garlic sauce.", "50 Minutes"),
+            new AvailableRecipes(new Recipe("Garlic Butter Steak", "/recipes", "/recipe-photos/steak_dinner.jpg", new List<Ingredient>()), new List<Tags>() {Tags.Dinner, Tags.Hard, Tags.Beef, Tags.Meats}, "Delicious beef steak with garlic butter and mashed potatoes.", "75 Minutes"),
+            new AvailableRecipes(new Recipe("Tuna Sandwhich", "/recipes", "/recipe-photos/tuna_sandwhich.jpg",  new List<Ingredient>()), new List<Tags>() {Tags.Lunch, Tags.Easy, Tags.Meats}, "Easy recipe for a tuna spread sandwhich.", "20 Minutes"),
+            new AvailableRecipes(new Recipe("Vegetable Salad", "/recipes", "/recipe-photos/vegetable_salad.jpg", new List<Ingredient>()), new List<Tags>() {Tags.Dinner, Tags.Easy, Tags.Vegetarian}, "A healthy green vegetable salad", "10 Minutes")
+        };
+
+        All_Recipes = Recipes_Functional.Concat(Recipes_Display).ToList();
+
+        // populate the searched recipes
+        SearchedRecipes = new List<AvailableRecipes>();
+
+    }
+
+    protected void favouriteRecipe(AvailableRecipes recipe)
+    {
+        if (user.FavouriteRecipes.Contains(recipe))
+        {
+            user.FavouriteRecipes.Remove(recipe);
+            toastService.ShowWarning("Removed " + recipe.Recipe.Name + " from Favourites!");
+        } else
+        {
+            user.FavouriteRecipes.Add(recipe);
+            toastService.ShowSuccess("Successfully added " + recipe.Recipe.Name + " to favorites!"); 
+        }
+    }
+
+    // not very efficient
+    public List<Tags> convertFilters()
+    {
+        List<Tags> temp = new List<Tags>();
+        foreach (var filter in Active_Filters)
+        {
+            temp.Add(filter.Tag);
+        }
+        return temp;
+    }
+
+
+    public void addFilter(SelectedFilter tag)
+    {
+        Active_Filters.Add(tag);
+    }
+
+    public void removeFilter(SelectedFilter tag)
+    {
+        tag.IsSelected = false;
+        Active_Filters.Remove(tag);
+    }
+
+    // add or remove tag, depending on tag.IsSelected
+    public void editFilter(SelectedFilter tag)
+    {
+        if (!tag.IsSelected)
+        {
+            addFilter(tag);
+        }
+        else
+        {
+            removeFilter(tag);
+        }
+    }
+
+    public void clearFilter()
+    {
+        Active_Filters.Clear();
+    }
+
+    public string isFavourite(AvailableRecipes recipe)
+    {
+        if (user.FavouriteRecipes.Contains(recipe))
+        {
+            return "background-image: url('/favorites-button-clicked.png');";
+        } else
+        {
+            return "";
+        }
+    }
+
+    public bool searchTag(AvailableRecipes recipe, string kw)
+    {
+        kw = kw.ToLower();
+        foreach(var tag in recipe.Tags)
+        {
+            if (tag.ToString().ToLower().Equals(kw))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
