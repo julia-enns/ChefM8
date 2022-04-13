@@ -9,48 +9,54 @@
 
 <PageTitle>Recipes</PageTitle>
 
-<div id="home-searchbar-container">
-    <input type="text" id="searchbar" name="searchbar" placeholder="Search for recipes..."/>
-    <button id="search-btn" type="submit">Search</button>
-</div>
-@if(MainLayout.loggedIn){ 
-    <div id="fav-btn-container">
-        <button type="button" @onclick="@(()=>nav.NavigateTo("/favourites"))">Favourites</button>
-    </div>
-}
-
-<h2 style="padding-top: 20px; font-weight: bold; font-size: 46px;">Discover</h2>
+<h2 style="padding-top: 20px; font-weight: bold; font-size: 46px;" @onclick="Switch_Time">Discover</h2>
 <div id="discover-section">
           
     @foreach (var recipe in All_Recipes)
     {
+        @if (!recipe.Tags[0].ToString().Equals(MealTypes[index]))
+        {
+            continue;
+        }
         <div class="discover-item" style="background-image: url('@recipe.Recipe.Image');" @onclick="(() => nav.NavigateTo(recipe.Recipe.Link))">
             <div class="discover-description">
                 <h3>@recipe.Recipe.Name</h3>
                 <h5>@recipe.Description</h5>
                 <p>@recipe.Duration</p>
             </div>
-
         </div>
     }
 
 </div>
 
+<hr id="divider" />
+<div id="home-searchbar-container">
+     <form id="animated" autocomplete="off" @onsubmit='(() => nav.NavigateTo("/search/" + searchValue))'>
+        <i class="fa fa-search" aria-hidden="true"></i><input type="text" name="search" placeholder="Find a recipe.." @bind="@searchValue">
+    </form>
+</div>
+
+@if(MainLayout.loggedIn){ 
+    <div id="fav-btn-container">
+        <button type="button" @onclick="@(()=>nav.NavigateTo("/favourites"))">Favourites</button>
+
+    </div>
+}
 <h2 style="padding-top: 20px; font-weight: bold; font-size: 46px;">All Recipes</h2>
 <div id="allrecipes-section">
     <div id="filter-tab">
         <h3>Refine Recipes</h3>
+        @if(Active_Filters.Any())
+        {
+            <button type="button" id="clear-filter-btn" @onclick="clearFilter">Clear Filters</button>
+        }
         <hr />
-        <div id="filter-search-container">
-            <input type="text" id="filtersearch" name="filtersearch" placeholder="Find a filter..."/>
-            <button id="filter-search-btn" type="submit">Search</button>
-        </div>
         <div id="active-filters-list">
             @foreach (var tag in Active_Filters)
             {
                 if (tag.IsSelected)
                 {
-                    <button type="button" class="active-filter" @onclick="() => removeFilter(tag)">@tag.Tag</button>
+                    <button type="button" class="active-filter" @onclick="() => removeFilter(tag)">@tag.Tag.ToString().Replace("_", " ")</button>
                 }
             }
         </div>
@@ -66,7 +72,7 @@
                     {
                         <li>
                             <input type="checkbox" name="fltr_checkbox" @bind="item.IsSelected" @onclick="() => editFilter(item)">
-                            <label for="fltr_checkbox" >@item.Tag.ToString()</label>
+                            <label for="fltr_checkbox" >@item.Tag.ToString().Replace("_", " ")</label>
                         </li>
                     }
                 </ul>
@@ -110,6 +116,10 @@
     public List<AvailableRecipes> Recipes_Display { get; set; }
     public AllFilters All_Filters { get; set; }
     public List<SelectedFilter> Active_Filters { get; set; }
+    public List<string> Recipe_Names { get; set; }
+    public string searchValue;
+    public string[] MealTypes;
+    public int index;
 
     public RecipeBrowser()
     {
@@ -139,6 +149,15 @@
 
         All_Filters = new AllFilters();
         Active_Filters = new List<SelectedFilter>();
+        Recipe_Names = new List<string>();
+
+        foreach(var recipe in All_Recipes)
+        {
+            Recipe_Names.Add(recipe.Recipe.Name);
+        }
+
+        MealTypes = new string[3] {"Breakfast", "Lunch", "Dinner"};
+        index = 0;
     }
 
     protected void favouriteRecipe(AvailableRecipes recipe)
@@ -185,6 +204,10 @@
 
     public void clearFilter()
     {
+        foreach (var tag in Active_Filters)
+        {
+            tag.IsSelected = false;
+        }
         Active_Filters.Clear();
     }
 
@@ -208,6 +231,13 @@
         {
             return "";
         }
+    }
+
+    // to display discover functionality, discover is clickable to switch between breakfast, lunch, dinner
+    public void Switch_Time()
+    {
+        index++;
+        if (index == 3) index = 0;
     }
 
     public async void OpenLogin()
