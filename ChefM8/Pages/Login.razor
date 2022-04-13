@@ -1,4 +1,5 @@
 ﻿@page "/login"
+@inject User user
 
 <PageTitle>Login</PageTitle>
 
@@ -55,6 +56,9 @@
 
 @code {
 
+    public List<string> Usernames => user.Usernames;
+    public List<string> Passwords => user.Passwords;
+
     public void UserLogin()
     {
         MainLayout.Login();
@@ -78,6 +82,17 @@
         {
             UserLogin();
             NavManager.NavigateTo("/recipes");
+        }
+        else
+        {
+            @for (int i = 0; i < Usernames.Count; i++)
+            {
+                @if (username == Usernames[i] && password == Passwords[i])
+                {
+                    UserLogin();
+                    NavManager.NavigateTo("/recipes");
+                }
+            }
         }
         
     }

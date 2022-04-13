@@ -12,6 +12,9 @@
         public IList<MealPlanRecipe> ThursdayRecipes { get; set; }
         public IList<MealPlanRecipe> FridayRecipes { get; set; }
         public IList<MealPlanRecipe> SaturdayRecipes { get; set; }
+        
+        public List<string> Usernames { get; set; }
+        public List<string> Passwords { get; set; }
 
         public User()
         {
@@ -25,6 +28,11 @@
             ThursdayRecipes = new List<MealPlanRecipe>();
             FridayRecipes = new List<MealPlanRecipe>();
             SaturdayRecipes = new List<MealPlanRecipe>();
+
+            Usernames = new List<string>();
+            Passwords = new List<string>();
+
+
         }
     }
 }
