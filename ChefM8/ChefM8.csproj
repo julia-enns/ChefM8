@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>	  
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
@@ -37,6 +38,12 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\video-thumbnails\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="readme.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
