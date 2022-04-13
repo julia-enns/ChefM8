@@ -1,0 +1,43 @@
+.contacts-header {
+    position: relative;
+    left: 20px;
+    top: 80px;
+    font-size: 60px;
+    color: black;
+    font-weight: bolder;
+    text-align: left;
+}
+
+.address {
+    position: relative;
+    left: 20px;
+    top: 110px;
+    font-size: 30px;
+    color: black;
+    font-weight: bolder;
+    text-align: left;
+}
+
+.contact-phone {
+    position: relative;
+    left: 20px;
+    top: 140px;
+    font-size: 30px;
+    color: black;
+    font-weight: bolder;
+    text-align: left;
+}
+
+.contact-email {
+    position: relative;
+    left: 20px;
+    top: 160px;
+    font-size: 30px;
+    color: black;
+    font-weight: bolder;
+    text-align: left;
+}
+
+.picture {
+    padding: 100px;
+}
