@@ -17,6 +17,10 @@ body {
     text-decoration: none;
 }
 
+#button-text:hover {
+    color: black;
+}
+
 #box-label {
     font-size: 15px;
     margin: 55px;
@@ -76,6 +80,10 @@ body {
     background-color: #ffad51;
     padding-left: 13px;
     padding-top: 2px;
+}
+
+#login-button-box:hover {
+    color: black;
 }
 
 #register-button-box {
