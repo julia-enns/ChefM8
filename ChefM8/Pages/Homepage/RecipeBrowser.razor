@@ -10,14 +10,6 @@
 
 <PageTitle>Recipes</PageTitle>
 
-<div id="home-searchbar-container">
-    <input type="text" id="searchbar" name="searchbar" placeholder="Search for recipes..."/>
-    <button id="search-btn" type="submit">Search</button>
-</div>
-<div id="fav-btn-container">
-    <button type="button" @onclick="@(()=>nav.NavigateTo("/favourites"))">Favourites</button>
-</div>
-
 <h2 style="padding-top: 20px; font-weight: bold; font-size: 46px;">Discover</h2>
 <div id="discover-section">
           
@@ -35,21 +27,33 @@
 
 </div>
 
+<hr id="divider" />
+<div id="home-searchbar-container">
+     <form id="animated" autocomplete="off" @onsubmit='(() => nav.NavigateTo("/search/" + searchValue))'>
+        <i class="fa fa-search" aria-hidden="true"></i><input type="text" name="search" placeholder="Find a recipe.." @bind="@searchValue">
+    </form>
+</div>
+
+<div id="fav-btn-container">
+    <button type="button" @onclick="@(()=>nav.NavigateTo("/favourites"))">Favourites</button>
+
+</div>
+
 <h2 style="padding-top: 20px; font-weight: bold; font-size: 46px;">All Recipes</h2>
 <div id="allrecipes-section">
     <div id="filter-tab">
         <h3>Refine Recipes</h3>
+        @if(Active_Filters.Any())
+        {
+            <button type="button" id="clear-filter-btn" @onclick="clearFilter">Clear Filters</button>
+        }
         <hr />
-        <div id="filter-search-container">
-            <input type="text" id="filtersearch" name="filtersearch" placeholder="Find a filter..."/>
-            <button id="filter-search-btn" type="submit">Search</button>
-        </div>
         <div id="active-filters-list">
             @foreach (var tag in Active_Filters)
             {
                 if (tag.IsSelected)
                 {
-                    <button type="button" class="active-filter" @onclick="() => removeFilter(tag)">@tag.Tag</button>
+                    <button type="button" class="active-filter" @onclick="() => removeFilter(tag)">@tag.Tag.ToString().Replace("_", " ")</button>
                 }
             }
         </div>
@@ -65,7 +69,7 @@
                     {
                         <li>
                             <input type="checkbox" name="fltr_checkbox" @bind="item.IsSelected" @onclick="() => editFilter(item)">
-                            <label for="fltr_checkbox" >@item.Tag.ToString()</label>
+                            <label for="fltr_checkbox" >@item.Tag.ToString().Replace("_", " ")</label>
                         </li>
                     }
                 </ul>
@@ -110,6 +114,7 @@
     public AllFilters All_Filters { get; set; }
     public List<SelectedFilter> Active_Filters { get; set; }
     public List<string> Recipe_Names { get; set; }
+    public string searchValue;
 
     public RecipeBrowser()
     {
@@ -185,6 +190,10 @@
 
     public void clearFilter()
     {
+        foreach (var tag in Active_Filters)
+        {
+            tag.IsSelected = false;
+        }
         Active_Filters.Clear();
     }
 

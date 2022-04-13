@@ -2,10 +2,42 @@ body {
     padding: 10%;
 }
 
+#divider {
+    margin-top: 2%;
+    width: 100%;
+    height: 2px;
+}
+
 #home-searchbar-container {
-    margin: auto;
-    width: 15%;
-    height: 50px;
+   display: flex;
+   justify-content: space-around;
+   padding-top: 50px;
+   padding-bottom: 30px;
+}
+
+/* ==== 1. animated seachbox ===== */
+#animated input[type=text] {
+    width: 500px;
+    box-sizing: border-box;
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    border-radius: 16px;
+    font-size: 26px;
+    background-color: white;
+    padding: 12px 20px 12px 30px;
+    -webkit-transition: width 0.5s ease-out;
+    transition: width 0.5s ease-out;
+}
+
+#animated input[type=text]:focus {
+    width: 700px;
+    outline: none !important;
+    box-shadow: 0 0 10px rgb(255, 138, 0);
+}
+
+#animated i {
+    position: relative;
+    font-size: 24px;
+    left: 90%;
 }
 
 #fav-btn-container {
@@ -22,6 +54,7 @@ body {
     padding: 1%;
     overflow-x: scroll;
     white-space: nowrap;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
 }
 
 .discover-item {
@@ -41,24 +74,6 @@ body {
 .discover-item:hover {
     transform: scale(1.01);
 }
-
-/*.discover-item button {
-    position: absolute;
-    border: none;
-    height: 45px;
-    top: 2%;
-    left: 90%;
-    background-image: url('/favorites-button.png');
-    background-repeat: no-repeat;
-    background-color: transparent;
-    background-size: contain;
-    z-index: 1;
-}
-
-
-.discover-item button:hover {
-    background-image: url('/favorites-button-clicked.png');
-}*/
 
 .discover-description {
     background-color: white;
@@ -110,11 +125,28 @@ body {
     border: 2px solid darkgray;
     float: left;
     flex: 1;
+    position: relative;
 }
 
 #filter-tab h3 {
-    padding: 10px;
+    padding: 15px 10px;
     font-weight:bold;
+}
+
+#clear-filter-btn {
+    font-size: 12px;
+    border-radius: 1px;
+    padding: 5px 15px;
+    background-color: dimgray;
+    border: 0;
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+#clear-filter-btn:hover {
+    color: white;
+    background-color: rgb(255, 138, 0);
 }
 
 #filter-search-container input {
@@ -276,7 +308,7 @@ nav.filter-button {
 
 .tags {
     display: inline-block;
-    background-color: black;
+    background-color: rgb(20,33,33);
     color: white;
     font-size: 14px;
     text-align: center;

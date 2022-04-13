@@ -9,8 +9,9 @@
 <PageTitle>Favourites</PageTitle>
 
 <div id="home-searchbar-container">
-    <input type="text" id="searchbar" name="searchbar" placeholder="Search in favourites" />
-    <button id="search-btn" type="submit">Search</button>
+     <form id="animated" autocomplete="off" @onsubmit='(() => nav.NavigateTo("/search/" + searchValue))'>
+        <i class="fa fa-search" aria-hidden="true"></i><input type="text" name="search" placeholder="Find a recipe.." @bind="@searchValue">
+    </form>
 </div>
 
 <h2 style="padding-top: 20px; font-weight: bold; font-size: 46px;">Favourites</h2>
@@ -18,10 +19,6 @@
     <div id="filter-tab">
         <h3>Refine Recipes</h3>
         <hr />
-        <div id="filter-search-container">
-            <input type="text" id="filtersearch" name="filtersearch" placeholder="Find a filter..." />
-            <button id="filter-search-btn" type="submit">Search</button>
-        </div>
         <div id="active-filters-list">
             @foreach (var tag in Active_Filters)
             {
@@ -60,12 +57,14 @@
                     continue;
                 }
             }
-            <div class="recipe-item" @onclick="(() => nav.NavigateTo(recipe.Recipe.Link))">
+            <div class="recipe-item">
                 <button id = "favorites-button" @onclick="() => favouriteRecipe(recipe)" style="@isFavourite(recipe)"></button>
-                <img src=@recipe.Recipe.Image>
-                <h3>@recipe.Recipe.Name</h3>
-                <h5>@recipe.Description</h5>
-                <p>@recipe.Duration</p>
+                <img src=@recipe.Recipe.Image @onclick="(() => nav.NavigateTo(recipe.Recipe.Link))">
+                <div @onclick="(() => nav.NavigateTo(recipe.Recipe.Link))">
+                    <h3>@recipe.Recipe.Name</h3>
+                    <h5>@recipe.Description</h5>
+                    <p>@recipe.Duration</p>
+                </div>
                 @foreach (var tag in recipe.Tags)
                 {
                     <div class="tags">@tag</div>
@@ -81,6 +80,7 @@
     public IList<AvailableRecipes> FavouriteRecipes => user.FavouriteRecipes;
     public AllFilters All_Filters { get; set; }
     public List<SelectedFilter> Active_Filters { get; set; }
+    public string searchValue;
 
     public FavouritesPage()
     {
