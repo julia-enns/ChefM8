@@ -3,9 +3,35 @@ body {
 }
 
 #home-searchbar-container {
-    margin: auto;
-    width: 15%;
-    height: 50px;
+    display: flex;
+    justify-content: space-around;
+    padding-top: 50px;
+    padding-bottom: 30px;
+}
+
+/* ==== 1. animated seachbox ===== */
+#animated input[type=text] {
+    width: 500px;
+    box-sizing: border-box;
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    border-radius: 16px;
+    font-size: 26px;
+    background-color: white;
+    padding: 12px 20px 12px 30px;
+    -webkit-transition: width 0.5s ease-out;
+    transition: width 0.5s ease-out;
+}
+
+    #animated input[type=text]:focus {
+        width: 700px;
+        outline: none !important;
+        box-shadow: 0 0 10px rgb(255, 138, 0);
+    }
+
+#animated i {
+    position: relative;
+    font-size: 24px;
+    left: 90%;
 }
 
 #fav-btn-container {
@@ -38,9 +64,9 @@ body {
     transition: transform .2s;
 }
 
-    .discover-item:hover {
-        transform: scale(1.01);
-    }
+.discover-item:hover {
+    transform: scale(1.01);
+}
 
 /*.discover-item button {
     position: absolute;
